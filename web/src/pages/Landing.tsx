@@ -148,7 +148,7 @@ export function Landing() {
       <Navbar transparent />
 
       {/* ════ Hero ════ */}
-      <section style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '80px' }}>
+      <section data-theme="dark" style={{ color: 'var(--text)', position: 'relative', overflow: 'hidden', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '80px' }}>
         <div className="hero-radar" aria-hidden="true" />
         <div className="hero-scrim" aria-hidden="true" />
         <div className="hero-caption">Jamuna River, Bangladesh · NISAR L-band radar · dark is water, bright is land</div>
@@ -257,7 +257,6 @@ export function Landing() {
         <div className="evidence-trail__flow" ref={trailRef}>
           {EVIDENCE_STAGES.map((s, i) => (
             <div key={s.num} className="evidence-trail__step" style={{ ['--i' as string]: i }}>
-              <span className="evidence-trail__ghost" aria-hidden="true">{s.num}</span>
               <span className="evidence-trail__step-num">STEP {s.num}</span>
               <span className="evidence-trail__step-title">{s.title}</span>
               <span className="evidence-trail__step-desc">{s.desc}</span>

@@ -810,24 +810,27 @@ function FeaturePauliRGB() {
       canvasRef.current.width = w;
       canvasRef.current.height = h;
       
-      // Draw base radar
-      ctx.drawImage(imgRadar, 0, 0, w, h);
-      const radarData = ctx.getImageData(0, 0, w, h);
-      
-      // Get water mask
-      ctx.drawImage(imgWater, 0, 0, w, h);
-      const waterData = ctx.getImageData(0, 0, w, h);
-      
-      // Get change mask
-      ctx.drawImage(imgChange, 0, 0, w, h);
-      const changeData = ctx.getImageData(0, 0, w, h);
+      // Read each layer on its own offscreen canvas. The water / change masks are transparent
+      // PNGs (water = pure blue, so its red channel is 0), so they must be tested by alpha,
+      // not by colour, and must never be painted on top of each other.
+      const readLayer = (img: HTMLImageElement) => {
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        const cx = c.getContext('2d', { willReadFrequently: true })!;
+        cx.drawImage(img, 0, 0, w, h);
+        return cx.getImageData(0, 0, w, h);
+      };
+      const radarData = readLayer(imgRadar);
+      const waterData = readLayer(imgWater);
+      const changeData = readLayer(imgChange);
       
       // Compute Synthetic Pauli
       const pauliImg = ctx.createImageData(w, h);
       for (let i = 0; i < radarData.data.length; i += 4) {
         const brightness = radarData.data[i]; // Grayscale
-        const isWater = waterData.data[i] > 128;
-        const isChange = changeData.data[i] > 128;
+        const isWater = waterData.data[i + 3] > 128;
+        // Erosion pixels are orange-red (R high, G low); accretion is gold and counts as land
+        const isChange = changeData.data[i + 3] > 128 && changeData.data[i + 1] < 120;
         
         if (isChange) {
            // Erosion -> Double Bounce -> Red

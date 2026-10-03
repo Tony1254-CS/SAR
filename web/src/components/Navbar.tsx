@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AlertTriangle, Brain, Microscope, FileText, Volume2, Wrench, Sun, Moon } from 'lucide-react';
+import { AlertTriangle, Brain, Microscope, FileText, Volume2, Wrench, Sun, Moon, Menu, MapPin, BookOpen, Users, LogIn } from 'lucide-react';
 import { useStore } from '../state/store';
 import { TABS } from '../panels/EvidenceTabs';
 import '../styles/navbar.css';
@@ -132,6 +132,25 @@ export function Navbar({
             </div>
           )}
 
+          {/* On /app the bar is too crowded for inline links, so the normal site navigation lives in a Menu dropdown */}
+          {showReachInfo && (
+            <div className="navbar__dropdown navbar__dropdown--left">
+              <button className="navbar__btn">
+                <Menu size={16} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Menu ▾
+              </button>
+              <div className="navbar__dropdown-content">
+                <a href="/impact"><AlertTriangle size={16} /> Insights</a>
+                <a href="/cases"><MapPin size={16} /> Investigations</a>
+                <a href="/intelligence"><Brain size={16} /> ML Intelligence</a>
+                <a href="/sar-lab"><Microscope size={16} /> SAR Lab</a>
+                <a href="/methods"><BookOpen size={16} /> Methods</a>
+                <a href="/about"><Users size={16} /> About Us</a>
+                <a href="/report"><FileText size={16} /> Report</a>
+                <a href="/auth"><LogIn size={16} /> Sign in</a>
+              </div>
+            </div>
+          )}
+
           {/* Reach selector (only on /app) */}
           {showReachInfo && reaches && reaches.length > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -225,19 +244,6 @@ export function Navbar({
               </div>
 
               
-              <a 
-                href="/intelligence" 
-                className="navbar__btn" 
-                style={{ 
-                  borderColor: 'rgba(224,179,74,0.4)', 
-                  color: 'var(--warn)', 
-                  textDecoration: 'none',
-                  background: 'rgba(224,179,74,0.05)',
-                  boxShadow: '0 0 10px rgba(224,179,74,0.1)'
-                }}
-              >
-                <Brain size={18} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Intelligence
-              </a>
 
               <div style={{ width: 1, height: 24, background: 'rgba(var(--fg-rgb), 0.2)', margin: '0 4px' }} />
 

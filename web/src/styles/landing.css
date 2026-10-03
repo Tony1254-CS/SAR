@@ -235,7 +235,7 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 1.3s cubic-bezier(0.45, 0.05, 0.25, 1);
 }
 
 .sar-flip:hover .sar-flip__inner,
@@ -511,26 +511,6 @@
 
 .evidence-trail__step:hover::before {
   transform: scaleX(1);
-}
-
-/* big faded step number behind the text */
-.evidence-trail__ghost {
-  position: absolute;
-  right: var(--s4);
-  top: var(--s2);
-  font-family: var(--font-num);
-  font-size: 4.5rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--water);
-  opacity: 0.08;
-  pointer-events: none;
-  transition: opacity var(--duration-normal), transform 0.5s var(--ease-out);
-}
-
-.evidence-trail__step:hover .evidence-trail__ghost {
-  opacity: 0.2;
-  transform: scale(1.1);
 }
 
 .evidence-trail__step-num {

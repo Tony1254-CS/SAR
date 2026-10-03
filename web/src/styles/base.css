@@ -425,6 +425,7 @@ code, pre {
               animation: float-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             }
             .eyebrow {
+              font-family: var(--font-hero);
               color: var(--water-strong);
               font-size: 0.9rem;
               font-weight: 600;
@@ -437,11 +438,12 @@ code, pre {
               backdrop-filter: blur(10px);
             }
             .headline {
+              font-family: var(--font-hero);
               font-size: clamp(3.2rem, 8.2vw, 7.5rem);
-              font-weight: 800;
-              line-height: 1.1;
+              font-weight: 700;
+              line-height: 1.04;
               color: var(--hero-title);
-              letter-spacing: -0.02em;
+              letter-spacing: -0.035em;
               margin: 0;
             }
             .headline-gradient {
@@ -455,8 +457,9 @@ code, pre {
               -webkit-text-fill-color: transparent;
             }
             .subheadline {
+              font-family: var(--font-hero-body);
               font-size: clamp(1.15rem, 2vw, 1.7rem);
-              line-height: 1.6;
+              line-height: 1.7;
               color: var(--hero-sub);
               max-width: 960px;
               margin: 0;
@@ -479,6 +482,7 @@ code, pre {
               }
             }
             .btn-elegant-primary {
+              font-family: var(--font-hero);
               background: var(--btn-primary-bg);
               color: var(--btn-primary-fg);
               padding: 20px 42px;
@@ -494,6 +498,7 @@ code, pre {
               box-shadow: 0 0 30px var(--btn-primary-glow);
             }
             .btn-elegant-secondary {
+              font-family: var(--font-hero);
               background: var(--btn-sec-bg);
               color: var(--btn-sec-fg);
               padding: 20px 42px;
@@ -586,17 +591,6 @@ select {
 .src-flip:hover .src-flip__front {
   border-color: rgba(var(--water-rgb), 0.55);
   box-shadow: 0 0 32px rgba(var(--water-rgb), 0.3);
-}
-.src-flip__num {
-  position: absolute;
-  top: var(--s3);
-  right: var(--s4);
-  font-family: var(--font-num);
-  font-size: 3.4rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--water);
-  opacity: 0.1;
 }
 .src-flip__icon {
   display: inline-flex;

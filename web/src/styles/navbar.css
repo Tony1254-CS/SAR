@@ -184,6 +184,7 @@
 }
 
 .navbar__btn {
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -252,6 +253,26 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.navbar__dropdown--left .navbar__dropdown-content { right: auto; left: 0; }
+
+.navbar__dropdown-content a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 16px;
+  color: var(--text);
+  font-size: var(--text-base);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all var(--duration-fast);
+}
+.navbar__dropdown-content a:hover {
+  background: rgba(var(--water-rgb), 0.1);
+  color: var(--water);
 }
 
 .navbar__dropdown-content button {
@@ -358,4 +379,22 @@
   .navbar__right {
     display: none;
   }
+}
+
+
+/* Landing: the hero is always a dark radar image, so the transparent (not yet scrolled) navbar
+   uses the dark palette in both themes and gets a soft dark fade so links stay readable. */
+.navbar--transparent:not(.navbar--scrolled) {
+  --text: #EEF0F2;
+  --text-2: #D2D8DE;
+  --text-3: #AEB7BF;
+  --water: #39C4D9;
+  --water-strong: #4DD8EC;
+  --water-rgb: 57, 196, 217;
+  --pass: #7FBF8E;
+  --line-strong: rgba(255, 255, 255, 0.28);
+  --fg-rgb: 255, 255, 255;
+  --btn-primary-bg: #ffffff;
+  --btn-primary-fg: #000000;
+  background: linear-gradient(to bottom, rgba(6, 10, 14, 0.78) 0%, rgba(6, 10, 14, 0.35) 70%, transparent 100%);
 }

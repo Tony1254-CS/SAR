@@ -119,8 +119,11 @@ export function AboutPage() {
       {/* ── Cinematic Story Section ── */}
       <div className="cinematic-hero" style={{ position: 'relative', overflow: 'hidden', padding: '6rem 0' }}>
         {/* Background glow and image */}
-        <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/erosion_preview.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.15, mixBlendMode: 'luminosity', filter: 'blur(4px)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(var(--panel-rgb), 1) 0%, rgba(var(--panel-rgb), 0.5) 50%, rgba(var(--panel-rgb), 1) 100%)' }} />
+        {/* The photo is landscape, so it only covers the top screen-height (not the whole tall section, which stretched and blurred it) and fades out into the page */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 'min(100vh, 900px)', pointerEvents: 'none', WebkitMaskImage: 'linear-gradient(to bottom, #000 55%, transparent 100%)', maskImage: 'linear-gradient(to bottom, #000 55%, transparent 100%)' }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url(/erosion_preview.jpg)', backgroundSize: 'cover', backgroundPosition: 'center 40%', opacity: 0.55 }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(var(--panel-rgb), 0.55) 0%, rgba(var(--panel-rgb), 0.45) 50%, rgba(var(--panel-rgb), 0.7) 100%)' }} />
+        </div>
         <div style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translate(-50%, -50%)', width: '80vw', height: '40vw', background: 'radial-gradient(ellipse at center, rgba(var(--water-rgb), 0.15) 0%, transparent 70%)', filter: 'blur(50px)', pointerEvents: 'none' }} />
 
         <div className="page-content" style={{ position: 'relative', zIndex: 1 }}>
@@ -311,11 +314,10 @@ export function AboutPage() {
           Hover a card to turn it over and see the full details.
         </p>
         <div className="src-grid">
-          {SOURCES.map((s, i) => (
+          {SOURCES.map((s) => (
             <div key={s.name} className="src-flip" tabIndex={0}>
               <div className="src-flip__inner">
                 <div className="src-flip__face src-flip__front">
-                  <span className="src-flip__num">{String(i + 1).padStart(2, '0')}</span>
                   <span className="src-flip__icon">{s.icon as ReactNode}</span>
                   <h3>{s.name}</h3>
                   <p>{s.role}</p>
