@@ -57,8 +57,8 @@ function GlassCard({ children, style }: { children: React.ReactNode; style?: Rea
 function SectionTitle({ title, subtitle }: { title: string; subtitle: string }) {
   return (
     <div style={{ marginBottom: 'var(--s5)' }}>
-      <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.2rem)', fontWeight: 900, color: 'var(--text)', margin: 0, letterSpacing: '-0.02em' }}>{title}</h2>
-      <p style={{ fontSize: '1rem', color: 'var(--text-3)', marginTop: 8, maxWidth: 800, lineHeight: 1.6 }}>{subtitle}</p>
+      <h2 style={{ fontSize: 'clamp(1.9rem, 3.4vw, 3rem)', fontWeight: 900, color: 'var(--text)', margin: 0, letterSpacing: '-0.02em' }}>{title}</h2>
+      <p style={{ fontSize: 'clamp(1.05rem, 1.4vw, 1.3rem)', color: 'var(--text-2)', marginTop: 10, maxWidth: 1000, lineHeight: 1.65 }}>{subtitle}</p>
     </div>
   );
 }
@@ -1336,7 +1336,7 @@ export function SARLabPage() {
       <Navbar />
       <div className="navbar-spacer" />
 
-      <div style={{ padding: 'var(--s6) var(--s5)', maxWidth: 1400, margin: '0 auto' }}>
+      <div style={{ padding: 'var(--s6) clamp(var(--s5), 3vw, var(--s8))', maxWidth: 1640, margin: '0 auto' }}>
 
         {/* ═══ HERO ═══ */}
         <div style={{ textAlign: 'center', marginBottom: 'var(--s8)', paddingTop: 'var(--s4)' }}>
@@ -1344,11 +1344,11 @@ export function SARLabPage() {
             <span className="globe-hero__badge-dot" style={{ background: 'var(--water)', boxShadow: '0 0 8px var(--water)' }} />
             INTERACTIVE SAR SCIENCE LAB
           </div>
-          <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 900, marginBottom: 'var(--s3)', marginTop: 'var(--s3)', letterSpacing: '-0.03em' }}>
+          <h1 style={{ fontSize: 'clamp(3rem, 7.2vw, 6.5rem)', fontWeight: 900, lineHeight: 1.08, marginBottom: 'var(--s4)', marginTop: 'var(--s3)', letterSpacing: '-0.03em' }}>
             <span style={{ color: 'var(--text)' }}>Radar Remote Sensing</span><br />
             <span className="glow-text">Deep Dive</span>
           </h1>
-          <p style={{ color: 'var(--text-3)', maxWidth: 750, margin: '0 auto', fontSize: '1.15rem', lineHeight: 1.7 }}>
+          <p style={{ color: 'var(--text-2)', maxWidth: 1000, margin: '0 auto', fontSize: 'clamp(1.15rem, 1.7vw, 1.6rem)', lineHeight: 1.65 }}>
             Understand the science behind our analysis. How synthetic aperture radar works,
             why NISAR's L-band is revolutionary, and how we extract surface change from radar signals.
           </p>
@@ -1357,13 +1357,13 @@ export function SARLabPage() {
         {/* ═══ SECTION 1: NISAR MISSION SPECS ═══ */}
         <div style={{ marginBottom: 'var(--s8)' }}>
           <SectionTitle title="NISAR Mission Parameters" subtitle="The most expensive Earth science radar satellite ever built — a joint NASA-ISRO mission designed to measure Earth's changing ecosystems." />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 'var(--s3)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: 'var(--s4)' }}>
             {NISAR_SPECS.map((spec) => (
-              <div key={spec.param} className="glass-panel hover-lift" style={{ padding: 'var(--s4)', display: 'flex', gap: 'var(--s3)', alignItems: 'flex-start' }}>
+              <div key={spec.param} className="glass-panel hover-lift" style={{ padding: 'var(--s5)', display: 'flex', gap: 'var(--s3)', alignItems: 'flex-start' }}>
                 <div style={{ fontSize: '1.5rem', flexShrink: 0, width: 40, textAlign: 'center' }}>{spec.icon}</div>
                 <div>
                   <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{spec.param}</div>
-                  <div style={{ fontSize: '1rem', color: 'var(--water)', fontWeight: 600, marginTop: 2 }}>{spec.value}</div>
+                  <div style={{ fontSize: '1.2rem', color: 'var(--water)', fontWeight: 700, marginTop: 4 }}>{spec.value}</div>
                 </div>
               </div>
             ))}
@@ -1512,33 +1512,25 @@ export function SARLabPage() {
         <div style={{ marginBottom: 'var(--s8)' }}>
           <SectionTitle title="InSAR Processing Pipeline" subtitle="Interferometric SAR (InSAR) combines two radar acquisitions to measure ground displacement with millimeter-precision. Here's how our pipeline works, step by step." />
           
-          <GlassCard>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'var(--s4)' }}>
-              {INSAR_STEPS.map((step, i) => (
-                <div
-                  key={i}
-                  onClick={() => setActiveStep(i)}
-                  style={{
-                    padding: 'var(--s5) var(--s4) var(--s4) var(--s4)',
-                    background: activeStep === i ? 'rgba(var(--water-rgb), 0.08)' : 'rgba(var(--fg-rgb), 0.02)',
-                    border: `1px solid ${activeStep === i ? 'var(--water)' : 'rgba(var(--fg-rgb), 0.05)'}`,
-                    borderRadius: 'var(--r-md)',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s',
-                    position: 'relative'
-                  }}
-                >
-                  {/* Step number */}
-                  <div style={{ position: 'absolute', top: -12, left: 16, background: activeStep === i ? 'var(--water)' : 'var(--surface-2, #1a1d21)', padding: '2px 10px', borderRadius: 'var(--r-full)', fontSize: '0.78rem', fontWeight: 700, color: activeStep === i ? '#000' : 'var(--text-3)', border: `1px solid ${activeStep === i ? 'var(--water)' : 'rgba(var(--fg-rgb), 0.1)'}` }}>
-                    STEP {i + 1}
+          <div className="snake-grid">
+            {INSAR_STEPS.map((step, i) => {
+              // Snake layout: 1 2 3 / 6 5 4
+              const row = Math.floor(i / 3);
+              const pos = i % 3;
+              const col = row % 2 === 0 ? pos : 2 - pos;
+              const cls = ['snake-node', activeStep === i ? 'is-active' : '', row % 2 === 1 ? 'snake-node--rtl' : '', pos === 2 ? 'snake-node--end' : '', i === INSAR_STEPS.length - 1 ? 'snake-node--last' : ''].filter(Boolean).join(' ');
+              return (
+                <div key={i} className={cls} onClick={() => setActiveStep(i)} style={{ gridRow: row + 1, gridColumn: col + 1 }}>
+                  <div className="snake-node__head">
+                    <span className="snake-node__num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="snake-node__icon">{step.icon}</span>
                   </div>
-                  <div style={{ fontSize: '2rem', marginBottom: 'var(--s2)' }}>{step.icon}</div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 700, color: activeStep === i ? 'var(--water)' : 'var(--text)', marginBottom: 8 }}>{step.title}</div>
-                  <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', lineHeight: 1.6 }}>{step.desc}</div>
+                  <div className="snake-node__title">{step.title}</div>
+                  <div className="snake-node__desc">{step.desc}</div>
                 </div>
-              ))}
-            </div>
-          </GlassCard>
+              );
+            })}
+          </div>
         </div>
 
         

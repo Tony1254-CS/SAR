@@ -141,12 +141,23 @@ export function CasesPage() {
               return {
                 lat,
                 lng,
-                label: r.name,
+                label: `<div class="globe-tip"><strong>${r.name}</strong><br/>${meta.changeType} · ${meta.region}<br/>Verdict: <span style="color:${VERDICT_COLOR[r.verdict] ?? '#6F7880'}">${r.verdict}</span></div>`,
                 color: VERDICT_COLOR[r.verdict] ?? '#6F7880',
                 size: 1.5,
               };
             }).filter(Boolean) as any}
           />
+
+          {/* Legend: dot colour = verdict */}
+          <div className="globe-legend">
+            <div className="globe-legend__title">Dot colour</div>
+            {Object.entries(VERDICT_COLOR).map(([verdict, c]) => (
+              <div key={verdict} className="globe-legend__row">
+                <span className="globe-legend__dot" style={{ background: c, color: c }} />
+                <span className="globe-legend__name">{verdict[0] + verdict.slice(1).toLowerCase()}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

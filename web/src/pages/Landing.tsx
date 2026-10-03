@@ -116,12 +116,11 @@ const DATA_SOURCES = [
   },
 ];
 
-export function Landing() {
-  const trailRef = useRef<HTMLDivElement>(null);
-
-  // Reveal the evidence-trail steps one after another when they scroll into view.
+/* Adds .is-visible to the element once it scrolls into view (drives the staggered entrance animations). */
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
   useEffect(() => {
-    const el = trailRef.current;
+    const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === 'undefined') {
       el.classList.add('is-visible');
@@ -136,6 +135,13 @@ export function Landing() {
     io.observe(el);
     return () => io.disconnect();
   }, []);
+  return ref;
+}
+
+export function Landing() {
+  const pipelineRef = useReveal<HTMLDivElement>();
+  const trailRef = useReveal<HTMLDivElement>();
+  const sourcesRef = useReveal<HTMLDivElement>();
 
   return (
     <div className="page-container">
@@ -176,7 +182,7 @@ export function Landing() {
       <section className="sar-intro">
         <div className="section-label">How SAR Works</div>
         <h2>Synthetic Aperture Radar for Earth Observation</h2>
-        <p style={{ maxWidth: 640, marginTop: 'var(--s2)' }}>
+        <p className="landing-lead">
           SAR is an active microwave remote sensing technology. Unlike optical cameras, it
           provides its own illumination — enabling observation regardless of time of day, cloud
           cover, or weather conditions.{' '}
@@ -184,7 +190,6 @@ export function Landing() {
             href="https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/sar"
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: 'var(--text-sm)' }}
           >
             Learn more on NASA Earthdata →
           </a>
@@ -209,37 +214,42 @@ export function Landing() {
         </div>
       </section>
 
-      <div className="divider" style={{ maxWidth: 1100, margin: '0 auto' }} />
+      <div className="divider" style={{ maxWidth: 1400, margin: '0 auto' }} />
 
       {/* ════ Pipeline ════ */}
       <section className="pipeline-section">
         <div className="section-label">Processing Pipeline</div>
         <h2>12-Step Analysis Pipeline</h2>
-        <p style={{ maxWidth: 640, marginTop: 'var(--s2)' }}>
+        <p className="landing-lead">
           Every number on this site passes through twelve offline processing steps — from raw
           NISAR granule to verified, bundled result. No step is skipped, and no number is hand-typed.
         </p>
 
-        <div className="pipeline-flow">
-          {PIPELINE_STEPS.map((step, i) => (
-            <div className="pipeline-step" key={`${step.label}-${i}`}>
-              <div className="pipeline-node">
-                <span className="pipeline-node__label">{step.label}</span>
-                <span className="pipeline-node__desc">{step.desc}</span>
-              </div>
-              {i < PIPELINE_STEPS.length - 1 && <span className="pipeline-arrow">→</span>}
+        <div className="pipeline-flow" ref={pipelineRef}>
+          {PIPELINE_STEPS.map((step, i) => {
+            // Snake layout: 1 2 3 4 / 8 7 6 5 / 9 10 11 12
+            const row = Math.floor(i / 4);
+            const pos = i % 4;
+            const col = row % 2 === 0 ? pos : 3 - pos;
+            const cls = ['pipeline-node', row % 2 === 1 ? 'pipeline-node--rtl' : '', pos === 3 ? 'pipeline-node--end' : '', i === PIPELINE_STEPS.length - 1 ? 'pipeline-node--last' : ''].filter(Boolean).join(' ');
+            return (
+            <div className={cls} key={`${step.label}-${i}`} style={{ ['--i' as string]: i, gridRow: row + 1, gridColumn: col + 1 }}>
+              <span className="pipeline-node__num">{String(i + 1).padStart(2, '0')}</span>
+              <span className="pipeline-node__label">{step.label}</span>
+              <span className="pipeline-node__desc">{step.desc}</span>
             </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      <div className="divider" style={{ maxWidth: 1100, margin: '0 auto' }} />
+      <div className="divider" style={{ maxWidth: 1400, margin: '0 auto' }} />
 
       {/* ════ Evidence Trail ════ */}
       <section className="evidence-trail">
         <div className="section-label">Evidence Trail</div>
         <h2>Five-Stage Verification</h2>
-        <p style={{ maxWidth: 640, marginTop: 'var(--s2)' }}>
+        <p className="landing-lead">
           Every investigation follows the same five-step trail: detect the change, investigate
           with independent sources, challenge the finding, explain the result, connect to the field.
         </p>
@@ -256,20 +266,20 @@ export function Landing() {
         </div>
       </section>
 
-      <div className="divider" style={{ maxWidth: 1100, margin: '0 auto' }} />
+      <div className="divider" style={{ maxWidth: 1400, margin: '0 auto' }} />
 
       {/* ════ Data Sources ════ */}
       <section className="data-sources">
         <div className="section-label">Data Sources</div>
         <h2>Built on NASA Open Data</h2>
-        <p style={{ maxWidth: 640, marginTop: 'var(--s2)' }}>
+        <p className="landing-lead">
           Every observation, validation, and context layer comes from a named, citable dataset.
           No data is fabricated or simulated.
         </p>
 
-        <div className="data-sources__grid">
-          {DATA_SOURCES.map((s) => (
-            <div key={s.name} className="data-source-card">
+        <div className="data-sources__grid" ref={sourcesRef}>
+          {DATA_SOURCES.map((s, i) => (
+            <div key={s.name} className="data-source-card" style={{ ['--i' as string]: i }}>
               <div className="data-source-card__badge">{s.badge}</div>
               <div className="data-source-card__info">
                 <div className="data-source-card__name">{s.name}</div>

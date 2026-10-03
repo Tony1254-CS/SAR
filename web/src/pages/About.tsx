@@ -1,9 +1,11 @@
-import { Cloud, Eye, Radio, Waves } from 'lucide-react';
+import { Cloud, Eye, Radio, Waves, Satellite, CloudRain, Mountain, Droplets, BarChart2, Globe, Layers } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { Navbar } from '../components/Navbar';
 
 const SOURCES = [
   {
     name: 'NISAR L2 GCOV Provisional V1',
+    icon: <Satellite size={26} />,
     role: 'Primary measurement — calibrated γ⁰ radar backscatter per pass',
     doi: '10.5067/NIL2GCOV-P1',
     provider: 'NASA/JPL NISAR, via ASF DAAC',
@@ -11,6 +13,7 @@ const SOURCES = [
   },
   {
     name: 'OPERA L3 DSWx-S1 V1',
+    icon: <Waves size={26} />,
     role: 'Independent validation — Sentinel-1 C-band water extent',
     doi: '10.5067/OPDSWS1-L3V1',
     provider: 'NASA JPL OPERA, via PO.DAAC',
@@ -18,6 +21,7 @@ const SOURCES = [
   },
   {
     name: 'GPM IMERG Daily Late Run V07',
+    icon: <CloudRain size={26} />,
     role: 'Rainfall anomaly check',
     doi: '10.5067/GPM/IMERGDL/DAY/07',
     provider: 'NASA Goddard, GPM',
@@ -25,6 +29,7 @@ const SOURCES = [
   },
   {
     name: 'ASF GLO-30 HAND',
+    icon: <Mountain size={26} />,
     role: 'Terrain mask — excludes water classification on high ground',
     doi: null,
     provider: 'Alaska Satellite Facility',
@@ -32,6 +37,7 @@ const SOURCES = [
   },
   {
     name: 'JRC Global Surface Water — Occurrence',
+    icon: <Droplets size={26} />,
     role: 'Reference — defines stable-land zone for null test',
     doi: null,
     provider: 'European Commission Joint Research Centre',
@@ -39,6 +45,7 @@ const SOURCES = [
   },
   {
     name: 'FFWC River Stage',
+    icon: <BarChart2 size={26} />,
     role: 'Scientific control — river height at each acquisition',
     doi: null,
     provider: 'Flood Forecasting and Warning Centre, BWDB, Bangladesh',
@@ -46,10 +53,27 @@ const SOURCES = [
   },
   {
     name: 'NASA GIBS Blue Marble',
+    icon: <Globe size={26} />,
     role: 'Satellite basemap tiles (WMTS)',
     doi: null,
     provider: 'NASA GIBS (Global Imagery Browse Services)',
     desc: 'Blue Marble ShadedRelief Bathymetry basemap tiles served via WMTS. Used as the visual context layer beneath our radar and change overlays on the map. Presentation only — not a scientific input.',
+  },
+  {
+    name: 'Esri World Imagery',
+    icon: <Layers size={26} />,
+    role: 'Satellite basemap under the map view',
+    doi: null,
+    provider: 'Esri, Maxar, Earthstar Geographics',
+    desc: 'High-resolution satellite imagery tiles used as the visual context layer under our radar, water and change overlays in the main map. Presentation only — it is never used in any measurement, threshold or verdict.',
+  },
+  {
+    name: 'Terrain Relief Tiles (Terrarium)',
+    icon: <Mountain size={26} />,
+    role: '3D relief for the map (optional)',
+    doi: null,
+    provider: 'AWS Open Data — Terrain Tiles',
+    desc: 'Elevation tiles in Terrarium encoding, loaded only when you switch on "3D relief". They give the map a sense of terrain height. Presentation only — not a scientific layer, and no number on the site is derived from it.',
   },
 ];
 
@@ -104,10 +128,10 @@ export function AboutPage() {
             <div style={{ display: 'inline-block', padding: '4px 16px', background: 'rgba(var(--water-rgb), 0.1)', border: '1px solid var(--water)', color: 'var(--water)', borderRadius: '20px', fontSize: '0.9rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1rem', animation: 'pulse 2s infinite' }}>
               The Untold Crisis
             </div>
-            <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 900, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text)', textShadow: '0 0 40px rgba(var(--fg-rgb), 0.3)', marginBottom: 'var(--s4)', lineHeight: 1.1 }}>
+            <h1 style={{ fontSize: 'clamp(3.2rem, 8vw, 7rem)', fontWeight: 900, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--text)', textShadow: '0 0 40px rgba(var(--fg-rgb), 0.3)', marginBottom: 'var(--s4)', lineHeight: 1.1 }}>
               The River <br/><span style={{ background: 'linear-gradient(90deg, var(--water), var(--fail))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Takes It All</span>
             </h1>
-            <p style={{ fontSize: '1.25rem', color: 'var(--text-2)', maxWidth: '800px', margin: '0 auto', lineHeight: 1.8, fontFamily: 'serif', fontStyle: 'italic' }}>
+            <p style={{ fontSize: 'clamp(1.2rem, 1.8vw, 1.6rem)', color: 'var(--text-2)', maxWidth: '1000px', margin: '0 auto', lineHeight: 1.75, fontFamily: 'serif', fontStyle: 'italic' }}>
               In Bangladesh, the Jamuna River doesn't just flood. It migrates. During the monsoon, the riverbank can erode hundreds of meters in a single week, swallowing homes, schools, and entire villages overnight.
             </p>
           </div>
@@ -116,8 +140,8 @@ export function AboutPage() {
             {/* Story Card 1 */}
             <div style={{ display: 'flex', gap: '2rem', background: 'rgba(var(--fg-rgb), 0.02)', border: '1px solid rgba(var(--fg-rgb), 0.05)', borderRadius: '24px', padding: '2rem', backdropFilter: 'blur(10px)', alignItems: 'center', flexWrap: 'wrap' }}>
               <div style={{ flex: '1 1 300px', minWidth: '300px' }}>
-                <h3 style={{ fontSize: '2rem', color: 'var(--text)', marginBottom: '1rem' }}>Blinded by the Monsoon</h3>
-                <p style={{ color: 'var(--text-2)', lineHeight: 1.7, fontSize: '1.1rem' }}>
+                <h3 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', color: 'var(--text)', marginBottom: '1rem' }}>Blinded by the Monsoon</h3>
+                <p style={{ color: 'var(--text-2)', lineHeight: 1.7, fontSize: 'clamp(1.1rem, 1.4vw, 1.35rem)' }}>
                   Traditional optical satellites (like Landsat or Sentinel-2) are useless when we need them most. Heavy monsoon clouds blanket the region for months, hiding the catastrophic erosion happening on the ground. We are blind to the destruction until the clouds finally clear in autumn—long after the damage is done.
                 </p>
               </div>
@@ -130,8 +154,8 @@ export function AboutPage() {
             {/* Story Card 2 */}
             <div style={{ display: 'flex', gap: '2rem', background: 'rgba(var(--water-rgb), 0.05)', border: '1px solid rgba(var(--water-rgb), 0.2)', borderRadius: '24px', padding: '2rem', backdropFilter: 'blur(10px)', alignItems: 'center', flexWrap: 'wrap', flexDirection: 'row-reverse', boxShadow: '0 20px 50px rgba(var(--water-rgb), 0.1)' }}>
               <div style={{ flex: '1 1 300px', minWidth: '300px' }}>
-                <h3 style={{ fontSize: '2rem', color: 'var(--water)', marginBottom: '1rem', textShadow: '0 0 18px rgba(var(--water-rgb), 0.35)' }}>Piercing the Veil with SAR</h3>
-                <p style={{ color: 'var(--text)', lineHeight: 1.7, fontSize: '1.1rem' }}>
+                <h3 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', color: 'var(--water)', marginBottom: '1rem', textShadow: '0 0 18px rgba(var(--water-rgb), 0.35)' }}>Piercing the Veil with SAR</h3>
+                <p style={{ color: 'var(--text)', lineHeight: 1.7, fontSize: 'clamp(1.1rem, 1.4vw, 1.35rem)' }}>
                   Enter <strong>NISAR</strong>. By utilizing L-band Synthetic Aperture Radar (SAR), we emit active microwave pulses that punch straight through the densest clouds and rain. The radar backscatter reveals the precise boundary between land and water. For the first time, we can track morphodynamic river shifts in <strong>real-time</strong>, regardless of weather.
                 </p>
               </div>
@@ -150,12 +174,12 @@ export function AboutPage() {
             <div style={{ display: 'inline-block', padding: '4px 16px', background: 'rgba(var(--fg-rgb), 0.05)', border: '1px solid rgba(var(--fg-rgb), 0.1)', color: 'var(--text-3)', borderRadius: '20px', fontSize: '0.9rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '2rem' }}>
               The Architects
             </div>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '3rem', color: 'var(--text)', fontWeight: 800 }}>Meet the Crew</h2>
+            <h2 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', marginBottom: '3rem', color: 'var(--text)', fontWeight: 800 }}>Meet the Crew</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem' }}>
               {[
                 { name: 'Sabbir Ahmed', role: 'Mission Commander', desc: 'System Architecture & AI Pipeline', initials: 'SA' },
                 { name: 'Sanjid Talukder', role: 'Data Scientist', desc: 'SAR Processing & Remote Sensing', initials: 'ST' },
-                { name: 'Sakibul Hassan Shovon', role: 'Frontend Engineer', desc: 'Interactive Visualization & UX', initials: 'SH' },
+                { name: 'Sakibul Hassan Shovon', role: 'AI Engineer', desc: 'Interactive Visualization & UX', initials: 'SH' },
                 { name: 'Yasin Arafat', role: 'Hydro Analyst', desc: 'River Dynamics & Quality Assurance', initials: 'YA' }
               ].map((member, i) => (
                 <div key={member.name} className="crew-card" style={{
@@ -188,9 +212,9 @@ export function AboutPage() {
                   }} className="crew-avatar">
                     {member.initials}
                   </div>
-                  <h3 style={{ fontSize: '1.4rem', marginBottom: '8px', letterSpacing: '0.05em', color: 'var(--text)', zIndex: 2 }}>{member.name}</h3>
-                  <div style={{ color: 'var(--water)', fontSize: '0.92rem', textTransform: 'uppercase', fontWeight: 800, marginBottom: '12px', letterSpacing: '1px', zIndex: 2 }}>{member.role}</div>
-                  <div style={{ color: 'var(--text-2)', fontSize: '0.95rem', lineHeight: 1.5, zIndex: 2 }}>{member.desc}</div>
+                  <h3 style={{ fontSize: '1.7rem', marginBottom: '8px', letterSpacing: '0.04em', color: 'var(--text)', zIndex: 2 }}>{member.name}</h3>
+                  <div style={{ color: 'var(--water)', fontSize: '1.05rem', textTransform: 'uppercase', fontWeight: 800, marginBottom: '12px', letterSpacing: '1px', zIndex: 2 }}>{member.role}</div>
+                  <div style={{ color: 'var(--text-2)', fontSize: '1.1rem', lineHeight: 1.5, zIndex: 2 }}>{member.desc}</div>
                 </div>
               ))}
             </div>
@@ -243,7 +267,7 @@ export function AboutPage() {
               gap: 'var(--s2)',
               alignItems: 'center',
               fontFamily: 'var(--font-num)',
-              fontSize: 'var(--text-xs)',
+              fontSize: 'var(--text-sm)',
               lineHeight: 2,
             }}
           >
@@ -261,7 +285,7 @@ export function AboutPage() {
               <span key={step} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--s2)' }}>
                 <span
                   style={{
-                    padding: '4px 12px',
+                    padding: '6px 14px',
                     background: 'var(--panel)',
                     border: '1px solid var(--line)',
                     borderRadius: 'var(--r-md)',
@@ -283,44 +307,29 @@ export function AboutPage() {
         {/* ── Detailed Data Sources ── */}
         <h2 style={{ marginBottom: 'var(--s4)' }}>Data Sources</h2>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s4)' }}>
-          {SOURCES.map((s) => (
-            <div
-              key={s.name}
-              className="card"
-              style={{ borderLeft: '3px solid var(--border-accent)' }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 'var(--s3)', flexWrap: 'wrap' }}>
-                <div>
-                  <h3 style={{ fontSize: 'var(--text-md)', marginBottom: 2 }}>{s.name}</h3>
-                  <div style={{ fontSize: 'var(--text-sm)', color: 'var(--water)', fontWeight: 500 }}>
-                    {s.role}
-                  </div>
+        <p style={{ fontSize: 'var(--text-md)', color: 'var(--text-2)', marginBottom: 'var(--s4)' }}>
+          Hover a card to turn it over and see the full details.
+        </p>
+        <div className="src-grid">
+          {SOURCES.map((s, i) => (
+            <div key={s.name} className="src-flip" tabIndex={0}>
+              <div className="src-flip__inner">
+                <div className="src-flip__face src-flip__front">
+                  <span className="src-flip__num">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="src-flip__icon">{s.icon as ReactNode}</span>
+                  <h3>{s.name}</h3>
+                  <p>{s.role}</p>
                 </div>
-                <div style={{ fontFamily: 'var(--font-num)', fontSize: 'var(--text-xs)', color: 'var(--text-3)' }}>
-                  {s.provider}
+                <div className="src-flip__face src-flip__back">
+                  <div className="src-flip__provider">{s.provider}</div>
+                  <p>{s.desc}</p>
+                  {s.doi && (
+                    <a href={`https://doi.org/${s.doi}`} target="_blank" rel="noopener noreferrer" className="src-flip__doi">
+                      DOI: {s.doi} ↗
+                    </a>
+                  )}
                 </div>
               </div>
-              <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--s3)', marginBottom: 0 }}>
-                {s.desc}
-              </p>
-              {s.doi && (
-                <a
-                  href={`https://doi.org/${s.doi}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'inline-block',
-                    marginTop: 'var(--s2)',
-                    fontFamily: 'var(--font-num)',
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--water)',
-                    opacity: 0.8,
-                  }}
-                >
-                  DOI: {s.doi} ↗
-                </a>
-              )}
             </div>
           ))}
         </div>
@@ -357,7 +366,7 @@ export function AboutPage() {
                   padding: 'var(--s4)',
                   cursor: 'pointer',
                   fontWeight: 600,
-                  fontSize: 'var(--text-md)',
+                  fontSize: 'var(--text-lg)',
                   color: 'var(--text)',
                   listStyle: 'none',
                   display: 'flex',
@@ -369,10 +378,10 @@ export function AboutPage() {
                 <span style={{ color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>▼</span>
               </summary>
               <div style={{ padding: '0 var(--s4) var(--s4)', borderTop: '1px solid var(--line)' }}>
-                <p style={{ fontSize: 'var(--text-sm)', marginTop: 'var(--s3)' }}>{c.explanation}</p>
+                <p style={{ fontSize: 'var(--text-md)', marginTop: 'var(--s3)', color: 'var(--text)' }}>{c.explanation}</p>
                 <div
                   style={{
-                    fontSize: 'var(--text-sm)',
+                    fontSize: 'var(--text-base)',
                     color: 'var(--water)',
                     padding: 'var(--s3)',
                     background: 'var(--water-dim)',
@@ -393,7 +402,7 @@ export function AboutPage() {
         {/* ── Honest Disclosure ── */}
         <h2 style={{ marginBottom: 'var(--s3)' }}>Disclosure</h2>
         <div className="card" style={{ background: 'var(--surface-2)' }}>
-          <p style={{ fontSize: 'var(--text-sm)', margin: 0 }}>
+          <p style={{ fontSize: 'var(--text-md)', margin: 0 }}>
             <strong>Built for NASA Space Apps Challenge 2026 — "Dancing with the SARs"</strong>. 
             Pipeline and UI code assisted by AI coding tools. Every scientific number
             shown in the app resolves to <code>manifest.json</code>, generated by the offline
