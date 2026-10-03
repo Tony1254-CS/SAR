@@ -5,9 +5,16 @@
 /* ── Hero Banner ── */
 .globe-hero {
   position: relative;
-  padding: calc(var(--navbar-height) + var(--s8)) var(--s5) var(--s7);
+  min-height: max(720px, calc(100vh - var(--navbar-height)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s8) var(--s5);
   text-align: center;
   overflow: hidden;
+  color: var(--text);
+  border-bottom: 1px solid rgba(var(--water-rgb), 0.35);
+  box-shadow: 0 1px 28px rgba(var(--water-rgb), 0.18);
   background: 
     radial-gradient(ellipse at 50% 0%, rgba(var(--water-rgb), 0.08) 0%, transparent 60%);
 }
@@ -65,7 +72,7 @@
 }
 
 .globe-hero h1 span {
-  background: linear-gradient(135deg, var(--water), var(--pass));
+  background: linear-gradient(135deg, #6BE7F7 0%, #7FE3C0 55%, #A6F0A8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -484,4 +491,83 @@
 
 @media (max-width: 700px) {
   .globe-legend { position: static; margin: var(--s3); }
+}
+
+
+/* ── Cases hero: globe as background, text on top ── */
+.globe-hero__bg { position: absolute; inset: 0; z-index: 0; }
+/* the hero is a dark band in both themes, so its own background must be dark too */
+.globe-hero { background: radial-gradient(ellipse at 50% 0%, rgba(var(--water-rgb), 0.1) 0%, transparent 60%), #05090d; }
+.globe-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 55% 60% at 50% 50%, rgba(4, 8, 12, 0.5) 0%, rgba(4, 8, 12, 0.22) 55%, transparent 100%);
+}
+.globe-hero::before { z-index: 1; }
+.globe-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  pointer-events: none; /* let the mouse drag / hover the globe underneath */
+}
+.globe-hero__content .globe-stat { pointer-events: auto; }
+.globe-hero__subtitle { text-shadow: 0 2px 22px rgba(0, 0, 0, 0.75); }
+.globe-hero h1 { text-shadow: none; filter: drop-shadow(0 2px 14px rgba(0, 0, 0, 0.7)); }
+.globe-hero h1 span { text-shadow: none; }
+.globe-stats-row { position: relative; max-width: 1000px; margin: 0 auto; }
+.globe-stats-row .globe-stats { margin: 0; }
+/* legend sits level with the stat cards, to their left */
+.globe-hero .globe-legend {
+  z-index: 3;
+  pointer-events: auto;
+  /* far left edge of the hero (the stats row is 1000px wide and centred), level with the stat cards */
+  left: calc(-1 * (50vw - 500px) + var(--s5));
+  right: auto;
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media (max-width: 1500px) {
+  .globe-hero .globe-legend {
+    position: static;
+    left: auto;
+    transform: none;
+    display: flex;
+    justify-content: center;
+    gap: var(--s4);
+    margin: var(--s4) auto 0;
+    width: fit-content;
+  }
+  .globe-hero .globe-legend__title { display: none; }
+}
+
+/* section that holds the case cards: clearly separate from the hero, no globe behind */
+.cases-head {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--s8) var(--s5) var(--s5);
+}
+.cases-head h2 { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 var(--s2); }
+.cases-head p { margin: 0; font-size: var(--text-md); color: var(--text-2); }
+
+
+
+/* ── Cases page: mobile ── */
+@media (max-width: 900px) {
+  .globe-hero { min-height: 0; padding: calc(var(--s7)) var(--s4) var(--s6); }
+  .globe-hero__bg { opacity: 0.9; }
+  .globe-hero h1 { font-size: clamp(1.9rem, 8.5vw, 2.8rem); }
+  .globe-hero__badge { font-size: 0.68rem; letter-spacing: 0.08em; padding: 6px 12px; text-align: left; line-height: 1.4; }
+  .globe-hero__subtitle { font-size: 1rem; margin-bottom: var(--s5); }
+  .globe-stats { gap: var(--s3); }
+  .globe-stat { padding: var(--s4) var(--s2); }
+  .globe-stat__value { font-size: 2.2rem; }
+  .globe-stat__label { font-size: 0.72rem; letter-spacing: 0.04em; }
+  .cases-head { padding: var(--s6) var(--s4) var(--s4); }
+}
+@media (max-width: 480px) {
+  .globe-hero__badge { border-radius: var(--r-lg); }
 }

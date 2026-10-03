@@ -80,7 +80,30 @@ export function CasesPage() {
       <div className="navbar-spacer" />
 
       {/* ════ Hero ════ */}
-      <section className="globe-hero">
+      <section className="globe-hero" data-theme="dark">
+        {/* The globe is the background of the hero; the text floats on top of it */}
+        <div className="globe-hero__bg">
+          <InteractiveGlobe fill night 
+            points={activeReaches.map(r => {
+              const meta = LOCATION_META[r.reach_id];
+              if (!meta) return null;
+              // Convert mapX (0-100 % of equirectangular) to lng (-180 to 180)
+              const lng = (meta.mapX / 100) * 360 - 180;
+              // Convert mapY (0-100 % from top) to lat (90 to -90)
+              const lat = 90 - (meta.mapY / 100) * 180;
+              return {
+                lat,
+                lng,
+                label: `<div class="globe-tip"><strong>${r.name}</strong><br/>${meta.changeType} · ${meta.region}<br/>Verdict: <span style="color:${VERDICT_COLOR[r.verdict] ?? '#6F7880'}">${r.verdict}</span></div>`,
+                color: VERDICT_COLOR[r.verdict] ?? '#6F7880',
+                size: 1.5,
+              };
+            }).filter(Boolean) as any}
+          />
+        </div>
+        <div className="globe-hero__scrim" />
+
+        <div className="globe-hero__content">
         <div className="globe-hero__badge">
           <span className="globe-hero__badge-dot" />
           GLOBAL SURFACE CHANGE MONITORING · NISAR L-BAND SAR
@@ -95,7 +118,8 @@ export function CasesPage() {
           that sees through clouds, darkness, and weather.
         </p>
 
-        {/* Stats */}
+        {/* Stats + legend */}
+        <div className="globe-stats-row">
         <div className="globe-stats">
           <div className="globe-stat">
             <div className="globe-stat__value">{activeReaches.length || 4}</div>
@@ -114,41 +138,7 @@ export function CasesPage() {
             <div className="globe-stat__label">Pipeline Steps</div>
           </div>
         </div>
-      </section>
-
-      {/* ════ 3D Globe ════ */}
-      <div style={{ 
-        maxWidth: '1200px', 
-        margin: '3rem auto 3rem auto', 
-        padding: '0 var(--s5)',
-        position: 'relative'
-      }}>
-        <div style={{
-          background: 'rgba(var(--panel-rgb), 0.4)',
-          borderRadius: 'var(--r-lg)',
-          border: '1px solid rgba(var(--water-rgb), 0.1)',
-          overflow: 'hidden',
-          position: 'relative'
-        }}>
-          <InteractiveGlobe 
-            points={activeReaches.map(r => {
-              const meta = LOCATION_META[r.reach_id];
-              if (!meta) return null;
-              // Convert mapX (0-100 % of equirectangular) to lng (-180 to 180)
-              const lng = (meta.mapX / 100) * 360 - 180;
-              // Convert mapY (0-100 % from top) to lat (90 to -90)
-              const lat = 90 - (meta.mapY / 100) * 180;
-              return {
-                lat,
-                lng,
-                label: `<div class="globe-tip"><strong>${r.name}</strong><br/>${meta.changeType} · ${meta.region}<br/>Verdict: <span style="color:${VERDICT_COLOR[r.verdict] ?? '#6F7880'}">${r.verdict}</span></div>`,
-                color: VERDICT_COLOR[r.verdict] ?? '#6F7880',
-                size: 1.5,
-              };
-            }).filter(Boolean) as any}
-          />
-
-          {/* Legend: dot colour = verdict */}
+          {/* Legend: dot colour = verdict (sits level with the stat cards) */}
           <div className="globe-legend">
             <div className="globe-legend__title">Dot colour</div>
             {Object.entries(VERDICT_COLOR).map(([verdict, c]) => (
@@ -159,7 +149,9 @@ export function CasesPage() {
             ))}
           </div>
         </div>
-      </div>
+        </div>
+
+      </section>
 
       {/* ════ Error State ════ */}
       {error && (
@@ -177,7 +169,13 @@ export function CasesPage() {
         </div>
       )}
 
-      {/* ════ Case Study Cards ════ */}
+      {/* ════ Case Study Cards (own section, separated from the globe hero) ════ */}
+      <div className="cases-head">
+        <div className="section-label">Active investigations</div>
+        <h2>Pick a site to open</h2>
+        <p>Hover or tap a card to flip it and see the details.</p>
+      </div>
+
             {/* Inline styles for 3D Flip and 2x2 Grid */}
       <style>{`
         .cases-grid {
@@ -193,6 +191,14 @@ export function CasesPage() {
             grid-template-columns: repeat(2, 1fr);
           }
         }
+        @media (max-width: 767px) {
+          .cases-grid { padding: 0 var(--s4); gap: 1.25rem; }
+          .flip-card-container { height: 340px; }
+          .case-title { font-size: 1.5rem; }
+          .back-desc { font-size: 0.92rem; }
+        }
+        /* touch screens have no hover: tapping a card (focus) flips it */
+        .flip-card-container:focus-within .flip-card-inner { transform: rotateY(180deg); }
         
         .flip-card-container {
           background-color: transparent;
@@ -326,16 +332,13 @@ export function CasesPage() {
             <div 
               key={r.reach_id} 
               className="flip-card-container"
+              tabIndex={0}
               style={{ animationDelay: `${0.1 * i}s`, animation: `fade-in-up 0.5s var(--ease-out) ${0.1 * i}s both` }}
             >
               <div className="flip-card-inner">
                 
                 {/* ── Front of Card ── */}
                 <div className="flip-card-front" style={{ borderTop: `3px solid ${color}` }}>
-                  {/* Subtle Background Watermark */}
-                  <div style={{ position: 'absolute', right: '-20px', bottom: '-20px', opacity: 0.05, transform: 'scale(8)', pointerEvents: 'none' }}>
-                    {meta?.icon}
-                  </div>
                   <div className="case-card__type" style={{ marginBottom: '1.5rem', color: 'var(--text-3)', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                     <span style={{ color: color }}>{meta?.icon ?? <Radio size={18} />}</span>
                     {meta?.changeType ?? 'Surface Change'} · {meta?.region ?? 'Global'}
