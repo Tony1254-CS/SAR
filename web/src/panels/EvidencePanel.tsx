@@ -106,7 +106,7 @@ export function EvidencePanel() {
           <h4 style={{ margin: '0 0 var(--s1) 0' }}>Sources</h4>
           {inputs.length === 0 && <div style={{ color: 'var(--text-3)' }}>No source data available</div>}
           {inputs.map((input, i) => (
-            <div key={i} style={{ marginBottom: 'var(--s1)', fontSize: '0.85rem' }}>
+            <div key={i} style={{ marginBottom: 'var(--s1)', fontSize: '0.92rem' }}>
               <div>{input.kind}</div>
               {input.granule && (
                 <div>
@@ -129,7 +129,7 @@ export function EvidencePanel() {
           <h4 style={{ margin: '0 0 var(--s1) 0' }}>Method</h4>
           <div>{metric?.definition ?? 'See Methods page.'}</div>
           {metric?.params && (
-            <table style={{ marginTop: 'var(--s1)', fontSize: '0.8rem' }}>
+            <table style={{ marginTop: 'var(--s1)', fontSize: '0.9rem' }}>
               <tbody>
                 {Object.entries(metric.params).map(([k, v]) => (
                   <tr key={k}>
@@ -152,7 +152,7 @@ export function EvidencePanel() {
           <h4 style={{ margin: '0 0 var(--s1) 0' }}>Checks</h4>
           {checks.length === 0 && <div style={{ color: 'var(--text-3)' }}>No linked checks</div>}
           {checks.map((c) => (
-            <div key={c.id} style={{ fontSize: '0.85rem' }}>
+            <div key={c.id} style={{ fontSize: '0.92rem' }}>
               {c.status} — {c.label ?? c.id}
             </div>
           ))}

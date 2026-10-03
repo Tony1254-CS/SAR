@@ -46,7 +46,7 @@ export function TelemetryPanel() {
     <div className="telemetry-panel">
       <div className="telemetry-header">
         <span>SAR OBSERVATION</span>
-        <span style={{ fontSize: '0.65rem', opacity: 0.7 }}>L-BAND</span>
+        <span style={{ fontSize: '0.78rem', opacity: 0.7 }}>L-BAND</span>
       </div>
       <div className="telemetry-data">
         <div className="telemetry-row">
@@ -55,7 +55,7 @@ export function TelemetryPanel() {
         </div>
         <div className="telemetry-row">
           <span className="telemetry-label">GRANULE:</span>
-          <span className="telemetry-value" title={currentGranule} style={{ fontSize: '0.65rem', maxWidth: '180px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
+          <span className="telemetry-value" title={currentGranule} style={{ fontSize: '0.78rem', maxWidth: '180px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
             {currentGranule}
           </span>
         </div>
@@ -85,12 +85,6 @@ export function TelemetryPanel() {
             </span>
           </div>
         )}
-        <div className="telemetry-row" style={{ marginTop: '6px' }}>
-          <span className="telemetry-label" style={{ fontSize: '0.62rem', color: 'var(--text-3)' }}>
-            Showing pre-computed analysis results from the offline pipeline.
-            Backscatter classification via Otsu thresholding on calibrated γ⁰ values.
-          </span>
-        </div>
       </div>
     </div>
   );

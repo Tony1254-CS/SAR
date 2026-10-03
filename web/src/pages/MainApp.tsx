@@ -1,3 +1,4 @@
+import { MessageSquare } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useStore } from '../state/store';
 import { useDeepLink } from '../state/useDeepLink';
@@ -138,19 +139,19 @@ export default function MainApp() {
                  <h2 style={{ color: 'var(--water)', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>
                    {analysisModeType === 'FULL' ? 'Full Analysis Report' : `${analysisActiveTab ? analysisActiveTab.charAt(0).toUpperCase() + analysisActiveTab.slice(1) : 'Analysis'} Report`}
                  </h2>
-                 <button onClick={() => window.print()} className="agentic-action-btn" style={{ padding: '6px 12px', fontSize: '0.65rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                 <button onClick={() => window.print()} className="agentic-action-btn" style={{ padding: '6px 12px', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                    Download PDF
                  </button>
                  <div style={{ position: 'relative' }}>
                    <button 
                      onClick={() => { setInspectMode(!inspectMode); setShowInspectTooltip(false); }}
-                     style={{ background: inspectMode ? 'var(--water)' : 'transparent', color: inspectMode ? '#000' : 'var(--water)', border: '1px solid var(--water)', padding: '6px 12px', borderRadius: 16, fontSize: '0.65rem', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6, transition: 'all 0.2s', boxShadow: inspectMode ? 'none' : '0 0 10px rgba(57,196,217,0.3)', animation: inspectMode ? 'none' : 'pulse-border 2s infinite' }}
+                     style={{ background: inspectMode ? 'var(--water)' : 'transparent', color: inspectMode ? '#000' : 'var(--water)', border: '1px solid var(--water)', padding: '6px 12px', borderRadius: 16, fontSize: '0.78rem', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 6, transition: 'all 0.2s', boxShadow: inspectMode ? 'none' : '0 0 10px rgba(var(--water-rgb), 0.3)', animation: inspectMode ? 'none' : 'pulse-border 2s infinite' }}
                    >
-                     {inspectMode ? '💬 Exit Chat Mode' : '💬 Chat with Data'}
+                     {inspectMode ? <><MessageSquare size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> Exit Chat Mode</> : <><MessageSquare size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> Chat with Data</>}
                    </button>
                    {showInspectTooltip && !inspectMode && (
-                     <div style={{ position: 'absolute', top: '120%', right: 0, width: 220, background: 'var(--water)', color: '#000', padding: 8, borderRadius: 8, fontSize: '0.65rem', fontWeight: 600, animation: 'fade-in 0.5s', zIndex: 100 }}>
+                     <div style={{ position: 'absolute', top: '120%', right: 0, width: 220, background: 'var(--water)', color: '#000', padding: 8, borderRadius: 8, fontSize: '0.78rem', fontWeight: 600, animation: 'fade-in 0.5s', zIndex: 100 }}>
                        <div style={{ position: 'absolute', top: -4, right: 24, width: 8, height: 8, background: 'var(--water)', transform: 'rotate(45deg)' }} />
                        Want to know more? Click here to ask AI about any data!
                      </div>

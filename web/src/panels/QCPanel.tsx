@@ -23,7 +23,7 @@ export function QCPanel() {
           
           return (
             <div key={check.id} style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--s2)' }}>
-              <span style={{ color, fontWeight: 'bold', fontSize: '0.8rem', marginTop: 2, minWidth: 40 }}>
+              <span style={{ color, fontWeight: 'bold', fontSize: '0.9rem', marginTop: 2, minWidth: 40 }}>
                 {check.status === 'NOT_EVALUATED' ? 'N/A' : check.status}
               </span>
               <div>

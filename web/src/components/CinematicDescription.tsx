@@ -53,7 +53,7 @@ export function CinematicDescription() {
     <div 
       style={{ 
         position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
-        background: 'radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,0.95) 100%)', 
+        background: 'radial-gradient(circle at center, transparent 0%, rgba(var(--shadow-rgb), 0.8) 70%, rgba(var(--shadow-rgb), 0.95) 100%)', 
         zIndex: 3000, 
         pointerEvents: 'none',
         display: 'flex',
@@ -64,22 +64,23 @@ export function CinematicDescription() {
       }}
     >
       <div 
+        className="hud-dark"
         style={{
-          background: 'rgba(0, 0, 0, 0.75)',
-          border: '1px solid rgba(57, 196, 217, 0.4)',
+          background: 'rgba(var(--shadow-rgb), 0.75)',
+          border: '1px solid rgba(var(--water-rgb), 0.4)',
           backdropFilter: 'blur(12px)',
           padding: '40px',
           borderRadius: '16px',
-          boxShadow: '0 0 50px rgba(57, 196, 217, 0.15)',
+          boxShadow: '0 0 50px rgba(var(--water-rgb), 0.15)',
           maxWidth: '700px',
           pointerEvents: 'auto',
           animation: 'fade-in 0.5s ease-out'
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, borderBottom: '1px solid rgba(var(--fg-rgb), 0.1)', paddingBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ width: 12, height: 12, borderRadius: '50%', background: 'var(--fail)', animation: 'pulse-dot 1s infinite' }} />
-            <span style={{ color: 'var(--fail)', letterSpacing: '0.2em', fontSize: '0.8rem', fontWeight: 600 }}>LIVE SATELLITE FEED</span>
+            <span style={{ color: 'var(--fail)', letterSpacing: '0.2em', fontSize: '0.9rem', fontWeight: 600 }}>LIVE SATELLITE FEED</span>
           </div>
           <button 
             onClick={() => setCinematicDesc(false)}
@@ -103,7 +104,7 @@ export function CinematicDescription() {
             <div style={{ background: 'rgba(239, 68, 68, 0.15)', border: '1px solid var(--fail)', padding: '20px', borderRadius: '8px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '16px', boxShadow: '0 0 20px rgba(239, 68, 68, 0.2)' }}>
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--fail)" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
               <div>
-                <div style={{ color: 'var(--fail)', fontSize: '0.85rem', fontWeight: 700, letterSpacing: '0.1em', marginBottom: '4px' }}>CRITICAL ALERT</div>
+                <div style={{ color: 'var(--fail)', fontSize: '0.92rem', fontWeight: 700, letterSpacing: '0.1em', marginBottom: '4px' }}>CRITICAL ALERT</div>
                 <div style={{ color: '#fff', fontSize: '1.6rem', fontWeight: 800, textShadow: '0 0 10px var(--fail)' }}>SIGNIFICANT LAND SURFACE CHANGE</div>
               </div>
             </div>
@@ -112,12 +113,12 @@ export function CinematicDescription() {
 
         {textStage >= 3 && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, animation: 'fade-in 1s ease-out' }}>
-            <div style={{ background: 'rgba(0,0,0,0.4)', padding: 16, borderRadius: 8, borderLeft: '3px solid var(--pass)' }}>
-              <div style={{ fontSize: '0.65rem', color: 'var(--text-3)' }}>HYDROLOGICAL REGIME</div>
+            <div style={{ background: 'rgba(var(--shadow-rgb), 0.4)', padding: 16, borderRadius: 8, borderLeft: '3px solid var(--pass)' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-3)' }}>HYDROLOGICAL REGIME</div>
               <div style={{ fontSize: '1.2rem', color: 'var(--pass)', fontWeight: 600 }}>High-Flow Braided</div>
             </div>
-            <div style={{ background: 'rgba(0,0,0,0.4)', padding: 16, borderRadius: 8, borderLeft: '3px solid var(--warn)' }}>
-              <div style={{ fontSize: '0.65rem', color: 'var(--text-3)' }}>VULNERABILITY INDEX</div>
+            <div style={{ background: 'rgba(var(--shadow-rgb), 0.4)', padding: 16, borderRadius: 8, borderLeft: '3px solid var(--warn)' }}>
+              <div style={{ fontSize: '0.78rem', color: 'var(--text-3)' }}>VULNERABILITY INDEX</div>
               <div style={{ fontSize: '1.2rem', color: 'var(--warn)', fontWeight: 600 }}>Critical Level 4</div>
             </div>
           </div>

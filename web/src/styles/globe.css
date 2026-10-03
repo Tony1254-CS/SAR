@@ -9,8 +9,7 @@
   text-align: center;
   overflow: hidden;
   background: 
-    radial-gradient(ellipse at 50% 0%, rgba(57,196,217,0.08) 0%, transparent 60%),
-    var(--bg);
+    radial-gradient(ellipse at 50% 0%, rgba(var(--water-rgb), 0.08) 0%, transparent 60%);
 }
 
 .globe-hero::before {
@@ -18,8 +17,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(57,196,217,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(57,196,217,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(var(--water-rgb), 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--water-rgb), 0.03) 1px, transparent 1px);
   background-size: 80px 80px;
   mask-image: radial-gradient(ellipse at center, black 20%, transparent 65%);
   -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 65%);
@@ -36,7 +35,7 @@
   text-transform: uppercase;
   color: var(--water);
   padding: 6px 18px;
-  border: 1px solid rgba(57,196,217,0.2);
+  border: 1px solid rgba(var(--water-rgb), 0.2);
   border-radius: var(--r-full);
   margin-bottom: var(--s4);
   animation: fade-in-up 0.6s var(--ease-out) both;
@@ -99,7 +98,7 @@
   font-size: var(--text-2xl);
   font-weight: 700;
   color: var(--water);
-  text-shadow: 0 0 20px rgba(57,196,217,0.3);
+  text-shadow: 0 0 20px rgba(var(--water-rgb), 0.3);
   line-height: 1;
   margin-bottom: 4px;
 }
@@ -117,8 +116,8 @@
   max-width: 1000px;
   margin: 0 auto var(--s6);
   padding: var(--s4);
-  background: rgba(18, 22, 26, 0.6);
-  border: 1px solid rgba(57,196,217,0.1);
+  background: var(--overlay-faint);
+  border: 1px solid rgba(var(--water-rgb), 0.1);
   border-radius: var(--r-lg);
   backdrop-filter: blur(12px);
   animation: fade-in-up 0.6s var(--ease-out) 0.4s both;
@@ -129,7 +128,7 @@
   width: 100%;
   aspect-ratio: 2 / 1;
   background: 
-    radial-gradient(ellipse at 50% 50%, rgba(57,196,217,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse at 50% 50%, rgba(var(--water-rgb), 0.04) 0%, transparent 70%),
     var(--map-bg);
   border-radius: var(--r-md);
   overflow: hidden;
@@ -142,15 +141,15 @@
 
 /* Map grid lines */
 .world-map__grid {
-  stroke: rgba(57,196,217,0.06);
+  stroke: rgba(var(--water-rgb), 0.06);
   stroke-width: 0.5;
   fill: none;
 }
 
 /* Country outlines */
 .world-map__land {
-  fill: rgba(57,196,217,0.06);
-  stroke: rgba(57,196,217,0.12);
+  fill: rgba(var(--water-rgb), 0.06);
+  stroke: rgba(var(--water-rgb), 0.12);
   stroke-width: 0.5;
 }
 
@@ -207,13 +206,13 @@
   left: 50%;
   transform: translateX(-50%);
   font-family: var(--font-num);
-  font-size: 0.6rem;
+  font-size: 0.74rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   white-space: nowrap;
   padding: 2px 8px;
   border-radius: var(--r-full);
-  background: rgba(14,17,19,0.85);
+  background: var(--overlay);
   border: 1px solid;
   opacity: 0;
   transition: opacity 0.2s;
@@ -253,7 +252,7 @@
   flex-direction: column;
   text-decoration: none;
   color: var(--text);
-  background: rgba(18, 22, 26, 0.72);
+  background: var(--overlay-soft);
   border: 1px solid var(--line);
   border-radius: var(--r-lg);
   padding: var(--s5);
@@ -273,9 +272,9 @@
 }
 
 .case-card:hover {
-  border-color: rgba(57,196,217,0.25);
+  border-color: rgba(var(--water-rgb), 0.25);
   transform: translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(57,196,217,0.1);
+  box-shadow: 0 12px 40px rgba(var(--shadow-rgb), 0.3), 0 0 0 1px rgba(var(--water-rgb), 0.1);
 }
 
 .case-card--supported::before { background: var(--pass); }
@@ -286,7 +285,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   font-family: var(--font-num);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -329,7 +328,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--s2) var(--s3);
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   font-family: var(--font-num);
   color: var(--text-3);
   margin-top: auto;
@@ -357,7 +356,7 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.6rem;
+  font-size: 0.74rem;
   font-family: var(--font-num);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -383,8 +382,8 @@
   align-items: flex-start;
   gap: var(--s4);
   padding: var(--s4);
-  background: rgba(57,196,217,0.04);
-  border: 1px solid rgba(57,196,217,0.1);
+  background: rgba(var(--water-rgb), 0.04);
+  border: 1px solid rgba(var(--water-rgb), 0.1);
   border-radius: var(--r-md);
   font-size: var(--text-sm);
   color: var(--text-2);

@@ -8,12 +8,12 @@
   right: 16px;
   width: 420px;
   max-height: calc(100% - 32px);
-  background: rgba(8, 12, 16, 0.95);
+  background: rgba(var(--panel-rgb), 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(57, 196, 217, 0.4);
+  border: 1px solid rgba(var(--water-rgb), 0.4);
   border-radius: var(--r-md);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(57, 196, 217, 0.1);
+  box-shadow: 0 10px 40px rgba(var(--shadow-rgb), 0.8), 0 0 20px rgba(var(--water-rgb), 0.1);
   display: flex;
   flex-direction: column;
   z-index: 1000;
@@ -24,15 +24,15 @@
 
 .agentic-panel__header {
   padding: 12px 16px;
-  border-bottom: 1px solid rgba(57, 196, 217, 0.2);
+  border-bottom: 1px solid rgba(var(--water-rgb), 0.2);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(57, 196, 217, 0.05);
+  background: rgba(var(--water-rgb), 0.05);
 }
 
 .agentic-panel__title {
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--water);
@@ -65,7 +65,7 @@
 /* Scrollbar for panel */
 .agentic-panel__content::-webkit-scrollbar { width: 4px; }
 .agentic-panel__content::-webkit-scrollbar-track { background: transparent; }
-.agentic-panel__content::-webkit-scrollbar-thumb { background: rgba(57, 196, 217, 0.3); }
+.agentic-panel__content::-webkit-scrollbar-thumb { background: rgba(var(--water-rgb), 0.3); }
 
 /* Step Navigation (Progress) */
 .agentic-steps {
@@ -82,7 +82,7 @@
   left: 10%;
   right: 10%;
   height: 2px;
-  background: rgba(57, 196, 217, 0.1);
+  background: rgba(var(--water-rgb), 0.1);
   z-index: 0;
 }
 
@@ -100,11 +100,11 @@
   height: 24px;
   border-radius: 50%;
   background: var(--bg);
-  border: 2px solid rgba(57, 196, 217, 0.3);
+  border: 2px solid rgba(var(--water-rgb), 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.6rem;
+  font-size: 0.74rem;
   font-weight: 700;
   transition: all 0.3s;
 }
@@ -119,9 +119,9 @@
 
 .agentic-step-indicator.active .agentic-step-dot {
   border-color: var(--water);
-  background: rgba(57, 196, 217, 0.2);
+  background: rgba(var(--water-rgb), 0.2);
   color: var(--water);
-  box-shadow: 0 0 12px rgba(57, 196, 217, 0.4);
+  box-shadow: 0 0 12px rgba(var(--water-rgb), 0.4);
 }
 
 .agentic-step-indicator.active .agentic-step-label {
@@ -140,12 +140,12 @@
 
 /* Terminal Processing Output */
 .agentic-terminal {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(57, 196, 217, 0.2);
+  background: rgba(var(--shadow-rgb), 0.6);
+  border: 1px solid rgba(var(--water-rgb), 0.2);
   border-radius: var(--r-sm);
   padding: 12px;
   font-family: var(--font-num);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   color: var(--pass);
   height: 140px;
   overflow: hidden;
@@ -157,7 +157,7 @@
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 40px;
-  background: linear-gradient(to top, rgba(0,0,0,1), transparent);
+  background: linear-gradient(to top, rgba(var(--shadow-rgb), 1), transparent);
   pointer-events: none;
 }
 
@@ -179,20 +179,20 @@
 
 /* Data Widgets for Output */
 .data-widget {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(var(--fg-rgb), 0.03);
+  border: 1px solid rgba(var(--fg-rgb), 0.1);
   border-radius: var(--r-sm);
   padding: 12px;
   animation: fade-in 0.4s ease-out;
 }
 
 .data-widget-header {
-  font-size: 0.65rem;
+  font-size: 0.78rem;
   color: var(--text-3);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(var(--fg-rgb), 0.05);
   padding-bottom: 4px;
 }
 
@@ -204,7 +204,7 @@
 }
 
 .data-metric-label {
-  font-size: 0.75rem;
+  font-size: 0.86rem;
   color: var(--text-2);
 }
 
@@ -212,13 +212,13 @@
   font-size: 0.9rem;
   color: var(--water);
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(57, 196, 217, 0.4);
+  text-shadow: 0 0 8px rgba(var(--water-rgb), 0.4);
 }
 
 /* Progress Bar */
 .agentic-progress {
   height: 4px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--fg-rgb), 0.1);
   border-radius: 2px;
   overflow: hidden;
   margin-top: 4px;
@@ -260,7 +260,7 @@
 }
 
 .sensor-card {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(var(--fg-rgb), 0.02);
   padding: 16px;
   border-radius: 6px;
   display: flex;
@@ -273,32 +273,32 @@
 }
 
 .sensor-card:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(var(--fg-rgb), 0.06);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 16px rgba(var(--shadow-rgb), 0.4);
 }
 
 .sensor-card::after {
   content: '';
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(var(--fg-rgb), 0.05);
   border-radius: 6px;
   pointer-events: none;
   transition: border-color 0.2s ease;
 }
 
 .sensor-card:hover::after {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(var(--fg-rgb), 0.2);
 }
 
 /* Big Action Button */
 .agentic-action-btn {
-  background: rgba(57, 196, 217, 0.1);
+  background: rgba(var(--water-rgb), 0.1);
   border: 1px solid var(--water);
   color: var(--water);
   font-family: var(--font-num);
-  font-size: 0.85rem;
+  font-size: 0.92rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -307,12 +307,12 @@
   cursor: pointer;
   transition: all 0.3s;
   text-align: center;
-  box-shadow: inset 0 0 10px rgba(57, 196, 217, 0.0);
+  box-shadow: inset 0 0 10px rgba(var(--water-rgb), 0.0);
 }
 
 .agentic-action-btn:hover {
-  background: rgba(57, 196, 217, 0.2);
-  box-shadow: inset 0 0 15px rgba(57, 196, 217, 0.3), 0 0 15px rgba(57, 196, 217, 0.2);
+  background: rgba(var(--water-rgb), 0.2);
+  box-shadow: inset 0 0 15px rgba(var(--water-rgb), 0.3), 0 0 15px rgba(var(--water-rgb), 0.2);
 }
 
 .agentic-action-btn:disabled {
@@ -325,7 +325,7 @@
 .radar-sweep-overlay {
   position: absolute;
   inset: 0;
-  background: conic-gradient(from 0deg, transparent 70%, rgba(57, 196, 217, 0.4) 100%);
+  background: conic-gradient(from 0deg, transparent 70%, rgba(var(--water-rgb), 0.4) 100%);
   border-radius: 50%;
   animation: radar-spin 2s linear infinite;
   pointer-events: none;
@@ -354,20 +354,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.7rem;
+  font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--water);
-  margin-bottom: 8px;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(57, 196, 217, 0.3);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(var(--water-rgb), 0.3);
 }
 
 .telemetry-row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 0.75rem;
+  margin-bottom: 8px;
+  font-size: 0.92rem;
 }
 
 .telemetry-label {
@@ -376,7 +376,7 @@
 
 .telemetry-value {
   color: var(--text);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .telemetry-value.highlight {
@@ -390,7 +390,7 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(4, 6, 8, 0.98);
+  background: rgba(var(--panel-rgb), 0.98);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -411,8 +411,8 @@
 .hud-grid {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(57, 196, 217, 0.05) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(57, 196, 217, 0.05) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(var(--water-rgb), 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(var(--water-rgb), 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
   animation: grid-scroll 20s linear infinite;
   pointer-events: none;
@@ -462,10 +462,10 @@
 .hud-ring-outer {
   position: absolute;
   inset: 0;
-  border: 4px dashed rgba(57, 196, 217, 0.5);
+  border: 4px dashed rgba(var(--water-rgb), 0.5);
   border-radius: 50%;
   animation: radar-spin 10s linear infinite;
-  box-shadow: 0 0 30px rgba(57, 196, 217, 0.2);
+  box-shadow: 0 0 30px rgba(var(--water-rgb), 0.2);
 }
 
 .hud-ring-inner {
@@ -489,7 +489,7 @@
 .hud-status {
   position: absolute;
   bottom: -40px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
   color: var(--pass);
   white-space: nowrap;
@@ -503,7 +503,7 @@
   height: 500px;
   width: 300px;
   overflow: hidden;
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   color: var(--text-3);
   display: flex;
   flex-direction: column-reverse;
@@ -566,7 +566,7 @@
 .nodivangon-image:hover {
   transform: scale(3.5);
   z-index: 100;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 0 1px rgba(57,196,217,0.5);
+  box-shadow: 0 10px 40px rgba(var(--shadow-rgb), 0.8), 0 0 0 1px rgba(var(--water-rgb), 0.5);
 }
 .nodivangon-image:hover .nodivangon-overlay {
   opacity: 0;

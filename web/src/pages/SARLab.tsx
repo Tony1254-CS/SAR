@@ -2,6 +2,7 @@
 import { useStore } from '../state/store';
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Navbar } from '../components/Navbar';
+import { Rocket, Globe, RefreshCw, Radio, Search, Ruler, Zap, Save, Clock, Handshake, Satellite, Target, Tornado, BarChart2, TrendingUp, Map, Star, XCircle, CheckCircle2, Leaf, Mountain } from 'lucide-react';
 import '../styles/globe.css';
 
 /* ═══════════════════════════════════════════════════════════════
@@ -24,25 +25,25 @@ const POL_CHANNELS = [
 ];
 
 const INSAR_STEPS = [
-  { title: 'Acquire SAR Pair', desc: 'Two SAR images from same orbital track, different dates. NISAR has 12-day exact repeat orbit — ideal for coherent change detection.', icon: '🛰️' },
-  { title: 'Co-registration', desc: 'Sub-pixel alignment of reference (primary) and secondary image using orbital ephemeris + cross-correlation. Accuracy: <0.1 pixel.', icon: '🎯' },
-  { title: 'Interferogram Formation', desc: 'Complex multiplication of aligned SLC images produces phase difference map. Each fringe = half-wavelength displacement (11.55 cm for L-band).', icon: '🌀' },
-  { title: 'Coherence Estimation', desc: 'Spatial window (5×5) correlation between acquisitions. High coherence (>0.7) = stable surface. Low coherence (<0.3) = surface change detected.', icon: '📊' },
-  { title: 'Phase Unwrapping', desc: 'Convert wrapped 2π-ambiguous phase into continuous displacement field using minimum cost flow algorithm. Critical for measuring actual ground movement.', icon: '📈' },
-  { title: 'Geocoding & Output', desc: 'Project unwrapped phase from radar geometry (range/azimuth) to geographic coordinates using DEM. Output: displacement map in mm/year.', icon: '🗺️' },
+  { title: 'Acquire SAR Pair', desc: 'Two SAR images from same orbital track, different dates. NISAR has 12-day exact repeat orbit — ideal for coherent change detection.', icon: <Satellite size={24} /> },
+  { title: 'Co-registration', desc: 'Sub-pixel alignment of reference (primary) and secondary image using orbital ephemeris + cross-correlation. Accuracy: <0.1 pixel.', icon: <Target size={24} /> },
+  { title: 'Interferogram Formation', desc: 'Complex multiplication of aligned SLC images produces phase difference map. Each fringe = half-wavelength displacement (11.55 cm for L-band).', icon: <Tornado size={24} /> },
+  { title: 'Coherence Estimation', desc: 'Spatial window (5×5) correlation between acquisitions. High coherence (>0.7) = stable surface. Low coherence (<0.3) = surface change detected.', icon: <BarChart2 size={24} /> },
+  { title: 'Phase Unwrapping', desc: 'Convert wrapped 2π-ambiguous phase into continuous displacement field using minimum cost flow algorithm. Critical for measuring actual ground movement.', icon: <TrendingUp size={24} /> },
+  { title: 'Geocoding & Output', desc: 'Project unwrapped phase from radar geometry (range/azimuth) to geographic coordinates using DEM. Output: displacement map in mm/year.', icon: <Map size={24} /> },
 ];
 
 const NISAR_SPECS = [
-  { param: 'Launch', value: 'March 2024', icon: '🚀' },
-  { param: 'Orbit', value: '747 km, Sun-synchronous', icon: '🌍' },
-  { param: 'Repeat Cycle', value: '12 days (exact)', icon: '🔄' },
-  { param: 'L-band Frequency', value: '1.257 GHz (λ = 23.8 cm)', icon: '📡' },
-  { param: 'Resolution', value: '3–10 m (ScanSAR: 5–25 m)', icon: '🔍' },
-  { param: 'Swath Width', value: '240 km', icon: '📐' },
-  { param: 'Polarization', value: 'Quad-pol (HH+HV+VH+VV)', icon: '⚡' },
-  { param: 'Data Rate', value: '26 Tbits/day (largest Earth science mission)', icon: '💾' },
-  { param: 'Mission Life', value: '3 years (design), 5+ years (goal)', icon: '⏱️' },
-  { param: 'Partnership', value: 'NASA JPL + ISRO SAC', icon: '🤝' },
+  { param: 'Launch', value: 'March 2024', icon: <Rocket size={24} /> },
+  { param: 'Orbit', value: '747 km, Sun-synchronous', icon: <Globe size={24} /> },
+  { param: 'Repeat Cycle', value: '12 days (exact)', icon: <RefreshCw size={24} /> },
+  { param: 'L-band Frequency', value: '1.257 GHz (λ = 23.8 cm)', icon: <Radio size={24} /> },
+  { param: 'Resolution', value: '3–10 m (ScanSAR: 5–25 m)', icon: <Search size={24} /> },
+  { param: 'Swath Width', value: '240 km', icon: <Ruler size={24} /> },
+  { param: 'Polarization', value: 'Quad-pol (HH+HV+VH+VV)', icon: <Zap size={24} /> },
+  { param: 'Data Rate', value: '26 Tbits/day (largest Earth science mission)', icon: <Save size={24} /> },
+  { param: 'Mission Life', value: '3 years (design), 5+ years (goal)', icon: <Clock size={24} /> },
+  { param: 'Partnership', value: 'NASA JPL + ISRO SAC', icon: <Handshake size={24} /> },
 ];
 
 function GlassCard({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
@@ -192,8 +193,8 @@ function FeatureRadarViewer() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--s4)' }}>
           
           {/* Box 1 */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s2)', background: 'rgba(255,255,255,0.02)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(255,255,255,0.05)' }}>
-            <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#fff', textAlign: 'center' }}>1. Raw σ⁰ Backscatter</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s2)', background: 'rgba(var(--fg-rgb), 0.02)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(var(--fg-rgb), 0.05)' }}>
+            <div style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--text)', textAlign: 'center' }}>1. Raw σ⁰ Backscatter</div>
             <div style={{ position: 'relative', height: 280, overflow: 'hidden', borderRadius: '4px', background: '#000', border: '1px solid #333' }}>
               <img src={`/data/v1/${reachId}/img/radar_20260919.png`} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover' }} alt="t1" />
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, clipPath: `polygon(0 0, ${sliderPos}% 0, ${sliderPos}% 100%, 0 100%)` }}>
@@ -202,30 +203,30 @@ function FeatureRadarViewer() {
               <div style={{ position: 'absolute', top: 0, bottom: 0, left: `calc(${sliderPos}% - 1px)`, width: 2, background: 'var(--water)', boxShadow: '0 0 10px var(--water)', pointerEvents: 'none' }} />
               <input type="range" min="0" max="100" value={sliderPos} onChange={e => setSliderPos(Number(e.target.value))} style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0, cursor: 'ew-resize', zIndex: 10 }} />
               
-              <div style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(0,0,0,0.8)', padding: '4px 8px', borderRadius: 4, fontSize: '0.75rem', border: '1px solid #555' }}>Aug 26 (t₀)</div>
-              <div style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(0,0,0,0.8)', padding: '4px 8px', borderRadius: 4, fontSize: '0.75rem', border: '1px solid #555' }}>Sep 19 (t₁)</div>
+              <div className="hud-dark" style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(var(--shadow-rgb), 0.8)', padding: '4px 8px', borderRadius: 4, fontSize: '0.86rem', border: '1px solid #555' }}>Aug 26 (t₀)</div>
+              <div className="hud-dark" style={{ position: 'absolute', top: 10, right: 10, background: 'rgba(var(--shadow-rgb), 0.8)', padding: '4px 8px', borderRadius: 4, fontSize: '0.86rem', border: '1px solid #555' }}>Sep 19 (t₁)</div>
             </div>
-            <div style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-3)' }}>Drag to compare raw SAR images. Notice the dark areas (water) changing shape.</div>
+            <div style={{ textAlign: 'center', fontSize: '0.86rem', color: 'var(--text-3)' }}>Drag to compare raw SAR images. Notice the dark areas (water) changing shape.</div>
           </div>
 
           {/* Box 2 */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s2)', background: 'rgba(255,255,255,0.02)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(0,100,255,0.2)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s2)', background: 'rgba(var(--fg-rgb), 0.02)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(0,100,255,0.2)' }}>
             <div style={{ fontSize: '1rem', fontWeight: 'bold', color: 'var(--water)', textAlign: 'center' }}>2. Interactive Otsu Threshold</div>
             <div style={{ height: 280, borderRadius: '4px', overflow: 'hidden', position: 'relative', background: '#000', border: '1px solid rgba(0,100,255,0.3)' }}>
               <canvas ref={otsuCanvasRef} width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', background: 'rgba(0,0,0,0.8)', padding: 'var(--s3)', borderTop: '1px solid rgba(0,100,255,0.3)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#fff', fontSize: '0.8rem', marginBottom: '8px' }}>
+              <div className="hud-dark" style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', background: 'rgba(var(--shadow-rgb), 0.8)', padding: 'var(--s3)', borderTop: '1px solid rgba(0,100,255,0.3)' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#fff', fontSize: '0.9rem', marginBottom: '8px' }}>
                   <span>Backscatter Threshold</span>
                   <span>{otsuThresh} DN</span>
                 </div>
                 <input type="range" min="10" max="150" value={otsuThresh} onChange={e => setOtsuThresh(Number(e.target.value))} style={{ width: '100%', accentColor: 'var(--water)' }} />
               </div>
             </div>
-            <div style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-3)' }}>Drag slider to classify water pixels in real-time based on brightness.</div>
+            <div style={{ textAlign: 'center', fontSize: '0.86rem', color: 'var(--text-3)' }}>Drag slider to classify water pixels in real-time based on brightness.</div>
           </div>
           
           {/* Box 3 */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s2)', background: 'rgba(255,255,255,0.02)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(255,50,50,0.2)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s2)', background: 'rgba(var(--fg-rgb), 0.02)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(255,50,50,0.2)' }}>
             <div style={{ fontSize: '1rem', fontWeight: 'bold', color: '#f44', textAlign: 'center' }}>3. Morphological Change diff()</div>
             <div style={{ height: 280, borderRadius: '4px', overflow: 'hidden', position: 'relative', background: '#000', border: '1px solid rgba(255,50,50,0.3)' }}>
               <canvas ref={changeCanvasRef} width={400} height={300} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -234,7 +235,7 @@ function FeatureRadarViewer() {
                  <img src={`/data/v1/${reachId}/img/change_20260826_20260919.png`} style={{ position: 'absolute', top:0, left:0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.1 }} />
               )}
               
-              <div style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(0,0,0,0.8)', padding: '8px 12px', borderRadius: 4, fontSize: '0.85rem', border: '1px solid #f44' }}>
+              <div className="hud-dark" style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(var(--shadow-rgb), 0.8)', padding: '8px 12px', borderRadius: 4, fontSize: '0.92rem', border: '1px solid #f44' }}>
                 <div style={{ color: '#aaa', marginBottom: 4 }}>Land Area Lost</div>
                 <div style={{ color: '#f44', fontWeight: 'bold', fontSize: '1.2rem', fontFamily: 'var(--font-num)' }}>{hectaresLost} ha</div>
               </div>
@@ -247,7 +248,7 @@ function FeatureRadarViewer() {
                 {isScanning ? 'COMPUTING DIFF...' : 'RUN PIPELINE'}
               </button>
             </div>
-            <div style={{ textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-3)' }}>Execute Boolean XOR on t₀ and t₁ masks to isolate riverbank erosion.</div>
+            <div style={{ textAlign: 'center', fontSize: '0.86rem', color: 'var(--text-3)' }}>Execute Boolean XOR on t₀ and t₁ masks to isolate riverbank erosion.</div>
           </div>
           
         </div>
@@ -274,10 +275,10 @@ function FeaturePipelineWalkthrough() {
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--s2)', justifyContent: 'center' }}>
           {steps.map((step, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ padding: 'var(--s3)', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--r-md)', width: 140, border: '1px solid var(--glass-border)', textAlign: 'center' }}>
-                <div style={{ fontSize: '0.75rem', color: 'var(--water)', marginBottom: 4, fontWeight: 'bold' }}>Step {i+1}</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>{step.title}</div>
-                <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', marginTop: 4 }}>{step.desc}</div>
+              <div style={{ padding: 'var(--s3)', background: 'rgba(var(--fg-rgb), 0.05)', borderRadius: 'var(--r-md)', width: 140, border: '1px solid var(--glass-border)', textAlign: 'center' }}>
+                <div style={{ fontSize: '0.86rem', color: 'var(--water)', marginBottom: 4, fontWeight: 'bold' }}>Step {i+1}</div>
+                <div style={{ fontSize: '0.92rem', fontWeight: 600 }}>{step.title}</div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', marginTop: 4 }}>{step.desc}</div>
               </div>
               {i < steps.length - 1 && <div style={{ color: 'var(--water)', margin: '0 8px' }}>→</div>}
             </div>
@@ -311,7 +312,7 @@ function FeatureSARvsOptical() {
       <GlassCard style={{ padding: 'var(--s5)' }}>
         
         {/* Interactive Cloud Control */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--s4)', marginBottom: 'var(--s5)', background: 'rgba(255,255,255,0.05)', padding: 'var(--s4)', borderRadius: 'var(--r-md)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--s4)', marginBottom: 'var(--s5)', background: 'rgba(var(--fg-rgb), 0.05)', padding: 'var(--s4)', borderRadius: 'var(--r-md)' }}>
           <div style={{ width: '40px', fontSize: '1.5rem', textAlign: 'center' }}>{cloudDensity > 50 ? '☁️' : '🌤️'}</div>
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
@@ -349,25 +350,25 @@ function FeatureSARvsOptical() {
             }} />
             
             {/* UI Overlay */}
-            <div style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(0,0,0,0.7)', padding: '4px 8px', borderRadius: '4px', color: '#f44', fontWeight: 'bold', fontSize: '0.8rem', border: '1px solid #f44' }}>
+            <div className="hud-dark" style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(var(--shadow-rgb), 0.7)', padding: '4px 8px', borderRadius: '4px', color: '#f44', fontWeight: 'bold', fontSize: '0.9rem', border: '1px solid #f44' }}>
               OPTICAL SENSOR (Landsat / Sentinel-2)
             </div>
             
             {cloudDensity > 60 && (
-              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(0,0,0,0.8)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '2px solid #f44', textAlign: 'center', width: '80%' }}>
+              <div className="hud-dark" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(var(--shadow-rgb), 0.8)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '2px solid #f44', textAlign: 'center', width: '80%' }}>
                 <div style={{ color: '#f44', fontWeight: 'bold', fontSize: '1.2rem', letterSpacing: 2, marginBottom: 8 }}>ACQUISITION BLOCKED</div>
-                <div style={{ color: 'var(--text-3)', fontSize: '0.8rem' }}>Visible/NIR wavelengths cannot penetrate thick monsoon cloud cover. Earth surface is unobservable.</div>
+                <div style={{ color: 'var(--text-3)', fontSize: '0.9rem' }}>Visible/NIR wavelengths cannot penetrate thick monsoon cloud cover. Earth surface is unobservable.</div>
               </div>
             )}
             
-            <div style={{ position: 'absolute', bottom: 10, left: 10, right: 10, background: 'rgba(0,0,0,0.8)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.75rem', marginBottom: 4 }}>
-                <span>WAVELENGTH:</span><span style={{ color: '#fff' }}>400-900 nm</span>
+            <div className="hud-dark" style={{ position: 'absolute', bottom: 10, left: 10, right: 10, background: 'rgba(var(--shadow-rgb), 0.8)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(var(--fg-rgb), 0.1)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.86rem', marginBottom: 4 }}>
+                <span>WAVELENGTH:</span><span style={{ color: 'var(--text)' }}>400-900 nm</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.75rem', marginBottom: 4 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.86rem', marginBottom: 4 }}>
                 <span>PENETRATION:</span><span style={{ color: '#f44', fontWeight: 'bold' }}>0% (Absorbed by H₂O)</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.75rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.86rem' }}>
                 <span>USABLE DATA (JUN-SEP):</span><span style={{ color: '#f44', fontWeight: 'bold' }}>~15%</span>
               </div>
             </div>
@@ -395,7 +396,7 @@ function FeatureSARvsOptical() {
             <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px)', backgroundSize: '40px 40px', pointerEvents: 'none' }} />
             
             {/* UI Overlay */}
-            <div style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(0,0,0,0.7)', padding: '4px 8px', borderRadius: '4px', color: '#0ff', fontWeight: 'bold', fontSize: '0.8rem', border: '1px solid #0ff' }}>
+            <div className="hud-dark" style={{ position: 'absolute', top: 10, left: 10, background: 'rgba(var(--shadow-rgb), 0.7)', padding: '4px 8px', borderRadius: '4px', color: '#0ff', fontWeight: 'bold', fontSize: '0.9rem', border: '1px solid #0ff' }}>
               L-BAND SAR (NISAR)
             </div>
             
@@ -403,14 +404,14 @@ function FeatureSARvsOptical() {
               <div style={{ color: 'rgba(0,255,255,0.15)', fontWeight: '900', fontSize: '3rem', letterSpacing: 5 }}>ACTIVE</div>
             </div>
             
-            <div style={{ position: 'absolute', bottom: 10, left: 10, right: 10, background: 'rgba(0,0,0,0.8)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(0,255,255,0.3)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.75rem', marginBottom: 4 }}>
-                <span>WAVELENGTH:</span><span style={{ color: '#fff' }}>23.8 cm (L-Band)</span>
+            <div className="hud-dark" style={{ position: 'absolute', bottom: 10, left: 10, right: 10, background: 'rgba(var(--shadow-rgb), 0.8)', padding: 'var(--s3)', borderRadius: 'var(--r-md)', border: '1px solid rgba(0,255,255,0.3)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.86rem', marginBottom: 4 }}>
+                <span>WAVELENGTH:</span><span style={{ color: 'var(--text)' }}>23.8 cm (L-Band)</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.75rem', marginBottom: 4 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.86rem', marginBottom: 4 }}>
                 <span>PENETRATION:</span><span style={{ color: '#0ff', fontWeight: 'bold' }}>100% (Passes through H₂O)</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.75rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--text-3)', fontSize: '0.86rem' }}>
                 <span>USABLE DATA (JUN-SEP):</span><span style={{ color: '#0ff', fontWeight: 'bold' }}>100% Guaranteed</span>
               </div>
             </div>
@@ -554,27 +555,27 @@ function FeatureSpeckleFilter() {
           
           {/* Slider Separator */}
           <div style={{ position: 'absolute', top: 0, bottom: 0, left: `calc(${sliderPos}% - 2px)`, width: 4, background: 'var(--water)', boxShadow: '0 0 15px var(--water)', zIndex: 10, pointerEvents: 'none' }}>
-             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 24, height: 40, background: '#fff', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 10px rgba(0,0,0,0.5)' }}>
-                <span style={{ color: '#000', fontWeight: 'bold', fontSize: '10px' }}>||</span>
+             <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 24, height: 40, background: '#fff', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 10px rgba(var(--shadow-rgb), 0.5)' }}>
+                <span style={{ color: '#000', fontWeight: 'bold', fontSize: '12px' }}>||</span>
              </div>
           </div>
           
           <input type="range" min="0" max="100" value={sliderPos} onChange={e => setSliderPos(Number(e.target.value))} style={{ position: 'absolute', width: '100%', height: '100%', opacity: 0, zIndex: 20, cursor: 'ew-resize' }} />
           
           {/* HUD Labels */}
-          <div style={{ position: 'absolute', top: 15, left: 15, background: 'rgba(0,0,0,0.8)', padding: '6px 12px', borderRadius: 6, fontSize: '0.85rem', border: '1px solid rgba(0,255,255,0.3)', color: '#0ff', zIndex: 5, backdropFilter: 'blur(4px)', pointerEvents: 'none' }}>
+          <div className="hud-dark" style={{ position: 'absolute', top: 15, left: 15, background: 'rgba(var(--shadow-rgb), 0.8)', padding: '6px 12px', borderRadius: 6, fontSize: '0.92rem', border: '1px solid rgba(0,255,255,0.3)', color: '#0ff', zIndex: 5, backdropFilter: 'blur(4px)', pointerEvents: 'none' }}>
             <div style={{ fontWeight: 'bold', marginBottom: 2 }}>FILTERED OUTPUT</div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>Adaptive Lee-Sigma Filter</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-3)' }}>Adaptive Lee-Sigma Filter</div>
           </div>
           
-          <div style={{ position: 'absolute', top: 15, right: 15, background: 'rgba(0,0,0,0.8)', padding: '6px 12px', borderRadius: 6, fontSize: '0.85rem', border: '1px solid rgba(255,50,50,0.3)', color: '#f44', zIndex: 5, backdropFilter: 'blur(4px)', pointerEvents: 'none', textAlign: 'right' }}>
+          <div className="hud-dark" style={{ position: 'absolute', top: 15, right: 15, background: 'rgba(var(--shadow-rgb), 0.8)', padding: '6px 12px', borderRadius: 6, fontSize: '0.92rem', border: '1px solid rgba(255,50,50,0.3)', color: '#f44', zIndex: 5, backdropFilter: 'blur(4px)', pointerEvents: 'none', textAlign: 'right' }}>
             <div style={{ fontWeight: 'bold', marginBottom: 2 }}>SIMULATED RAW SLC</div>
-            <div style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>Single Look Complex ({noiseLevel}-Look)</div>
+            <div style={{ fontSize: '0.82rem', color: 'var(--text-3)' }}>Single Look Complex ({noiseLevel}-Look)</div>
           </div>
           
           {/* Loading / Processing Indicator */}
           {isProcessing && (
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(0,0,0,0.8)', padding: 'var(--s4)', borderRadius: 'var(--r-md)', border: '1px solid var(--water)', color: 'var(--water)', fontWeight: 'bold', zIndex: 30, display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div className="hud-dark" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', background: 'rgba(var(--shadow-rgb), 0.8)', padding: 'var(--s4)', borderRadius: 'var(--r-md)', border: '1px solid var(--water)', color: 'var(--water)', fontWeight: 'bold', zIndex: 30, display: 'flex', alignItems: 'center', gap: '10px' }}>
               <div className="spinner" style={{ width: 20, height: 20, border: '3px solid var(--water)', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
               COMPUTING MATRICES...
             </div>
@@ -582,31 +583,31 @@ function FeatureSpeckleFilter() {
         </div>
         
         {/* Control Panel */}
-        <div style={{ padding: 'var(--s4)', background: '#0a0a0a', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ padding: 'var(--s4)', background: 'var(--surface)', borderTop: '1px solid rgba(var(--fg-rgb), 0.05)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'var(--s6)' }}>
             
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-2)', fontWeight: 'bold' }}>Spatial Window Size</span>
-                <span style={{ fontSize: '0.9rem', color: '#fff', fontFamily: 'var(--font-num)' }}>{windowSize}×{windowSize} px</span>
+                <span style={{ fontSize: '0.92rem', color: 'var(--text-2)', fontWeight: 'bold' }}>Spatial Window Size</span>
+                <span style={{ fontSize: '0.9rem', color: 'var(--text)', fontFamily: 'var(--font-num)' }}>{windowSize}×{windowSize} px</span>
               </div>
               <input type="range" min="3" max="15" step="2" value={windowSize} onChange={e => setWindowSize(Number(e.target.value))} style={{ width: '100%', accentColor: 'var(--water)', marginBottom: 8 }} />
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-3)' }}>Larger windows produce smoother results but blur crucial high-frequency edges (like riverbanks).</div>
+              <div style={{ fontSize: '0.86rem', color: 'var(--text-3)' }}>Larger windows produce smoother results but blur crucial high-frequency edges (like riverbanks).</div>
             </div>
             
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-2)', fontWeight: 'bold' }}>Equivalent Number of Looks (ENL)</span>
-                <span style={{ fontSize: '0.9rem', color: '#fff', fontFamily: 'var(--font-num)' }}>L = {noiseLevel}</span>
+                <span style={{ fontSize: '0.92rem', color: 'var(--text-2)', fontWeight: 'bold' }}>Equivalent Number of Looks (ENL)</span>
+                <span style={{ fontSize: '0.9rem', color: 'var(--text)', fontFamily: 'var(--font-num)' }}>L = {noiseLevel}</span>
               </div>
               <input type="range" min="1" max="16" step="1" value={noiseLevel} onChange={e => setNoiseLevel(Number(e.target.value))} style={{ width: '100%', accentColor: '#f44', marginBottom: 8 }} />
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-3)' }}>Simulates multi-looking. L=1 is raw SLC data with maximum multiplicative speckle variance.</div>
+              <div style={{ fontSize: '0.86rem', color: 'var(--text-3)' }}>Simulates multi-looking. L=1 is raw SLC data with maximum multiplicative speckle variance.</div>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'rgba(255,255,255,0.03)', padding: 'var(--s3)', borderRadius: 'var(--r-sm)', border: '1px solid rgba(255,255,255,0.1)' }}>
-               <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>Filter Performance</div>
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', background: 'rgba(var(--fg-rgb), 0.03)', padding: 'var(--s3)', borderRadius: 'var(--r-sm)', border: '1px solid rgba(var(--fg-rgb), 0.1)' }}>
+               <div style={{ fontSize: '0.86rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 4 }}>Filter Performance</div>
                <div style={{ fontSize: '1.2rem', color: '#0ff', fontWeight: 'bold', fontFamily: 'var(--font-num)' }}>{calcTime} ms</div>
-               <div style={{ fontSize: '0.7rem', color: '#888', marginTop: 4 }}>Computed over 240,000 pixels instantly via optimized JS TypedArrays.</div>
+               <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', marginTop: 4 }}>Computed over 240,000 pixels instantly via optimized JS TypedArrays.</div>
             </div>
             
           </div>
@@ -670,7 +671,7 @@ function FeatureRadarGeometry() {
           
           <svg width="100%" height="100%" viewBox="0 0 1000 350" preserveAspectRatio="xMidYMid slice">
              {/* Grid */}
-             <g stroke="rgba(255,255,255,0.05)" strokeWidth="1">
+             <g stroke="rgba(var(--fg-rgb), 0.05)" strokeWidth="1">
                {Array.from({length: 10}).map((_,i) => <line key={`v${i}`} x1={i*100} y1="0" x2={i*100} y2="350" />)}
                {Array.from({length: 4}).map((_,i) => <line key={`h${i}`} x1="0" y1={i*100} x2="1000" y2={i*100} />)}
              </g>
@@ -697,7 +698,7 @@ function FeatureRadarGeometry() {
                 d={shadowEndX < M_LEFT 
                   ? `M ${M_PEAK_X} ${M_PEAK_Y} L ${M_LEFT} ${GROUND_Y} L ${shadowEndX} ${GROUND_Y}` 
                   : `M ${M_PEAK_X} ${M_PEAK_Y} L ${shadowEndX} ${GROUND_Y}`} 
-                fill="rgba(0,0,0,0.7)" 
+                fill="rgba(var(--shadow-rgb), 0.7)" 
              />
              <path 
                 d={shadowEndX < M_LEFT 
@@ -723,26 +724,26 @@ function FeatureRadarGeometry() {
           
           {/* Dynamic HUD Overlays */}
           <div style={{ position: 'absolute', top: 120, left: M_PEAK_X - 180, pointerEvents: 'none' }}>
-            <div style={{ background: isLayover ? 'rgba(255,0,0,0.2)' : 'rgba(255,170,0,0.2)', border: `1px solid ${isLayover ? '#f44' : '#fa0'}`, padding: '4px 8px', borderRadius: 4, color: isLayover ? '#f44' : '#fa0', fontWeight: 'bold', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+            <div style={{ background: isLayover ? 'rgba(255,0,0,0.2)' : 'rgba(255,170,0,0.2)', border: `1px solid ${isLayover ? '#f44' : '#fa0'}`, padding: '4px 8px', borderRadius: 4, color: isLayover ? '#f44' : '#fa0', fontWeight: 'bold', fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
               {isLayover ? "LAYOVER (Fold-over)" : "FORESHORTENING"}
             </div>
             {isLayover && (
-              <div style={{ fontSize: '0.65rem', color: '#f44', marginTop: 4, background: 'rgba(0,0,0,0.8)', padding: 4, borderRadius: 4, width: 150 }}>
+              <div className="hud-dark" style={{ fontSize: '0.78rem', color: '#f44', marginTop: 4, background: 'rgba(var(--shadow-rgb), 0.8)', padding: 4, borderRadius: 4, width: 150 }}>
                 Mountain peak is closer to radar ({Math.round(distPeak)}m) than the base ({Math.round(distLeft)}m). Top is mapped BEFORE bottom!
               </div>
             )}
             {!isLayover && (
-              <div style={{ fontSize: '0.65rem', color: '#fa0', marginTop: 4, background: 'rgba(0,0,0,0.8)', padding: 4, borderRadius: 4, width: 150 }}>
+              <div className="hud-dark" style={{ fontSize: '0.78rem', color: '#fa0', marginTop: 4, background: 'rgba(var(--shadow-rgb), 0.8)', padding: 4, borderRadius: 4, width: 150 }}>
                 Slope is compressed in radar imagery.
               </div>
             )}
           </div>
           
           <div style={{ position: 'absolute', top: Math.max(120, M_PEAK_Y + 50), left: M_PEAK_X + 20, pointerEvents: 'none' }}>
-            <div style={{ background: 'rgba(0,0,0,0.8)', border: '1px solid #555', padding: '4px 8px', borderRadius: 4, color: '#aaa', fontWeight: 'bold', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+            <div className="hud-dark" style={{ background: 'rgba(var(--shadow-rgb), 0.8)', border: '1px solid #555', padding: '4px 8px', borderRadius: 4, color: '#aaa', fontWeight: 'bold', fontSize: '0.9rem', whiteSpace: 'nowrap' }}>
               RADAR SHADOW
             </div>
-            <div style={{ fontSize: '0.65rem', color: '#888', marginTop: 4, background: 'rgba(0,0,0,0.8)', padding: 4, borderRadius: 4, width: 130 }}>
+            <div className="hud-dark" style={{ fontSize: '0.78rem', color: '#888', marginTop: 4, background: 'rgba(var(--shadow-rgb), 0.8)', padding: 4, borderRadius: 4, width: 130 }}>
               No radar signal reaches here. Blank pixels.
             </div>
           </div>
@@ -750,7 +751,7 @@ function FeatureRadarGeometry() {
           {/* User Controls HUD */}
           <div style={{ position: 'absolute', bottom: 20, right: 20, width: 350, background: 'rgba(0,10,20,0.85)', padding: 'var(--s4)', borderRadius: 'var(--r-md)', border: '1px solid rgba(0,255,255,0.3)', backdropFilter: 'blur(10px)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--s3)' }}>
-              <div style={{ fontSize: '0.8rem', color: '#0ff', fontWeight: 'bold', letterSpacing: 1 }}>INCIDENCE ANGLE (θ)</div>
+              <div style={{ fontSize: '0.9rem', color: '#0ff', fontWeight: 'bold', letterSpacing: 1 }}>INCIDENCE ANGLE (θ)</div>
               <div style={{ fontSize: '1.5rem', color: '#fff', fontWeight: 'bold', fontFamily: 'var(--font-num)' }}>{incAngle}°</div>
             </div>
             <input 
@@ -762,7 +763,7 @@ function FeatureRadarGeometry() {
               onChange={e => setIncAngle(Number(e.target.value))} 
               style={{ width: '100%', accentColor: '#0ff', cursor: 'ew-resize', marginBottom: 'var(--s3)' }} 
             />
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', lineHeight: 1.5 }}>
+            <div style={{ fontSize: '0.86rem', color: 'var(--text-3)', lineHeight: 1.5 }}>
               Drag to adjust satellite orbit. Shallower angles (larger θ) increase shadow. Steeper angles (smaller θ) cause severe layover.
             </div>
           </div>
@@ -893,7 +894,7 @@ function FeaturePauliRGB() {
           }} />
           
           {/* Overlay text on base radar */}
-          <div style={{ position: 'absolute', bottom: 20, left: 20, color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-num)', fontSize: '0.8rem' }}>
+          <div style={{ position: 'absolute', bottom: 20, left: 20, color: 'rgba(var(--fg-rgb), 0.5)', fontFamily: 'var(--font-num)', fontSize: '0.9rem' }}>
             RAW L-BAND HH BACKSCATTER (σ⁰)
           </div>
 
@@ -924,7 +925,7 @@ function FeaturePauliRGB() {
               <div style={{ position: 'absolute', top: '50%', left: '40%', right: '40%', height: '1px', background: 'rgba(0, 255, 255, 0.5)' }} />
               <div style={{ position: 'absolute', left: '50%', top: '40%', bottom: '40%', width: '1px', background: 'rgba(0, 255, 255, 0.5)' }} />
               
-              <div style={{ position: 'absolute', bottom: -30, left: '50%', transform: 'translateX(-50%)', color: '#0ff', fontSize: '10px', fontFamily: 'monospace', whiteSpace: 'nowrap', textShadow: '0 0 5px #0ff' }}>
+              <div style={{ position: 'absolute', bottom: -30, left: '50%', transform: 'translateX(-50%)', color: '#0ff', fontSize: '12px', fontFamily: 'monospace', whiteSpace: 'nowrap', textShadow: '0 0 5px #0ff' }}>
                 SYNTHETIC PAULI COMPOSITE
               </div>
             </div>
@@ -932,28 +933,28 @@ function FeaturePauliRGB() {
         </div>
         
         {/* Legend */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--s4)', background: '#0a0a0a', padding: 'var(--s4)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--s4)', background: 'var(--surface)', padding: 'var(--s4)', borderTop: '1px solid rgba(var(--fg-rgb), 0.05)' }}>
            <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
              <div style={{ width: 16, height: 16, background: '#f44', borderRadius: '4px', boxShadow: '0 0 10px #f44' }} />
              <div>
-               <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#fff' }}>Double-Bounce (Red)</div>
-               <div style={{ fontSize: '0.75rem', color: 'var(--text-3)' }}>Erosion boundaries / Urban</div>
+               <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text)' }}>Double-Bounce (Red)</div>
+               <div style={{ fontSize: '0.86rem', color: 'var(--text-3)' }}>Erosion boundaries / Urban</div>
              </div>
            </div>
            
            <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
              <div style={{ width: 16, height: 16, background: '#4f4', borderRadius: '4px', boxShadow: '0 0 10px #4f4' }} />
              <div>
-               <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#fff' }}>Volume (Green)</div>
-               <div style={{ fontSize: '0.75rem', color: 'var(--text-3)' }}>Stable forest / Agriculture</div>
+               <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text)' }}>Volume (Green)</div>
+               <div style={{ fontSize: '0.86rem', color: 'var(--text-3)' }}>Stable forest / Agriculture</div>
              </div>
            </div>
            
            <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
              <div style={{ width: 16, height: 16, background: '#44f', borderRadius: '4px', boxShadow: '0 0 10px #44f' }} />
              <div>
-               <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: '#fff' }}>Surface (Blue)</div>
-               <div style={{ fontSize: '0.75rem', color: 'var(--text-3)' }}>River water / Bare soil</div>
+               <div style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--text)' }}>Surface (Blue)</div>
+               <div style={{ fontSize: '0.86rem', color: 'var(--text-3)' }}>River water / Bare soil</div>
              </div>
            </div>
         </div>
@@ -1158,49 +1159,49 @@ function FeatureCloudePottier() {
            <div style={{ position: 'relative', width: 400, height: 400, border: '1px solid rgba(0,255,255,0.3)', background: '#000', cursor: 'crosshair' }}>
               {!isLoaded && <div style={{ position: 'absolute', top: 180, left: 100, color: '#0ff' }}>CALIBRATING SENSORS...</div>}
               <canvas ref={mapCanvasRef} width={400} height={400} style={{ display: 'block' }} onMouseMove={handleMouseMove} />
-              <div style={{ position: 'absolute', top: 5, left: 5, background: 'rgba(0,0,0,0.8)', padding: '2px 6px', border: '1px solid #0ff', color: '#0ff', fontSize: '0.7rem', fontFamily: 'var(--font-num)' }}>
+              <div className="hud-dark" style={{ position: 'absolute', top: 5, left: 5, background: 'rgba(var(--shadow-rgb), 0.8)', padding: '2px 6px', border: '1px solid #0ff', color: '#0ff', fontSize: '0.82rem', fontFamily: 'var(--font-num)' }}>
                  TARGET POS: {reticlePos.x > 0 ? `${(25.1234 + reticlePos.y*0.0001).toFixed(4)}°N, ${(89.5678 + reticlePos.x*0.0001).toFixed(4)}°E` : 'AWAITING TARGET'}
               </div>
            </div>
            
            {/* CENTER: Telemetry HUD */}
-           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 'var(--s4)', padding: 'var(--s4)', background: 'rgba(0,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 'var(--r-md)' }}>
+           <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 'var(--s4)', padding: 'var(--s4)', background: 'rgba(0,255,255,0.02)', border: '1px solid rgba(var(--fg-rgb), 0.05)', borderRadius: 'var(--r-md)' }}>
               
               <div>
-                 <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', letterSpacing: 1, textTransform: 'uppercase' }}>Dominant Mechanism</div>
+                 <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', letterSpacing: 1, textTransform: 'uppercase' }}>Dominant Mechanism</div>
                  <div style={{ fontSize: '1.1rem', fontWeight: 'bold', color: telemetry.dominant.includes('Surface') ? '#0ff' : telemetry.dominant.includes('Double') ? '#f44' : '#4f4' }}>
                    {telemetry.dominant}
                  </div>
               </div>
               
-              <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+              <div style={{ height: '1px', background: 'rgba(var(--fg-rgb), 0.1)' }} />
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--s3)' }}>
                  <div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', letterSpacing: 1 }}>ENTROPY (H)</div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', letterSpacing: 1 }}>ENTROPY (H)</div>
                     <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-num)', color: '#fff' }}>{telemetry.h}</div>
                  </div>
                  <div>
-                    <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', letterSpacing: 1 }}>ALPHA (α)</div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', letterSpacing: 1 }}>ALPHA (α)</div>
                     <div style={{ fontSize: '1.5rem', fontFamily: 'var(--font-num)', color: '#fff' }}>{telemetry.alpha}°</div>
                  </div>
               </div>
               
-              <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+              <div style={{ height: '1px', background: 'rgba(var(--fg-rgb), 0.1)' }} />
               
               <div>
-                 <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', letterSpacing: 1 }}>ANALYSIS WINDOW</div>
+                 <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', letterSpacing: 1 }}>ANALYSIS WINDOW</div>
                  <div style={{ fontSize: '0.9rem', fontFamily: 'var(--font-num)', color: '#aaa' }}>20×20 px ({telemetry.samples} samples)</div>
-                 <div style={{ fontSize: '0.7rem', color: '#555', marginTop: 4 }}>Live Gaussian dispersion modeling applied to localized backscatter tensor.</div>
+                 <div style={{ fontSize: '0.82rem', color: '#555', marginTop: 4 }}>Live Gaussian dispersion modeling applied to localized backscatter tensor.</div>
               </div>
 
            </div>
 
            {/* RIGHT: Scatter Plot */}
-           <div style={{ position: 'relative', width: 400, height: 400, border: '1px solid rgba(255,255,255,0.2)', background: '#050a10' }}>
+           <div style={{ position: 'relative', width: 400, height: 400, border: '1px solid rgba(var(--fg-rgb), 0.2)', background: '#050a10' }}>
               <canvas ref={plotCanvasRef} width={400} height={400} style={{ display: 'block' }} />
-              <div style={{ position: 'absolute', bottom: -20, left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', color: 'var(--text-3)' }}>Entropy (H) 0 → 1</div>
-              <div style={{ position: 'absolute', left: -25, top: '50%', transform: 'translateY(-50%) rotate(-90deg)', fontSize: '0.75rem', color: 'var(--text-3)' }}>Alpha (α) 0° → 90°</div>
+              <div style={{ position: 'absolute', bottom: -20, left: '50%', transform: 'translateX(-50%)', fontSize: '0.86rem', color: 'var(--text-3)' }}>Entropy (H) 0 → 1</div>
+              <div style={{ position: 'absolute', left: -25, top: '50%', transform: 'translateY(-50%) rotate(-90deg)', fontSize: '0.86rem', color: 'var(--text-3)' }}>Alpha (α) 0° → 90°</div>
            </div>
            
         </div>
@@ -1331,7 +1332,7 @@ export function SARLabPage() {
 
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '100vh', color: 'var(--text)' }}>
+    <div style={{ background: 'transparent', minHeight: '100vh', color: 'var(--text)' }}>
       <Navbar />
       <div className="navbar-spacer" />
 
@@ -1361,7 +1362,7 @@ export function SARLabPage() {
               <div key={spec.param} className="glass-panel hover-lift" style={{ padding: 'var(--s4)', display: 'flex', gap: 'var(--s3)', alignItems: 'flex-start' }}>
                 <div style={{ fontSize: '1.5rem', flexShrink: 0, width: 40, textAlign: 'center' }}>{spec.icon}</div>
                 <div>
-                  <div style={{ fontSize: '0.7rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{spec.param}</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{spec.param}</div>
                   <div style={{ fontSize: '1rem', color: 'var(--water)', fontWeight: 600, marginTop: 2 }}>{spec.value}</div>
                 </div>
               </div>
@@ -1382,7 +1383,7 @@ export function SARLabPage() {
                   onClick={() => setActiveBand(i)}
                   style={{
                     padding: '10px 20px',
-                    border: `2px solid ${activeBand === i ? b.color : 'rgba(255,255,255,0.1)'}`,
+                    border: `2px solid ${activeBand === i ? b.color : 'rgba(var(--fg-rgb), 0.1)'}`,
                     borderRadius: 'var(--r-md)',
                     background: activeBand === i ? `${b.color}15` : 'transparent',
                     color: activeBand === i ? b.color : 'var(--text-3)',
@@ -1393,7 +1394,7 @@ export function SARLabPage() {
                     boxShadow: activeBand === i ? `0 0 20px ${b.color}20` : 'none'
                   }}
                 >
-                  {b.name} {b.highlight ? '★' : ''}
+                  {b.name} {b.highlight ? <Star size={14} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> : ''}
                 </button>
               ))}
             </div>
@@ -1403,23 +1404,23 @@ export function SARLabPage() {
               <div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--s3)' }}>
                   <div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Frequency Range</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Frequency Range</div>
                     <div style={{ fontSize: '1.2rem', fontWeight: 700, color: BANDS[activeBand].color, fontFamily: 'var(--font-num)' }}>{BANDS[activeBand].freq}</div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Wavelength</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Wavelength</div>
                     <div style={{ fontSize: '1.2rem', fontWeight: 700, color: BANDS[activeBand].color, fontFamily: 'var(--font-num)' }}>{BANDS[activeBand].wl}</div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Vegetation Penetration</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Vegetation Penetration</div>
                     <div style={{ fontSize: '1.2rem', fontWeight: 700, color: BANDS[activeBand].color, fontFamily: 'var(--font-num)' }}>{BANDS[activeBand].pen}</div>
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Key Missions</div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Key Missions</div>
                     <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-2)', marginTop: 2 }}>{BANDS[activeBand].sat}</div>
                   </div>
                 </div>
-                <div style={{ marginTop: 'var(--s4)', padding: 'var(--s3)', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--r-md)', borderLeft: `3px solid ${BANDS[activeBand].color}` }}>
+                <div style={{ marginTop: 'var(--s4)', padding: 'var(--s3)', background: 'rgba(var(--fg-rgb), 0.03)', borderRadius: 'var(--r-md)', borderLeft: `3px solid ${BANDS[activeBand].color}` }}>
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-2)', lineHeight: 1.6 }}>
                     <strong>Primary Use:</strong> {BANDS[activeBand].use}
                   </div>
@@ -1432,15 +1433,15 @@ export function SARLabPage() {
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '20%', background: 'linear-gradient(180deg, #0a1628 0%, #152238 100%)' }} />
                 {/* Canopy */}
                 <div style={{ position: 'absolute', top: '20%', left: 0, right: 0, height: '30%', background: 'linear-gradient(180deg, #1a3a1a 0%, #0f2810 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase' }}>🌿 Forest Canopy</span>
+                  <span style={{ fontSize: '0.82rem', color: 'rgba(var(--fg-rgb), 0.5)', textTransform: 'uppercase' }}>🌿 Forest Canopy</span>
                 </div>
                 {/* Soil */}
                 <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, height: '30%', background: 'linear-gradient(180deg, #3a2a1a 0%, #2a1a0a 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>🏔️ Soil / Ground</span>
+                  <span style={{ fontSize: '0.82rem', color: 'rgba(var(--fg-rgb), 0.4)', textTransform: 'uppercase' }}>🏔️ Soil / Ground</span>
                 </div>
                 {/* Bedrock */}
                 <div style={{ position: 'absolute', top: '80%', left: 0, right: 0, height: '20%', background: '#1a1a1a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>⛰️ Bedrock</span>
+                  <span style={{ fontSize: '0.82rem', color: 'rgba(var(--fg-rgb), 0.3)', textTransform: 'uppercase' }}>⛰️ Bedrock</span>
                 </div>
                 {/* Penetration arrow */}
                 <div style={{
@@ -1458,7 +1459,7 @@ export function SARLabPage() {
                   position: 'absolute',
                   left: 'calc(70% + 10px)',
                   top: '18%',
-                  fontSize: '0.7rem',
+                  fontSize: '0.82rem',
                   color: BANDS[activeBand].color,
                   fontWeight: 700,
                   fontFamily: 'var(--font-num)',
@@ -1467,7 +1468,7 @@ export function SARLabPage() {
                   PENETRATION: {BANDS[activeBand].pen}
                 </div>
                 {/* SAR satellite icon */}
-                <div style={{ position: 'absolute', left: 'calc(70% - 12px)', top: '8%', fontSize: '1.5rem' }}>🛰️</div>
+                <div style={{ position: 'absolute', left: 'calc(70% - 12px)', top: '8%', fontSize: '1.5rem' }}><Satellite size={24} /></div>
               </div>
             </div>
           </GlassCard>
@@ -1494,12 +1495,12 @@ export function SARLabPage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--s3)' }}>
                   <div style={{ fontSize: '1.8rem', fontWeight: 900, color: pol.color, fontFamily: 'var(--font-num)' }}>{pol.id}</div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 900, color: pol.color, fontFamily: 'var(--font-num)' }}>
-                    {pol.simVal} <span style={{ fontSize: '0.7rem', color: 'var(--text-3)' }}>dB</span>
+                    {pol.simVal} <span style={{ fontSize: '0.82rem', color: 'var(--text-3)' }}>dB</span>
                   </div>
                 </div>
-                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-2)', marginBottom: 4 }}>{pol.label}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', lineHeight: 1.5, marginBottom: 'var(--s2)' }}>{pol.desc}</div>
-                <div style={{ display: 'inline-block', padding: '3px 10px', background: `${pol.color}15`, border: `1px solid ${pol.color}30`, borderRadius: 'var(--r-full)', fontSize: '0.65rem', color: pol.color, fontWeight: 600 }}>
+                <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-2)', marginBottom: 4 }}>{pol.label}</div>
+                <div style={{ fontSize: '0.86rem', color: 'var(--text-3)', lineHeight: 1.5, marginBottom: 'var(--s2)' }}>{pol.desc}</div>
+                <div style={{ display: 'inline-block', padding: '3px 10px', background: `${pol.color}15`, border: `1px solid ${pol.color}30`, borderRadius: 'var(--r-full)', fontSize: '0.78rem', color: pol.color, fontWeight: 600 }}>
                   {pol.mechanism}
                 </div>
               </div>
@@ -1519,8 +1520,8 @@ export function SARLabPage() {
                   onClick={() => setActiveStep(i)}
                   style={{
                     padding: 'var(--s5) var(--s4) var(--s4) var(--s4)',
-                    background: activeStep === i ? 'rgba(57,196,217,0.08)' : 'rgba(255,255,255,0.02)',
-                    border: `1px solid ${activeStep === i ? 'var(--water)' : 'rgba(255,255,255,0.05)'}`,
+                    background: activeStep === i ? 'rgba(var(--water-rgb), 0.08)' : 'rgba(var(--fg-rgb), 0.02)',
+                    border: `1px solid ${activeStep === i ? 'var(--water)' : 'rgba(var(--fg-rgb), 0.05)'}`,
                     borderRadius: 'var(--r-md)',
                     cursor: 'pointer',
                     transition: 'all 0.3s',
@@ -1528,12 +1529,12 @@ export function SARLabPage() {
                   }}
                 >
                   {/* Step number */}
-                  <div style={{ position: 'absolute', top: -12, left: 16, background: activeStep === i ? 'var(--water)' : 'var(--surface-2, #1a1d21)', padding: '2px 10px', borderRadius: 'var(--r-full)', fontSize: '0.65rem', fontWeight: 700, color: activeStep === i ? '#000' : 'var(--text-3)', border: `1px solid ${activeStep === i ? 'var(--water)' : 'rgba(255,255,255,0.1)'}` }}>
+                  <div style={{ position: 'absolute', top: -12, left: 16, background: activeStep === i ? 'var(--water)' : 'var(--surface-2, #1a1d21)', padding: '2px 10px', borderRadius: 'var(--r-full)', fontSize: '0.78rem', fontWeight: 700, color: activeStep === i ? '#000' : 'var(--text-3)', border: `1px solid ${activeStep === i ? 'var(--water)' : 'rgba(var(--fg-rgb), 0.1)'}` }}>
                     STEP {i + 1}
                   </div>
                   <div style={{ fontSize: '2rem', marginBottom: 'var(--s2)' }}>{step.icon}</div>
                   <div style={{ fontSize: '0.9rem', fontWeight: 700, color: activeStep === i ? 'var(--water)' : 'var(--text)', marginBottom: 8 }}>{step.title}</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-3)', lineHeight: 1.6 }}>{step.desc}</div>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', lineHeight: 1.6 }}>{step.desc}</div>
                 </div>
               ))}
             </div>
@@ -1547,11 +1548,11 @@ export function SARLabPage() {
           
           <GlassCard>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--s4)' }}>
-              <div style={{ position: 'relative', height: '300px', width: '100%', background: 'rgba(0,0,0,0.2)', borderRadius: 'var(--r-md)', padding: '20px' }}>
+              <div style={{ position: 'relative', height: '300px', width: '100%', background: 'rgba(var(--shadow-rgb), 0.2)', borderRadius: 'var(--r-md)', padding: '20px' }}>
                 <svg width="100%" height="100%" viewBox="0 0 900 100" preserveAspectRatio="none">
                   {/* Grid lines */}
                   {[0, 0.25, 0.5, 0.75, 1].map(v => (
-                    <line key={v} x1="0" y1={100 - v*100} x2="900" y2={100 - v*100} stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+                    <line key={v} x1="0" y1={100 - v*100} x2="900" y2={100 - v*100} stroke="rgba(var(--fg-rgb), 0.1)" strokeWidth="1" />
                   ))}
                   
                   {/* Curves */}
@@ -1580,10 +1581,10 @@ export function SARLabPage() {
               </div>
 
               <div style={{ display: 'flex', gap: 'var(--s4)', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: '#e0e0e0' }}></div><span style={{ fontSize: '0.85rem' }}>Urban (τ=500d)</span></div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: '#E0B34A' }}></div><span style={{ fontSize: '0.85rem' }}>Bare Soil (τ=365d)</span></div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: '#7FBF8E' }}></div><span style={{ fontSize: '0.85rem' }}>Vegetation (τ=15d)</span></div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: 'var(--erosion)' }}></div><span style={{ fontSize: '0.85rem' }}>Active Erosion (Day 12 drop)</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: '#e0e0e0' }}></div><span style={{ fontSize: '0.92rem' }}>Urban (τ=500d)</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: '#E0B34A' }}></div><span style={{ fontSize: '0.92rem' }}>Bare Soil (τ=365d)</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: '#7FBF8E' }}></div><span style={{ fontSize: '0.92rem' }}>Vegetation (τ=15d)</span></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><div style={{ width: 16, height: 4, background: 'var(--erosion)' }}></div><span style={{ fontSize: '0.92rem' }}>Active Erosion (Day 12 drop)</span></div>
               </div>
             </div>
           </GlassCard>
@@ -1594,8 +1595,8 @@ export function SARLabPage() {
           
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--s4)' }}>
             <GlassCard style={{ borderLeft: '3px solid var(--warn)' }}>
-              <h3 style={{ margin: '0 0 var(--s3) 0', color: 'var(--warn)', fontSize: '1.1rem' }}>❌ C-band Limitations (Sentinel-1)</h3>
-              <ul style={{ margin: 0, paddingLeft: 'var(--s4)', color: 'var(--text-2)', fontSize: '0.85rem', lineHeight: 1.8, listStyleType: "'– '" }}>
+              <h3 style={{ margin: '0 0 var(--s3) 0', color: 'var(--warn)', fontSize: '1.1rem' }}><XCircle size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> C-band Limitations (Sentinel-1)</h3>
+              <ul style={{ margin: 0, paddingLeft: 'var(--s4)', color: 'var(--text-2)', fontSize: '0.92rem', lineHeight: 1.8, listStyleType: "'– '" }}>
                 <li>Short wavelength (5.6 cm) cannot penetrate vegetation canopy</li>
                 <li>Rapid decorrelation in forested areas (coherence lost in days)</li>
                 <li>Cannot distinguish soil moisture change from surface deformation</li>
@@ -1605,8 +1606,8 @@ export function SARLabPage() {
             </GlassCard>
 
             <GlassCard style={{ borderLeft: '3px solid var(--water)' }}>
-              <h3 style={{ margin: '0 0 var(--s3) 0', color: 'var(--water)', fontSize: '1.1rem' }}>✅ L-band Advantages (NISAR)</h3>
-              <ul style={{ margin: 0, paddingLeft: 'var(--s4)', color: 'var(--text-2)', fontSize: '0.85rem', lineHeight: 1.8, listStyleType: "'✓ '" }}>
+              <h3 style={{ margin: '0 0 var(--s3) 0', color: 'var(--water)', fontSize: '1.1rem' }}><CheckCircle2 size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> L-band Advantages (NISAR)</h3>
+              <ul style={{ margin: 0, paddingLeft: 'var(--s4)', color: 'var(--text-2)', fontSize: '0.92rem', lineHeight: 1.8, listStyleType: "'✓ '" }}>
                 <li>Long wavelength (23.8 cm) penetrates through forest canopy to trunk/ground</li>
                 <li>Maintains coherence for months — enables true change detection</li>
                 <li>Quad-polarization reveals scattering mechanism (surface vs volume)</li>
@@ -1638,7 +1639,7 @@ export function SARLabPage() {
               <h3 style={{ margin: '0 0 var(--s3) 0', color: 'var(--water)', fontSize: '1.2rem' }}>Dynamic Otsu Threshold (σ⁰)</h3>
               <p style={{ color: 'var(--text-3)', fontSize: '0.9rem', marginBottom: 'var(--s3)' }}>Minimizes intra-class variance of the bimodal backscatter histogram. Adjust to distinguish water (-18dB) from land (-10dB).</p>
               
-              <div style={{ position: 'relative', height: '150px', display: 'flex', alignItems: 'flex-end', gap: '2px', paddingBottom: '20px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+              <div style={{ position: 'relative', height: '150px', display: 'flex', alignItems: 'flex-end', gap: '2px', paddingBottom: '20px', borderBottom: '1px solid rgba(var(--fg-rgb), 0.1)' }}>
                 {otsuData.map((d, i) => {
                   const isWater = d.db < otsuThreshold;
                   return (
@@ -1685,7 +1686,7 @@ export function SARLabPage() {
                 <div>
                   <h3 style={{ margin: '0 0 var(--s2) 0', color: 'var(--erosion)', fontSize: '1.2rem' }}>InSAR Fringe Synthesizer</h3>
                   <p style={{ color: 'var(--text-3)', fontSize: '0.9rem', margin: 0 }}>Mathematical phase generator: φ(x,y) = (4π/λ) × d(x,y). L-band λ = 23.8 cm.</p>
-                  <p style={{ color: 'var(--text-3)', fontSize: '0.8rem', margin: '4px 0 0 0' }}>Click on the canvas to set deformation center.</p>
+                  <p style={{ color: 'var(--text-3)', fontSize: '0.9rem', margin: '4px 0 0 0' }}>Click on the canvas to set deformation center.</p>
                 </div>
               </div>
               
@@ -1702,16 +1703,16 @@ export function SARLabPage() {
                 
                 <div style={{ flex: '1 1 200px', display: 'flex', flexDirection: 'column', gap: 'var(--s3)' }}>
                   <div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-3)', marginBottom: '4px' }}>Max Displacement (D): {insarMaxDisp} cm</div>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', marginBottom: '4px' }}>Max Displacement (D): {insarMaxDisp} cm</div>
                     <input type="range" min="1" max="20" step="0.5" value={insarMaxDisp} onChange={e => setInsarMaxDisp(parseFloat(e.target.value))} style={{ width: '100%', accentColor: 'var(--erosion)' }} />
                   </div>
                   <div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-3)', marginBottom: '4px' }}>Deformation Radius (σ): {insarRadius} m</div>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', marginBottom: '4px' }}>Deformation Radius (σ): {insarRadius} m</div>
                     <input type="range" min="100" max="2000" step="100" value={insarRadius} onChange={e => setInsarRadius(parseInt(e.target.value))} style={{ width: '100%', accentColor: 'var(--erosion)' }} />
                   </div>
                   
-                  <div style={{ padding: 'var(--s3)', background: 'rgba(255,255,255,0.05)', borderRadius: 'var(--r-md)', marginTop: 'auto' }}>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-3)', marginBottom: '4px' }}>Calculated Fringes</div>
+                  <div style={{ padding: 'var(--s3)', background: 'rgba(var(--fg-rgb), 0.05)', borderRadius: 'var(--r-md)', marginTop: 'auto' }}>
+                    <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', marginBottom: '4px' }}>Calculated Fringes</div>
                     <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--erosion)', fontFamily: 'var(--font-num)' }}>
                       {(insarMaxDisp / (23.8 / 2)).toFixed(1)} <span style={{ fontSize: '1rem' }}>fringes</span>
                     </div>
@@ -1725,8 +1726,8 @@ export function SARLabPage() {
         </div>
 
         {/* Footer */}
-        <div style={{ textAlign: 'center', padding: 'var(--s8) 0', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-3)', maxWidth: 600, margin: '0 auto', lineHeight: 1.6 }}>
+        <div style={{ textAlign: 'center', padding: 'var(--s8) 0', borderTop: '1px solid rgba(var(--fg-rgb), 0.05)' }}>
+          <p style={{ fontSize: '0.86rem', color: 'var(--text-3)', maxWidth: 600, margin: '0 auto', lineHeight: 1.6 }}>
             This educational module is part of <strong>FluviSAR</strong> — built for NASA Space Apps Challenge 2026, "Dancing with the SARs".
             All scientific content is sourced from NASA JPL NISAR documentation, ESA Sentinel-1 User Guide, and peer-reviewed SAR literature.
           </p>

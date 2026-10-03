@@ -1,3 +1,4 @@
+import { AlertTriangle } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Navbar } from '../components/Navbar';
 import { useStore } from '../state/store';
@@ -247,7 +248,7 @@ ${impact.emergencyActions.map((a: string, i: number) => `${i + 1}. ${a}`).join('
               className="emergency-alert-btn" 
               onClick={() => setShowEmergencyModal(true)}
             >
-              ⚠ GENERATE EMERGENCY BRIEFING
+              <AlertTriangle size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> GENERATE EMERGENCY BRIEFING
             </button>
           </div>
         </div>
@@ -259,15 +260,15 @@ ${impact.emergencyActions.map((a: string, i: number) => `${i + 1}. ${a}`).join('
             <div className="temporal-chart-container">
               <svg width="100%" height="200" viewBox="0 0 800 200" preserveAspectRatio="none">
                 {/* Grid */}
-                <line x1="0" y1="50" x2="800" y2="50" stroke="rgba(255,255,255,0.05)" strokeDasharray="4 4" />
-                <line x1="0" y1="100" x2="800" y2="100" stroke="rgba(255,255,255,0.05)" strokeDasharray="4 4" />
-                <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(255,255,255,0.05)" strokeDasharray="4 4" />
+                <line x1="0" y1="50" x2="800" y2="50" stroke="rgba(var(--fg-rgb), 0.05)" strokeDasharray="4 4" />
+                <line x1="0" y1="100" x2="800" y2="100" stroke="rgba(var(--fg-rgb), 0.05)" strokeDasharray="4 4" />
+                <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(var(--fg-rgb), 0.05)" strokeDasharray="4 4" />
                 
                 {/* Labels */}
-                <text x="50" y="190" fill="#64748b" fontSize="12" fontFamily="monospace">AUG (t0)</text>
-                <text x="250" y="190" fill="#39c4d9" fontSize="12" fontFamily="monospace">SEP (t1)</text>
-                <text x="450" y="190" fill="#64748b" fontSize="12" fontFamily="monospace">OCT</text>
-                <text x="650" y="190" fill="#e4572e" fontSize="12" fontFamily="monospace">NOV (HARVEST)</text>
+                <text x="50" y="190" fill="var(--text-3)" fontSize="15" fontFamily="monospace">AUG (t0)</text>
+                <text x="250" y="190" fill="#39c4d9" fontSize="15" fontFamily="monospace">SEP (t1)</text>
+                <text x="450" y="190" fill="var(--text-3)" fontSize="15" fontFamily="monospace">OCT</text>
+                <text x="650" y="190" fill="#e4572e" fontSize="15" fontFamily="monospace">NOV (HARVEST)</text>
 
                 {/* Confidence Polygon */}
                 <polygon points="250,150 450,120 650,40 800,20 800,100 650,120 450,160 250,150" fill="rgba(228,87,46,0.1)" />
@@ -295,7 +296,7 @@ ${impact.emergencyActions.map((a: string, i: number) => `${i + 1}. ${a}`).join('
               {impact.emergencyActions.map((action, i) => {
                 // Determine mock priority based on index
                 const priority = i === 0 ? 'P1' : i === 1 ? 'P2' : 'P3';
-                const status = i === 0 ? '⚠ EVACUATE' : i === 1 ? '⚙ PREPOSIT.' : '✓ MONITOR';
+                const status = i === 0 ? 'EVACUATE' : i === 1 ? 'PREPOSIT.' : 'MONITOR';
                 const statusColor = i === 0 ? 'text-fail' : i === 1 ? 'text-warn' : 'text-pass';
                 
                 return (
@@ -353,7 +354,7 @@ ${impact.emergencyActions.map((a: string, i: number) => `${i + 1}. ${a}`).join('
       {showEmergencyModal && (
         <div className="emergency-modal-overlay">
           <div className="emergency-modal">
-            <h2>⚠ EMERGENCY BRIEFING</h2>
+            <h2><AlertTriangle size={24} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> EMERGENCY BRIEFING</h2>
             <p><strong>Reach:</strong> {reachId.toUpperCase().replace(/-/g, ' ')}</p>
             <p><strong>Population at Risk:</strong> {impact.populationAtRisk.toLocaleString()} people</p>
             <p><strong>Est. Economic Impact:</strong> ${(impact.economicLossUSD / 1000000).toFixed(1)}M USD</p>

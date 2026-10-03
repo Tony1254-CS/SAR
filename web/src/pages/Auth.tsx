@@ -20,7 +20,7 @@ export function AuthPage() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'var(--bg)',
+        background: 'transparent',
         color: 'var(--text)',
         fontFamily: 'var(--font-text)',
       }}

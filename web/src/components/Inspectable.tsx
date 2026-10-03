@@ -1,3 +1,4 @@
+import { Search } from 'lucide-react';
 import { useState } from 'react';
 import { useStore } from '../state/store';
 import { classifyIntent } from '../chat/intents';
@@ -69,14 +70,14 @@ export function Inspectable({ children, intentKey, fallbackQuery }: InspectableP
       className={`inspectable-wrapper ${expanded ? 'expanded' : ''}`}
       style={{ 
         position: 'relative', 
-        border: expanded ? '1px solid rgba(57,196,217,0.5)' : '1px dashed rgba(57,196,217,0.5)', 
+        border: expanded ? '1px solid rgba(var(--water-rgb), 0.5)' : '1px dashed rgba(var(--water-rgb), 0.5)', 
         borderRadius: 8, 
         padding: expanded ? '16px' : '0px',
         margin: expanded ? '8px 0' : '0',
         cursor: expanded ? 'default' : 'pointer',
         transition: 'all 0.2s ease',
-        background: expanded ? 'rgba(8,12,16,0.8)' : 'rgba(57,196,217,0.05)',
-        boxShadow: expanded ? '0 10px 30px rgba(0,0,0,0.5)' : 'none',
+        background: expanded ? 'rgba(var(--panel-rgb), 0.8)' : 'rgba(var(--water-rgb), 0.05)',
+        boxShadow: expanded ? '0 10px 30px rgba(var(--shadow-rgb), 0.5)' : 'none',
         zIndex: expanded ? 10 : 1
       }}
       onClick={!expanded ? handleInspectClick : undefined}
@@ -87,14 +88,14 @@ export function Inspectable({ children, intentKey, fallbackQuery }: InspectableP
       
       {!expanded && (
         <div style={{ position: 'absolute', top: -8, right: -8, background: 'var(--water)', color: '#000', fontSize: '0.55rem', padding: '2px 6px', borderRadius: 10, fontWeight: 'bold', boxShadow: '0 0 8px var(--water)', zIndex: 2, pointerEvents: 'none' }}>
-          🔍 Inspect
+          <Search size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> Inspect
         </div>
       )}
 
       {expanded && (
-        <div style={{ marginTop: 16, borderTop: '1px solid rgba(57,196,217,0.2)', paddingTop: 16 }}>
+        <div style={{ marginTop: 16, borderTop: '1px solid rgba(var(--water-rgb), 0.2)', paddingTop: 16 }}>
           {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12, color: 'var(--water)', fontSize: '0.7rem', fontWeight: 600, textTransform: 'uppercase' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 12, color: 'var(--water)', fontSize: '0.82rem', fontWeight: 600, textTransform: 'uppercase' }}>
             <span style={{ animation: 'pulse-dot 2s infinite' }}>●</span> AI Analysis
           </div>
 
@@ -109,11 +110,11 @@ export function Inspectable({ children, intentKey, fallbackQuery }: InspectableP
             ) : chatLog.map((msg, i) => (
               <div key={i} style={{ 
                 alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
-                background: msg.role === 'user' ? 'rgba(57,196,217,0.15)' : 'rgba(255,255,255,0.05)',
-                border: msg.role === 'user' ? '1px solid rgba(57,196,217,0.3)' : '1px solid rgba(255,255,255,0.1)',
+                background: msg.role === 'user' ? 'rgba(var(--water-rgb), 0.15)' : 'rgba(var(--fg-rgb), 0.05)',
+                border: msg.role === 'user' ? '1px solid rgba(var(--water-rgb), 0.3)' : '1px solid rgba(var(--fg-rgb), 0.1)',
                 padding: '10px 14px',
                 borderRadius: 12,
-                fontSize: '0.8rem',
+                fontSize: '0.9rem',
                 lineHeight: 1.5,
                 color: msg.role === 'user' ? 'var(--text)' : 'var(--text-2)',
                 maxWidth: '92%'
@@ -134,15 +135,15 @@ export function Inspectable({ children, intentKey, fallbackQuery }: InspectableP
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSend()}
-              placeholder="🪄 Ask a follow-up question..."
-              style={{ flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 20, padding: '8px 14px', color: 'var(--text)', fontSize: '0.8rem', outline: 'none' }}
+              placeholder="<Wand2 size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> Ask a follow-up question..."
+              style={{ flex: 1, background: 'rgba(var(--fg-rgb), 0.05)', border: '1px solid rgba(var(--fg-rgb), 0.2)', borderRadius: 20, padding: '8px 14px', color: 'var(--text)', fontSize: '0.9rem', outline: 'none' }}
               autoFocus
             />
             <button 
               onClick={() => setExpanded(false)} 
-              style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', color: 'var(--text-3)', borderRadius: 20, padding: '0 16px', fontSize: '0.75rem', cursor: 'pointer', transition: 'all 0.2s' }}
+              style={{ background: 'transparent', border: '1px solid rgba(var(--fg-rgb), 0.3)', color: 'var(--text-3)', borderRadius: 20, padding: '0 16px', fontSize: '0.86rem', cursor: 'pointer', transition: 'all 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.borderColor = 'var(--text)'; }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-3)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)'; }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-3)'; e.currentTarget.style.borderColor = 'rgba(var(--fg-rgb), 0.3)'; }}
             >
               Close
             </button>

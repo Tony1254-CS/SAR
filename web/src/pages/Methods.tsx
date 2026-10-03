@@ -1,3 +1,4 @@
+import { Settings, Satellite, Brain, CheckCircle2, Wrench, AlertTriangle } from 'lucide-react';
 import { useEffect, useState, ReactNode } from 'react';
 import { useStore } from '../state/store';
 import { fetchQC } from '../data/load';
@@ -27,7 +28,7 @@ const PIPELINE_STEPS = [
   { label: 'CHECK BUNDLE', desc: 'Refuse to ship a bundle that fails schema or consistency checks' },
 ];
 
-function MainBox({ title, description, icon, color, onClick, delay }: { title: string, description: string, icon: string, color: string, onClick: () => void, delay: number }) {
+function MainBox({ title, description, icon, color, onClick, delay }: { title: string, description: string, icon: ReactNode, color: string, onClick: () => void, delay: number }) {
   const [isHovered, setIsHovered] = useState(false);
   return (
     <div 
@@ -35,60 +36,80 @@ function MainBox({ title, description, icon, color, onClick, delay }: { title: s
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        background: isHovered ? 'rgba(28, 34, 40, 0.7)' : 'rgba(18, 22, 26, 0.6)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
+        background: isHovered ? `linear-gradient(135deg, rgba(var(--panel-rgb), 0.8) 0%, rgba(var(--panel-rgb), 0.9) 100%)` : 'rgba(var(--panel-rgb), 0.6)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
         border: '1px solid',
-        borderColor: isHovered ? color : 'var(--line-strong)',
-        borderRadius: 'var(--r-lg)',
-        padding: 'var(--s6)',
+        borderColor: isHovered ? color : 'rgba(var(--fg-rgb), 0.08)',
+        borderRadius: '20px',
+        padding: '1.25rem',
         cursor: 'pointer',
-        boxShadow: isHovered ? `0 8px 32px ${color}20, inset 0 0 20px ${color}05` : '0 4px 16px rgba(0,0,0,0.2)',
-        transform: isHovered ? 'translateY(-4px)' : 'none',
-        transition: 'all 0.4s var(--ease-out)',
+        boxShadow: isHovered ? `0 12px 40px ${color}30, inset 0 0 20px ${color}10` : '0 8px 32px rgba(var(--shadow-rgb), 0.4)',
+        transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--s3)',
+        gap: '0.75rem',
         height: '100%',
         animation: `fadeSlideUp 0.6s var(--ease-out) ${delay}s forwards`,
-        opacity: 0
+        opacity: 0,
+        position: 'relative',
+        overflow: 'hidden'
       }}
     >
+      {/* Subtle background glow blob on hover */}
+      <div style={{
+        position: 'absolute',
+        top: '-50px',
+        right: '-50px',
+        width: '150px',
+        height: '150px',
+        background: color,
+        filter: 'blur(80px)',
+        opacity: isHovered ? 0.3 : 0,
+        transition: 'opacity 0.6s ease',
+        pointerEvents: 'none'
+      }} />
+
       <div style={{ 
-        fontSize: '36px', 
-        marginBottom: 'var(--s2)', 
-        filter: isHovered ? `drop-shadow(0 0 12px ${color}80)` : 'grayscale(30%)',
-        transition: 'filter 0.4s ease',
-        transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-        transformOrigin: 'left bottom'
+        fontSize: '28px', 
+        marginBottom: '0.5rem', 
+        color: isHovered ? color : 'var(--text-3)',
+        filter: isHovered ? `drop-shadow(0 0 15px ${color}80)` : 'none',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        transform: isHovered ? 'scale(1.15) rotate(-5deg)' : 'scale(1) rotate(0deg)',
+        transformOrigin: 'left center',
+        zIndex: 1
       }}>
         {icon}
       </div>
-      <h3 style={{ fontSize: 'var(--text-xl)', fontWeight: 600, color: 'var(--text)', margin: 0 }}>{title}</h3>
-      <p style={{ color: 'var(--text-2)', fontSize: 'var(--text-base)', lineHeight: 1.6, margin: 0, flex: 1 }}>{description}</p>
+      <h3 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text)', margin: 0, transition: 'color 0.3s ease', zIndex: 1 }}>{title}</h3>
+      <p style={{ color: 'var(--text-2)', fontSize: '0.92rem', lineHeight: 1.7, margin: 0, flex: 1, fontWeight: 400, zIndex: 1 }}>{description}</p>
       
       {/* Map Layers styled button */}
       <div style={{
-        marginTop: 'var(--s4)',
+        marginTop: '1.5rem',
         alignSelf: 'flex-start',
         padding: '6px 14px',
-        background: isHovered ? `${color}10` : 'transparent',
+        background: isHovered ? `${color}15` : 'rgba(var(--fg-rgb), 0.03)',
         border: '1px solid',
-        borderColor: isHovered ? color : 'var(--line-strong)',
-        color: color,
-        fontSize: 'var(--text-sm)',
-        fontWeight: 500,
+        borderColor: isHovered ? color : 'rgba(var(--fg-rgb), 0.1)',
+        color: isHovered ? color : 'var(--text-2)',
+        fontSize: '0.9rem',
+        fontWeight: 600,
         display: 'flex',
         alignItems: 'center',
         gap: '8px',
-        transition: 'all 0.3s ease',
-        borderRadius: 'var(--r-sm)'
+        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        borderRadius: '100px',
+        boxShadow: isHovered ? `0 0 15px ${color}20` : 'none',
+        zIndex: 1
       }}>
         View Details 
         <span style={{ 
-          transform: isHovered ? 'translateX(4px)' : 'none', 
-          transition: 'transform 0.3s var(--ease-out)',
-          opacity: isHovered ? 1 : 0.7
+          transform: isHovered ? 'translateX(6px)' : 'none', 
+          transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+          opacity: isHovered ? 1 : 0.6
         }}>→</span>
       </div>
     </div>
@@ -102,7 +123,7 @@ function Modal({ isOpen, onClose, title, children }: { isOpen: boolean, onClose:
       style={{
         position: 'fixed',
         top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.6)',
+        backgroundColor: 'rgba(var(--shadow-rgb), 0.6)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -115,8 +136,8 @@ function Modal({ isOpen, onClose, title, children }: { isOpen: boolean, onClose:
     >
       <div 
         style={{
-          background: 'var(--bg)',
-          backgroundColor: 'rgba(10, 10, 10, 0.85)',
+          background: 'transparent',
+          backgroundColor: 'rgba(var(--panel-rgb), 0.85)',
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
           padding: 'var(--s8)',
@@ -126,7 +147,7 @@ function Modal({ isOpen, onClose, title, children }: { isOpen: boolean, onClose:
           maxHeight: '85vh',
           overflowY: 'auto',
           position: 'relative',
-          boxShadow: '0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset',
+          boxShadow: '0 24px 64px rgba(var(--shadow-rgb), 0.6), 0 0 0 1px rgba(var(--fg-rgb), 0.05) inset',
           border: '1px solid var(--line-strong)',
           animation: 'slideUpModal 0.4s var(--ease-out) forwards'
         }} 
@@ -141,7 +162,7 @@ function Modal({ isOpen, onClose, title, children }: { isOpen: boolean, onClose:
             display: 'flex', alignItems: 'center', justifyContent: 'center', 
             fontSize: '16px', cursor: 'pointer', color: 'var(--text-2)', 
             transition: 'all 0.2s',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.2)'
+            boxShadow: '0 2px 8px rgba(var(--shadow-rgb), 0.2)'
           }}
           onMouseEnter={e => { e.currentTarget.style.background = 'var(--line-strong)'; e.currentTarget.style.color = 'var(--text)'; }}
           onMouseLeave={e => { e.currentTarget.style.background = 'var(--panel)'; e.currentTarget.style.color = 'var(--text-2)'; }}
@@ -178,7 +199,7 @@ export function MethodsPage() {
   return (
     <div className="page-container" style={{ position: 'relative', overflow: 'hidden' }}>
       
-      {/* Inline styles for animations */}
+            {/* Inline styles for animations */}
       <style>{`
         @keyframes fadeSlideUp {
           from { opacity: 0; transform: translateY(30px); }
@@ -191,6 +212,17 @@ export function MethodsPage() {
         @keyframes slideUpModal {
           from { opacity: 0; transform: translateY(20px) scale(0.98); }
           to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .methods-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1.25rem;
+          margin-top: 1.5rem;
+        }
+        @media (min-width: 768px) {
+          .methods-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
         .bg-glow {
           position: absolute;
@@ -212,7 +244,7 @@ export function MethodsPage() {
 
       <div className="page-content" style={{ maxWidth: '1200px', margin: '0 auto', padding: 'var(--s6) var(--s4)', position: 'relative', zIndex: 1 }}>
         <div style={{ marginBottom: 'var(--s6)', textAlign: 'center', animation: 'fadeSlideUp 0.6s var(--ease-out) forwards' }}>
-          <h1 style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: 'var(--s4)', color: 'var(--text)', textShadow: '0 4px 24px rgba(0,0,0,0.5)' }}>
+          <h1 style={{ fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.03em', marginBottom: 'var(--s4)', color: 'var(--text)' }}>
             Methods & Architecture
           </h1>
           <p style={{ color: 'var(--text-2)', fontSize: 'var(--text-lg)', lineHeight: 1.6, maxWidth: '800px', margin: '0 auto' }}>
@@ -222,12 +254,12 @@ export function MethodsPage() {
         </div>
 
         {/* The Main Boxes Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 'var(--s6)', marginTop: 'var(--s8)' }}>
+        <div className="methods-grid">
           
           <MainBox 
             title="Processing Pipeline" 
             description="The 12-step automated sequence to process raw NISAR data into clean, validated morphology metrics." 
-            icon="⚙️"
+            icon=<Settings size={18} />
             color="var(--water)"
             onClick={() => setActiveBox('pipeline')} 
             delay={0.1}
@@ -236,7 +268,7 @@ export function MethodsPage() {
           <MainBox 
             title="Data Sources" 
             description="The primary and reference satellite datasets that power the pipeline and validation steps." 
-            icon="🛰️"
+            icon=<Satellite size={18} />
             color="var(--accretion)"
             onClick={() => setActiveBox('sources')} 
             delay={0.2}
@@ -245,7 +277,7 @@ export function MethodsPage() {
           <MainBox 
             title="Methodology" 
             description="How we confidently identify land loss while controlling for seasonal flooding variance." 
-            icon="🧠"
+            icon=<Brain size={18} />
             color="var(--erosion)"
             onClick={() => setActiveBox('methodology')} 
             delay={0.3}
@@ -255,7 +287,7 @@ export function MethodsPage() {
             <MainBox 
               title="Quality Control" 
               description="Automated cross-sensor checks performed to ensure the data is reliable before publishing." 
-              icon="✅"
+              icon=<CheckCircle2 size={18} />
               color="var(--pass)"
               onClick={() => setActiveBox('qc')} 
               delay={0.4}
@@ -266,7 +298,7 @@ export function MethodsPage() {
             <MainBox 
               title="Configuration" 
               description="The exact parameters used in the pipeline for this specific reach output." 
-              icon="🔧"
+              icon=<Wrench size={18} />
               color="var(--ambiguous)"
               onClick={() => setActiveBox('config')} 
               delay={0.5}
@@ -276,7 +308,7 @@ export function MethodsPage() {
           <MainBox 
             title="Limitations" 
             description="Honesty about what this data represents and the boundaries of our confidence." 
-            icon="⚠️"
+            icon=<AlertTriangle size={18} />
             color="var(--warn)"
             onClick={() => setActiveBox('limitations')} 
             delay={0.6}
@@ -299,9 +331,9 @@ export function MethodsPage() {
               gap: 'var(--s4)',
             }}>
               <span style={{ 
-                background: 'rgba(57, 196, 217, 0.1)', 
+                background: 'rgba(var(--water-rgb), 0.1)', 
                 color: 'var(--water)', 
-                border: '1px solid rgba(57, 196, 217, 0.2)',
+                border: '1px solid rgba(var(--water-rgb), 0.2)',
                 padding: '4px 10px', 
                 borderRadius: '6px', 
                 fontSize: 'var(--text-xs)', 

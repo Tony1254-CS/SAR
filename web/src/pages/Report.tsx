@@ -1,3 +1,4 @@
+import { Printer } from 'lucide-react';
 
 
 export function ReportPage() {
@@ -15,11 +16,11 @@ export function ReportPage() {
         `}
       </style>
       
-      <div className="page-container" style={{ maxWidth: 800, margin: '0 auto', padding: '4rem', border: '1px solid #ccc', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', background: '#fff' }}>
+      <div className="page-container" style={{ maxWidth: 800, margin: '0 auto', padding: '4rem', border: '1px solid #ccc', boxShadow: '0 4px 20px rgba(var(--shadow-rgb), 0.1)', background: '#fff' }}>
         
         <div className="no-print" style={{ textAlign: 'right', marginBottom: '2rem' }}>
           <button onClick={() => window.print()} style={{ padding: '0.5rem 1rem', background: '#000', color: '#fff', border: 'none', cursor: 'pointer', fontFamily: 'system-ui, sans-serif' }}>
-            🖨️ Print Report
+            <Printer size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> Print Report
           </button>
         </div>
 
@@ -89,7 +90,7 @@ export function ReportPage() {
           </ul>
         </section>
 
-        <section style={{ marginTop: '4rem', fontSize: '0.8rem', color: '#666', borderTop: '1px solid #ccc', paddingTop: '1rem' }}>
+        <section style={{ marginTop: '4rem', fontSize: '0.9rem', color: '#666', borderTop: '1px solid #ccc', paddingTop: '1rem' }}>
           <h2 style={{ fontSize: '1rem', textTransform: 'uppercase', margin: '0 0 0.5rem 0' }}>5. Data Provenance</h2>
           <p style={{ margin: 0, fontFamily: 'monospace' }}>
             NISAR Granules: NIL2GCOV_20260801_120000, NIL2GCOV_20260825_120000<br/>

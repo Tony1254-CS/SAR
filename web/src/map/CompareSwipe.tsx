@@ -216,14 +216,14 @@ export function CompareSwipe({ primaryMap }: { primaryMap: maplibregl.Map | null
           panel just paints over the left portion of it). */}
       <div style={{
         position: 'absolute', top: 12, left: `${position}%`, transform: 'translateX(calc(-100% - 10px))',
-        background: 'var(--bg)', padding: '4px 8px', color: 'var(--text)', zIndex: 10, fontSize: '0.85rem', whiteSpace: 'nowrap',
+        background: 'var(--bg)', padding: '4px 8px', color: 'var(--text)', zIndex: 10, fontSize: '0.92rem', whiteSpace: 'nowrap',
         pointerEvents: 'none',
       }}>
         Before: {compare.t0}
       </div>
       <div style={{
         position: 'absolute', top: 12, left: `${position}%`, transform: 'translateX(10px)',
-        background: 'var(--bg)', padding: '4px 8px', color: 'var(--text)', zIndex: 10, fontSize: '0.85rem', whiteSpace: 'nowrap',
+        background: 'var(--bg)', padding: '4px 8px', color: 'var(--text)', zIndex: 10, fontSize: '0.92rem', whiteSpace: 'nowrap',
         pointerEvents: 'none',
       }}>
         After: {compare.t1}

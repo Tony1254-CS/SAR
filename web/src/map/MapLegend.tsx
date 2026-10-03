@@ -39,7 +39,7 @@ export function MapLegend() {
             <span>Water turned to land (Accretion)</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--s2)', marginTop: 'var(--s1)' }}>
-            <span style={{ display: 'inline-block', width: 12, height: 12, background: 'var(--ambiguous)', backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.2) 2px, rgba(0,0,0,0.2) 4px)' }}></span>
+            <span style={{ display: 'inline-block', width: 12, height: 12, background: 'var(--ambiguous)', backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(var(--shadow-rgb), 0.2) 2px, rgba(var(--shadow-rgb), 0.2) 4px)' }}></span>
             <span>Ambiguous / excluded</span>
           </div>
         </>

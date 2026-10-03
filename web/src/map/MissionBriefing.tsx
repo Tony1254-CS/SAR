@@ -1,3 +1,4 @@
+import { AlertTriangle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useStore } from '../state/store';
 import maplibregl from 'maplibre-gl';
@@ -88,53 +89,53 @@ export function MissionBriefing({ map }: { map: maplibregl.Map | null }) {
       <div style={{
         position: 'absolute',
         top: 0, left: 0, right: 0, height: '10px',
-        background: 'rgba(57, 196, 217, 0.4)',
-        boxShadow: '0 0 20px rgba(57, 196, 217, 0.8)',
+        background: 'rgba(var(--water-rgb), 0.4)',
+        boxShadow: '0 0 20px rgba(var(--water-rgb), 0.8)',
         animation: 'scanline 4s linear infinite'
       }} />
 
       {/* Narrative Text */}
-      <div style={{
+      <div className="hud-dark" style={{
         position: 'absolute',
         bottom: '15%',
-        background: 'rgba(0,0,0,0.85)',
+        background: 'rgba(var(--shadow-rgb), 0.85)',
         border: '1px solid var(--water)',
         padding: '24px 40px',
         borderRadius: '8px',
         maxWidth: '700px',
         textAlign: 'center',
-        boxShadow: '0 0 30px rgba(57,196,217,0.3)',
+        boxShadow: '0 0 30px rgba(var(--water-rgb), 0.3)',
         transition: 'opacity 0.5s ease-in-out',
         opacity: step >= 0 ? 1 : 0
       }}>
         {step === 0 && (
-          <h2 style={{ color: '#fff', letterSpacing: '2px' }}>MISSION BRIEFING: {reach?.name.toUpperCase()}</h2>
+          <h2 style={{ color: 'var(--text)', letterSpacing: '2px' }}>MISSION BRIEFING: {reach?.name.toUpperCase()}</h2>
         )}
         {step === 1 && (
           <h3 style={{ color: 'var(--water)', fontFamily: 'monospace' }}>Targeting Brahmaputra-Jamuna floodplain...</h3>
         )}
         {step === 2 && (
           <div>
-            <h3 style={{ color: '#fff' }}>NISAR L2 GCOV Acquisition Detected</h3>
-            <p style={{ color: '#aaa', fontFamily: 'monospace' }}>Mode: ScanSAR | Processing Level: L2</p>
+            <h3 style={{ color: 'var(--text)' }}>NISAR L2 GCOV Acquisition Detected</h3>
+            <p style={{ color: 'var(--text-2)', fontFamily: 'monospace' }}>Mode: ScanSAR | Processing Level: L2</p>
           </div>
         )}
         {step === 3 && (
           <div>
             <h3 style={{ color: 'var(--erosion)' }}>Change Detected: 1,247 hectares</h3>
-            <p style={{ color: '#fff' }}>Verdict: <span style={{ color: 'var(--pass)' }}>SUPPORTED</span> (Cross-validated)</p>
+            <p style={{ color: 'var(--text)' }}>Verdict: <span style={{ color: 'var(--pass)' }}>SUPPORTED</span> (Cross-validated)</p>
           </div>
         )}
         {step === 4 && (
           <div>
             <h3 style={{ color: '#FF0000' }}>Predictive Model Engaged</h3>
-            <p style={{ color: '#fff', fontSize: '18px' }}>⚠️ 3,247 people within impact radius</p>
+            <p style={{ color: 'var(--text)', fontSize: '18px' }}><AlertTriangle size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> 3,247 people within impact radius</p>
           </div>
         )}
         {step === 5 && (
           <div>
             <h2 style={{ color: 'var(--pass)', letterSpacing: '4px' }}>ASSESSMENT COMPLETE</h2>
-            <p style={{ color: '#aaa' }}>Returning control to operator.</p>
+            <p style={{ color: 'var(--text-2)' }}>Returning control to operator.</p>
           </div>
         )}
       </div>

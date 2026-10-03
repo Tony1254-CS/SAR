@@ -41,7 +41,7 @@ function MessageBubble({ msg }: { msg: Message }) {
         <>
           <div
             onClick={() => setShowSources(!showSources)}
-            style={{ fontSize: '0.6rem', color: 'var(--water)', cursor: 'pointer', marginTop: 6, opacity: 0.8 }}
+            style={{ fontSize: '0.74rem', color: 'var(--water)', cursor: 'pointer', marginTop: 6, opacity: 0.8 }}
           >
             📎 {showSources ? 'Hide' : 'Show'} sources ({msg.sources.length})
           </div>

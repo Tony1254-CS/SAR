@@ -1,3 +1,4 @@
+import { Pause, Play } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useStore } from '../state/store';
 
@@ -45,9 +46,9 @@ export function RiverMemory() {
       transform: 'translateX(-50%)',
       width: 'auto',
       minWidth: '320px',
-      background: 'rgba(8, 12, 16, 0.85)',
+      background: 'rgba(var(--panel-rgb), 0.85)',
       backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(57, 196, 217, 0.3)',
+      border: '1px solid rgba(var(--water-rgb), 0.3)',
       borderRadius: '24px',
       padding: '8px 16px',
       display: 'flex',
@@ -55,14 +56,14 @@ export function RiverMemory() {
       alignItems: 'center',
       gap: '16px',
       zIndex: 200,
-      boxShadow: '0 8px 32px rgba(0,0,0,0.6)'
+      boxShadow: '0 8px 32px rgba(var(--shadow-rgb), 0.6)'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <h4 style={{ margin: 0, color: 'var(--text)', fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em' }}>
+        <h4 style={{ margin: 0, color: 'var(--text)', fontSize: '13px', fontWeight: 600, letterSpacing: '0.05em' }}>
           TIME LAPSE
         </h4>
       </div>
-        <div style={{ fontSize: '11px', color: 'var(--water)', fontFamily: 'monospace', marginLeft: 'auto', marginRight: 16 }}>
+        <div style={{ fontSize: '12.5px', color: 'var(--water)', fontFamily: 'monospace', marginLeft: 'auto', marginRight: 16 }}>
           {selectedDate}
         </div>
       
@@ -76,7 +77,7 @@ export function RiverMemory() {
             setPlaying(!playing);
           }}
           style={{
-            background: playing ? 'rgba(255,255,255,0.1)' : 'var(--water)',
+            background: playing ? 'rgba(var(--fg-rgb), 0.1)' : 'var(--water)',
             color: playing ? '#fff' : '#000',
             border: 'none',
             borderRadius: '50%',
@@ -90,10 +91,10 @@ export function RiverMemory() {
             transition: 'all 0.2s'
           }}
         >
-          {playing ? '⏸️' : '▶️'}
+          {playing ? <Pause size={18} /> : <Play size={18} />}
         </button>
         
-        <div style={{ flex: 1, position: 'relative', height: '4px', background: 'rgba(255,255,255,0.2)', borderRadius: '2px' }}>
+        <div style={{ flex: 1, position: 'relative', height: '4px', background: 'rgba(var(--fg-rgb), 0.2)', borderRadius: '2px' }}>
           {okDates.map((date, i) => {
             const isSelected = date === selectedDate;
             const left = `${(i / (okDates.length - 1)) * 100}%`;

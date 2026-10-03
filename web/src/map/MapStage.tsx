@@ -206,7 +206,7 @@ export function MapStage() {
             <h4 style="margin:0 0 8px 0; color:${color}; font-size:14px;">${title}</h4>
             <div style="margin-bottom:4px;"><b>Probability:</b> ${p.probability}%</div>
             <div style="margin-bottom:4px;"><b>Reasoning:</b> ${p.reason}</div>
-            <div style="font-size:11px; color:#666; margin-top:8px;">AI Prediction Model</div>
+            <div style="font-size:12.5px; color:#666; margin-top:8px;">AI Prediction Model</div>
           </div>
         `)
         .addTo(map);
@@ -248,7 +248,7 @@ export function MapStage() {
             <h4 style="margin:0 0 8px 0; color:#ff5a00; font-size:14px;">${p.title}</h4>
             <div style="margin-bottom:4px;"><b>Magnitude:</b> ${p.mag}</div>
             <div style="margin-bottom:4px;"><b>Date:</b> ${p.date}</div>
-            <div style="font-size:11px; color:#666; margin-top:8px;">Source: NASA EONET API</div>
+            <div style="font-size:12.5px; color:#666; margin-top:8px;">Source: NASA EONET API</div>
           </div>
         `)
         .addTo(map);
@@ -380,7 +380,7 @@ export function MapStage() {
             background: terrainOn ? 'var(--water)' : 'var(--panel)',
             color: terrainOn ? '#04222b' : 'var(--text)',
             border: '1px solid var(--line-strong)', borderRadius: 'var(--r)',
-            padding: '5px 12px', cursor: 'pointer', fontSize: '0.8rem', fontWeight: terrainOn ? 700 : 400,
+            padding: '5px 12px', cursor: 'pointer', fontSize: '0.9rem', fontWeight: terrainOn ? 700 : 400,
           }}
         >
           {terrainOn ? '✓ 3D relief' : '3D relief'}

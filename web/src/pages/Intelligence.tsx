@@ -1,3 +1,4 @@
+import { Brain, Check } from 'lucide-react';
 // @ts-nocheck
 import React, { useState, useEffect, useRef } from 'react';
 import { useStore } from '../state/store';
@@ -33,7 +34,8 @@ export function IntelligencePage() {
     let index = 0;
     const interval = setInterval(() => {
       if (index < allTelemetry.length) {
-        setTelemetryLines(prev => [...prev, allTelemetry[index]]);
+        const line = allTelemetry[index];
+        setTelemetryLines(prev => [...prev, line]);
         index++;
       } else {
         clearInterval(interval);
@@ -111,7 +113,7 @@ export function IntelligencePage() {
   };
 
   return (
-    <div style={{ backgroundColor: 'var(--bg)', minHeight: '100vh', color: 'var(--text, #E2E8F0)', fontFamily: 'system-ui, sans-serif' }}>
+    <div style={{ backgroundColor: 'transparent', minHeight: '100vh', color: 'var(--text, #E2E8F0)', fontFamily: 'system-ui, sans-serif' }}>
       <Navbar />
       <div className="navbar-spacer" style={{ height: '80px' }} />
 
@@ -119,7 +121,7 @@ export function IntelligencePage() {
         
         {/* Section 1: Hero Header */}
         <section style={{ textAlign: 'center', marginBottom: '4rem', animation: mounted ? 'fadeIn 1s ease-out' : 'none', opacity: mounted ? 1 : 0, transition: 'opacity 1s' }}>
-          <div style={{ display: 'inline-block', padding: '0.25rem 1rem', borderRadius: '9999px', backgroundColor: 'rgba(57, 196, 217, 0.1)', color: 'var(--water, #39C4D9)', border: '1px solid rgba(57, 196, 217, 0.3)', marginBottom: '1.5rem', fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.05em' }}>
+          <div style={{ display: 'inline-block', padding: '0.25rem 1rem', borderRadius: '9999px', backgroundColor: 'rgba(var(--water-rgb), 0.1)', color: 'var(--water, #39C4D9)', border: '1px solid rgba(var(--water-rgb), 0.3)', marginBottom: '1.5rem', fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.05em' }}>
             LIVE ML INFERENCE CLUSTER
           </div>
           <h1 className="glow-text" style={{ fontSize: '3.5rem', fontWeight: 800, margin: '0 0 1rem 0', letterSpacing: '-0.02em' }}>
@@ -152,21 +154,21 @@ export function IntelligencePage() {
           <div style={{ position: 'relative', height: '300px', width: '100%', maxWidth: '800px', margin: '0 auto' }}>
             <svg viewBox="-50 -20 700 250" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
               {/* Grid and Axes */}
-              <line x1="0" y1="0" x2="0" y2="200" stroke="#334155" strokeWidth="2" />
-              <line x1="0" y1="200" x2="600" y2="200" stroke="#334155" strokeWidth="2" />
+              <line x1="0" y1="0" x2="0" y2="200" stroke="var(--line-strong)" strokeWidth="2" />
+              <line x1="0" y1="200" x2="600" y2="200" stroke="var(--line-strong)" strokeWidth="2" />
               
               {/* Y-axis labels */}
               {[-5, -10, -15, -20, -25].map(db => (
-                <text key={db} x="-10" y={mapDbToY(db)} fill="#64748B" fontSize="12" textAnchor="end" dominantBaseline="middle">{db} dB</text>
+                <text key={db} x="-10" y={mapDbToY(db)} fill="#64748B" fontSize="14" textAnchor="end" dominantBaseline="middle">{db} dB</text>
               ))}
 
               {/* Threshold line */}
               <line x1="0" y1={mapDbToY(-14.2)} x2="600" y2={mapDbToY(-14.2)} stroke="rgba(228, 87, 46, 0.8)" strokeWidth="2" strokeDasharray="6,4" />
-              <text x="610" y={mapDbToY(-14.2)} fill="var(--erosion, #E4572E)" fontSize="12" dominantBaseline="middle">Otsu Threshold (-14.2 dB)</text>
+              <text x="610" y={mapDbToY(-14.2)} fill="var(--erosion, #E4572E)" fontSize="14" dominantBaseline="middle">Otsu Threshold (-14.2 dB)</text>
               
               {/* Shaded water zone */}
-              <rect x="0" y={mapDbToY(-14.2)} width="600" height={200 - mapDbToY(-14.2)} fill="rgba(57, 196, 217, 0.1)" />
-              <text x="300" y={mapDbToY(-14.2) + 20} fill="var(--water, #39C4D9)" fontSize="12" textAnchor="middle" opacity="0.6">Water Detection Zone</text>
+              <rect x="0" y={mapDbToY(-14.2)} width="600" height={200 - mapDbToY(-14.2)} fill="rgba(var(--water-rgb), 0.1)" />
+              <text x="300" y={mapDbToY(-14.2) + 20} fill="var(--water, #39C4D9)" fontSize="14" textAnchor="middle" opacity="0.6">Water Detection Zone</text>
 
               {/* Data Lines */}
               <polyline 
@@ -189,16 +191,16 @@ export function IntelligencePage() {
                 const x = (i / (timeSeriesData.length - 1)) * 600;
                 return (
                   <g key={i} onMouseEnter={() => setHoveredPoint(i)} onMouseLeave={() => setHoveredPoint(null)}>
-                    <text x={x} y="220" fill="#64748B" fontSize="12" textAnchor="middle">{d.date}</text>
+                    <text x={x} y="220" fill="#64748B" fontSize="14" textAnchor="middle">{d.date}</text>
                     <circle cx={x} cy={mapDbToY(d.hh)} r="5" fill="var(--water, #39C4D9)" style={{ cursor: 'pointer', transform: hoveredPoint === i ? 'scale(1.5)' : 'scale(1)', transformOrigin: `${x}px ${mapDbToY(d.hh)}px`, transition: 'transform 0.2s' }} />
                     <circle cx={x} cy={mapDbToY(d.hv)} r="5" fill="var(--accretion, #D9B26A)" style={{ cursor: 'pointer', transform: hoveredPoint === i ? 'scale(1.5)' : 'scale(1)', transformOrigin: `${x}px ${mapDbToY(d.hv)}px`, transition: 'transform 0.2s' }} />
                     
                     {/* Tooltip */}
                     {hoveredPoint === i && (
                       <g style={{ pointerEvents: 'none' }}>
-                        <rect x={x - 45} y={Math.min(mapDbToY(d.hh), mapDbToY(d.hv)) - 55} width="90" height="45" fill="#0E1113" stroke="#334155" rx="4" />
-                        <text x={x} y={Math.min(mapDbToY(d.hh), mapDbToY(d.hv)) - 38} fill="var(--water, #39C4D9)" fontSize="10" textAnchor="middle" fontFamily="var(--font-num)">HH: {d.hh.toFixed(1)}</text>
-                        <text x={x} y={Math.min(mapDbToY(d.hh), mapDbToY(d.hv)) - 22} fill="var(--accretion, #D9B26A)" fontSize="10" textAnchor="middle" fontFamily="var(--font-num)">HV: {d.hv.toFixed(1)}</text>
+                        <rect x={x - 45} y={Math.min(mapDbToY(d.hh), mapDbToY(d.hv)) - 55} width="90" height="45" fill="var(--panel)" stroke="var(--line-strong)" rx="4" />
+                        <text x={x} y={Math.min(mapDbToY(d.hh), mapDbToY(d.hv)) - 38} fill="var(--water, #39C4D9)" fontSize="13" textAnchor="middle" fontFamily="var(--font-num)">HH: {d.hh.toFixed(1)}</text>
+                        <text x={x} y={Math.min(mapDbToY(d.hh), mapDbToY(d.hv)) - 22} fill="var(--accretion, #D9B26A)" fontSize="13" textAnchor="middle" fontFamily="var(--font-num)">HV: {d.hv.toFixed(1)}</text>
                       </g>
                     )}
                   </g>
@@ -218,44 +220,44 @@ export function IntelligencePage() {
           <h2 style={{ margin: '0 0 0.5rem 0', fontSize: '2rem' }}>InSAR Coherence Decay Profiler (γ)</h2>
           <p style={{ color: 'var(--text-2, #94A3B8)', margin: '0 0 2rem 0' }}>Detecting surface anomalies through temporal decorrelation. A sudden drop indicates a change event.</p>
           
-          <div style={{ height: '350px', position: 'relative', borderBottom: '1px solid #333', borderLeft: '1px solid #333', marginTop: '2rem' }}>
+          <div style={{ height: '350px', position: 'relative', borderBottom: '1px solid var(--line)', borderLeft: '1px solid var(--line)', marginTop: '2rem', marginLeft: '3rem', marginRight: '9rem' }}>
             <svg width="100%" height="100%" viewBox="0 0 800 350" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
               {/* Grid lines */}
               {[0, 0.2, 0.4, 0.6, 0.8, 1.0].map((val, i) => (
                 <g key={i}>
-                  <line x1="0" y1={350 - val*300} x2="800" y2={350 - val*300} stroke="#333" strokeDasharray="4 4" />
-                  <text x="-30" y={350 - val*300 + 4} fill="#888" fontSize="12">{val.toFixed(1)}</text>
+                  <line x1="0" y1={350 - val*300} x2="800" y2={350 - val*300} stroke="var(--line)" strokeDasharray="4 4" />
+                  <text x="-30" y={350 - val*300 + 4} fill="var(--text-3)" fontSize="14">{val.toFixed(1)}</text>
                 </g>
               ))}
-              <text x="-40" y="20" fill="#aaa" fontSize="12" transform="rotate(-90 -40 20)">Coherence (γ)</text>
-              <text x="400" y="380" fill="#aaa" fontSize="12" textAnchor="middle">Time (days)</text>
+              <text x="-40" y="20" fill="var(--text-3)" fontSize="14" transform="rotate(-90 -40 20)">Coherence (γ)</text>
+              <text x="400" y="380" fill="var(--text-3)" fontSize="14" textAnchor="middle">Time (days)</text>
               
               {/* X Axis ticks */}
               {[0, 12, 24, 36, 48].map((day) => (
-                <text key={day} x={(day/48)*800} y="365" fill="#888" fontSize="12" textAnchor="middle">{day}</text>
+                <text key={day} x={(day/48)*800} y="365" fill="var(--text-3)" fontSize="14" textAnchor="middle">{day}</text>
               ))}
 
               {/* Urban (τ=500d) */}
-              <path d="M0 50 Q 400 65, 800 80" fill="none" stroke="#888" strokeWidth="2" />
-              <text x="810" y="80" fill="#888" fontSize="12">Urban</text>
+              <path d="M0 50 Q 400 65, 800 80" fill="none" stroke="var(--text-3)" strokeWidth="2" />
+              <text x="810" y="80" fill="var(--text-3)" fontSize="14">Urban</text>
 
               {/* Bare soil (τ=365d) */}
               <path d="M0 50 Q 400 90, 800 130" fill="none" stroke="#D9B26A" strokeWidth="2" />
-              <text x="810" y="130" fill="#D9B26A" fontSize="12">Bare Soil</text>
+              <text x="810" y="130" fill="#D9B26A" fontSize="14">Bare Soil</text>
 
               {/* Vegetation (τ=15d) */}
               <path d="M0 50 Q 200 250, 800 300" fill="none" stroke="#7FBF8E" strokeWidth="2" />
-              <text x="810" y="300" fill="#7FBF8E" fontSize="12">Vegetation</text>
+              <text x="810" y="300" fill="#7FBF8E" fontSize="14">Vegetation</text>
 
               {/* Changed surface (ANOMALY) */}
               <path d="M0 50 L 200 70 L 200 300 L 800 320" fill="none" stroke="#E4572E" strokeWidth="3" />
               <circle cx="200" cy="300" r="5" fill="#E4572E" />
               <text x="215" y="295" fill="#E4572E" fontSize="14" fontWeight="bold">↓ DETECTION POINT</text>
-              <text x="810" y="320" fill="#E4572E" fontSize="12" fontWeight="bold">Changed Surface</text>
+              <text x="810" y="320" fill="#E4572E" fontSize="14" fontWeight="bold">Changed Surface</text>
 
               {/* Water */}
               <path d="M0 350 L 800 350" fill="none" stroke="var(--water)" strokeWidth="2" />
-              <text x="810" y="350" fill="var(--water)" fontSize="12">Water (γ≈0)</text>
+              <text x="810" y="350" fill="var(--water)" fontSize="14">Water (γ≈0)</text>
             </svg>
           </div>
         </section>
@@ -267,13 +269,13 @@ export function IntelligencePage() {
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
             {[
-              { title: 'HH (Co-pol)', subtitle: 'Surface scattering dominates', color: 'rgba(57, 196, 217,', gradient: 'linear-gradient(135deg, #07090A 0%, rgba(57, 196, 217, 0.4) 50%, #07090A 100%)', bar: 'linear-gradient(to right, #000, #39C4D9)' },
-              { title: 'HV (Cross-pol)', subtitle: 'Volume scattering from vegetation', color: 'rgba(217, 178, 106,', gradient: 'radial-gradient(circle at 70% 30%, rgba(217, 178, 106, 0.5) 0%, #07090A 70%)', bar: 'linear-gradient(to right, #000, #D9B26A)' },
-              { title: 'HH/HV Ratio', subtitle: 'Change detection signal', color: 'rgba(228, 87, 46,', gradient: 'conic-gradient(from 180deg at 50% 50%, #07090A 0deg, rgba(228, 87, 46, 0.6) 180deg, #07090A 360deg)', bar: 'linear-gradient(to right, #000, #E4572E)' }
+              { title: 'HH (Co-pol)', subtitle: 'Surface scattering dominates', color: 'rgba(57, 196, 217,', gradient: 'linear-gradient(135deg, var(--surface) 0%, rgba(var(--water-rgb), 0.4) 50%, var(--surface) 100%)', bar: 'linear-gradient(to right, #000, #39C4D9)' },
+              { title: 'HV (Cross-pol)', subtitle: 'Volume scattering from vegetation', color: 'rgba(217, 178, 106,', gradient: 'radial-gradient(circle at 70% 30%, rgba(217, 178, 106, 0.5) 0%, var(--surface) 70%)', bar: 'linear-gradient(to right, #000, #D9B26A)' },
+              { title: 'HH/HV Ratio', subtitle: 'Change detection signal', color: 'rgba(228, 87, 46,', gradient: 'conic-gradient(from 180deg at 50% 50%, var(--surface) 0deg, rgba(228, 87, 46, 0.6) 180deg, var(--surface) 360deg)', bar: 'linear-gradient(to right, #000, #E4572E)' }
             ].map((panel, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <div style={{ aspectRatio: '1', borderRadius: '8px', background: panel.gradient, border: `1px solid ${panel.color} 0.3)`, position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px)' }}></div>
+                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(var(--fg-rgb), 0.03) 10px, rgba(var(--fg-rgb), 0.03) 20px)' }}></div>
                 </div>
                 <div style={{ height: '8px', borderRadius: '4px', background: panel.bar }}></div>
                 <div>
@@ -302,7 +304,7 @@ export function IntelligencePage() {
                 {threshold.toFixed(2)}
               </div>
             </div>
-            <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(57,196,217,0.1)', borderRadius: '8px', border: '1px solid rgba(57,196,217,0.2)', color: 'var(--water)', fontSize: '0.9rem' }}>
+            <div style={{ marginTop: '1rem', padding: '1rem', background: 'rgba(var(--water-rgb), 0.1)', borderRadius: '8px', border: '1px solid rgba(var(--water-rgb), 0.2)', color: 'var(--water)', fontSize: '0.9rem' }}>
               <strong>Impact:</strong> At confidence &ge; {threshold.toFixed(2)}: {Math.round(1247 - ((threshold - 0.5) / 0.45) * 600)} ha erosion detected (vs 1,247 ha at 0.5)
             </div>
           </div>
@@ -377,7 +379,7 @@ export function IntelligencePage() {
                               transition: 'all 0.2s ease',
                               transform: (hoveredCell?.r === r && hoveredCell?.c === c) ? 'scale(1.05)' : 'scale(1)',
                               zIndex: (hoveredCell?.r === r && hoveredCell?.c === c) ? 10 : 1,
-                              boxShadow: (hoveredCell?.r === r && hoveredCell?.c === c) ? '0 10px 25px -5px rgba(0,0,0,0.5)' : 'none'
+                              boxShadow: (hoveredCell?.r === r && hoveredCell?.c === c) ? '0 10px 25px -5px rgba(var(--shadow-rgb), 0.5)' : 'none'
                             }}
                           >
                             {cell.v}
@@ -410,7 +412,7 @@ export function IntelligencePage() {
                   const r = ((tp / (tp + fn)) * 100).toFixed(1) + '%';
                   const f1 = ((2 * tp / (2 * tp + fp + fn)) * 100).toFixed(1) + '%';
                   return (
-                    <div key={i} style={{ backgroundColor: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                    <div key={i} style={{ backgroundColor: 'rgba(var(--fg-rgb), 0.03)', padding: '1rem', borderRadius: '8px', border: '1px solid rgba(var(--fg-rgb), 0.1)' }}>
                       <div style={{ fontWeight: 600, marginBottom: '0.5rem', textAlign: 'center', color: 'var(--text)' }}>{label} Metrics</div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', marginBottom: '0.25rem' }}><span style={{ color: 'var(--text-3)' }}>Precision</span> <span style={{ fontFamily: 'var(--font-num)' }}>{p}</span></div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', marginBottom: '0.25rem' }}><span style={{ color: 'var(--text-3)' }}>Recall</span> <span style={{ fontFamily: 'var(--font-num)' }}>{r}</span></div>
@@ -431,26 +433,26 @@ export function IntelligencePage() {
             
             <div style={{ position: 'relative', height: '300px', width: '100%' }}>
               <svg viewBox="-30 -10 650 250" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-                <line x1="0" y1="0" x2="0" y2="200" stroke="#334155" strokeWidth="2" />
-                <line x1="0" y1="200" x2="600" y2="200" stroke="#334155" strokeWidth="2" />
+                <line x1="0" y1="0" x2="0" y2="200" stroke="var(--line-strong)" strokeWidth="2" />
+                <line x1="0" y1="200" x2="600" y2="200" stroke="var(--line-strong)" strokeWidth="2" />
                 
                 {/* Labels */}
-                <text x="-15" y="0" fill="#64748B" fontSize="12" textAnchor="end">1.0</text>
-                <text x="-15" y="100" fill="#64748B" fontSize="12" textAnchor="end">0.5</text>
-                <text x="-15" y="200" fill="#64748B" fontSize="12" textAnchor="end">0.0</text>
+                <text x="-15" y="0" fill="#64748B" fontSize="14" textAnchor="end">1.0</text>
+                <text x="-15" y="100" fill="#64748B" fontSize="14" textAnchor="end">0.5</text>
+                <text x="-15" y="200" fill="#64748B" fontSize="14" textAnchor="end">0.0</text>
                 
-                <text x="0" y="220" fill="#64748B" fontSize="12" textAnchor="middle">0.0</text>
-                <text x="300" y="220" fill="#64748B" fontSize="12" textAnchor="middle">0.5</text>
-                <text x="600" y="220" fill="#64748B" fontSize="12" textAnchor="middle">1.0</text>
+                <text x="0" y="220" fill="#64748B" fontSize="14" textAnchor="middle">0.0</text>
+                <text x="300" y="220" fill="#64748B" fontSize="14" textAnchor="middle">0.5</text>
+                <text x="600" y="220" fill="#64748B" fontSize="14" textAnchor="middle">1.0</text>
                 
-                <text x="-40" y="100" fill="#64748B" fontSize="12" textAnchor="middle" transform="rotate(-90, -40, 100)">True Positive Rate</text>
-                <text x="300" y="240" fill="#64748B" fontSize="12" textAnchor="middle">False Positive Rate</text>
+                <text x="-40" y="100" fill="#64748B" fontSize="14" textAnchor="middle" transform="rotate(-90, -40, 100)">True Positive Rate</text>
+                <text x="300" y="240" fill="#64748B" fontSize="14" textAnchor="middle">False Positive Rate</text>
 
                 {/* Baseline */}
                 <line x1="0" y1="200" x2="600" y2="0" stroke="#475569" strokeWidth="2" strokeDasharray="8,8" />
                 
                 {/* Shaded AUC */}
-                <polygon points={`0,200 ${rocPoints} 600,200`} fill="rgba(57, 196, 217, 0.1)" />
+                <polygon points={`0,200 ${rocPoints} 600,200`} fill="rgba(var(--water-rgb), 0.1)" />
                 
                 {/* Curve */}
                 <polyline 
@@ -478,7 +480,7 @@ export function IntelligencePage() {
                     <span>{feat.name}</span>
                     <span style={{ fontFamily: 'var(--font-num)', color: 'var(--water, #39C4D9)' }}>{feat.value}</span>
                   </div>
-                  <div style={{ height: '8px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden' }}>
+                  <div style={{ height: '8px', backgroundColor: 'rgba(var(--fg-rgb), 0.05)', borderRadius: '4px', overflow: 'hidden' }}>
                     <div 
                       style={{ 
                         height: '100%', 
@@ -504,42 +506,42 @@ export function IntelligencePage() {
             <div style={{ display: 'flex', gap: '2rem', textAlign: 'right' }}>
               <div>
                 <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--erosion, #E4572E)', fontFamily: 'var(--font-num)' }}>0.121</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Val Loss</div>
+                <div style={{ fontSize: '0.86rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Val Loss</div>
               </div>
               <div>
                 <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--water, #39C4D9)', fontFamily: 'var(--font-num)' }}>0.872</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Val IoU</div>
+                <div style={{ fontSize: '0.86rem', color: 'var(--text-3)', textTransform: 'uppercase' }}>Val IoU</div>
               </div>
             </div>
           </div>
 
           <div style={{ position: 'relative', height: '300px', width: '100%', maxWidth: '900px', margin: '0 auto' }}>
             <svg viewBox="-50 -20 700 250" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-              <line x1="0" y1="0" x2="0" y2="200" stroke="#334155" strokeWidth="2" />
-              <line x1="600" y1="0" x2="600" y2="200" stroke="#334155" strokeWidth="2" />
-              <line x1="0" y1="200" x2="600" y2="200" stroke="#334155" strokeWidth="2" />
+              <line x1="0" y1="0" x2="0" y2="200" stroke="var(--line-strong)" strokeWidth="2" />
+              <line x1="600" y1="0" x2="600" y2="200" stroke="var(--line-strong)" strokeWidth="2" />
+              <line x1="0" y1="200" x2="600" y2="200" stroke="var(--line-strong)" strokeWidth="2" />
 
               {/* Y-axis L (Loss) */}
               {[0, 0.2, 0.4, 0.6, 0.8, 1.0].map(v => (
-                <text key={v} x="-10" y={200 - v * 200} fill="var(--erosion, #E4572E)" fontSize="12" textAnchor="end" dominantBaseline="middle">{v.toFixed(1)}</text>
+                <text key={v} x="-10" y={200 - v * 200} fill="var(--erosion, #E4572E)" fontSize="14" textAnchor="end" dominantBaseline="middle">{v.toFixed(1)}</text>
               ))}
-              <text x="-40" y="100" fill="var(--erosion, #E4572E)" fontSize="12" textAnchor="middle" transform="rotate(-90, -40, 100)">BCE Loss</text>
+              <text x="-40" y="100" fill="var(--erosion, #E4572E)" fontSize="14" textAnchor="middle" transform="rotate(-90, -40, 100)">BCE Loss</text>
 
               {/* Y-axis R (IoU) */}
               {[0, 0.2, 0.4, 0.6, 0.8, 1.0].map(v => (
-                <text key={v} x="610" y={200 - v * 200} fill="var(--water, #39C4D9)" fontSize="12" textAnchor="start" dominantBaseline="middle">{v.toFixed(1)}</text>
+                <text key={v} x="610" y={200 - v * 200} fill="var(--water, #39C4D9)" fontSize="14" textAnchor="start" dominantBaseline="middle">{v.toFixed(1)}</text>
               ))}
-              <text x="640" y="100" fill="var(--water, #39C4D9)" fontSize="12" textAnchor="middle" transform="rotate(-90, 640, 100)">IoU Score</text>
+              <text x="640" y="100" fill="var(--water, #39C4D9)" fontSize="14" textAnchor="middle" transform="rotate(-90, 640, 100)">IoU Score</text>
 
               {/* X-axis */}
               {[0, 100, 200, 300, 400, 500].map(v => (
-                <text key={v} x={(v/500)*600} y="220" fill="#64748B" fontSize="12" textAnchor="middle">{v}</text>
+                <text key={v} x={(v/500)*600} y="220" fill="#64748B" fontSize="14" textAnchor="middle">{v}</text>
               ))}
-              <text x="300" y="240" fill="#64748B" fontSize="12" textAnchor="middle">Epochs</text>
+              <text x="300" y="240" fill="#64748B" fontSize="14" textAnchor="middle">Epochs</text>
 
               {/* Early stopping line */}
               <line x1={(350/500)*600} y1="0" x2={(350/500)*600} y2="200" stroke="#94A3B8" strokeWidth="1" strokeDasharray="4,4" />
-              <text x={(350/500)*600 + 10} y="20" fill="#94A3B8" fontSize="10">Early stopping checkpoint</text>
+              <text x={(350/500)*600 + 10} y="20" fill="#94A3B8" fontSize="13">Early stopping checkpoint</text>
 
               {/* Lines */}
               <polyline 
@@ -568,7 +570,7 @@ export function IntelligencePage() {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: 'var(--text-3)' }}>
+                <tr style={{ borderBottom: '1px solid rgba(var(--fg-rgb), 0.1)', color: 'var(--text-3)' }}>
                   <th style={{ padding: '1rem', fontWeight: 600 }}>Fold</th>
                   <th style={{ padding: '1rem', fontWeight: 600 }}>Train IoU</th>
                   <th style={{ padding: '1rem', fontWeight: 600 }}>Val IoU</th>
@@ -585,7 +587,7 @@ export function IntelligencePage() {
                   { fold: '4', trIou: '0.905', vIou: '0.881', trF1: '0.938', vF1: '0.934', ep: '445' },
                   { fold: '5', trIou: '0.911', vIou: '0.871', trF1: '0.942', vF1: '0.927', ep: '478' },
                 ].map((row, i) => (
-                  <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)', backgroundColor: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
+                  <tr key={i} style={{ borderBottom: '1px solid rgba(var(--fg-rgb), 0.05)', backgroundColor: i % 2 === 0 ? 'rgba(var(--fg-rgb), 0.02)' : 'transparent' }}>
                     <td style={{ padding: '1rem' }}>{row.fold}</td>
                     <td style={{ padding: '1rem' }}>{row.trIou}</td>
                     <td style={{ padding: '1rem', color: 'var(--water, #39C4D9)' }}>{row.vIou}</td>
@@ -594,7 +596,7 @@ export function IntelligencePage() {
                     <td style={{ padding: '1rem', color: 'var(--text-3)' }}>{row.ep}</td>
                   </tr>
                 ))}
-                <tr style={{ backgroundColor: 'rgba(57, 196, 217, 0.05)', fontWeight: 700 }}>
+                <tr style={{ backgroundColor: 'rgba(var(--water-rgb), 0.05)', fontWeight: 700 }}>
                   <td style={{ padding: '1rem', color: 'var(--text)' }}>Mean</td>
                   <td style={{ padding: '1rem' }}>0.912±0.006</td>
                   <td style={{ padding: '1rem', color: 'var(--water, #39C4D9)' }}>0.872±0.007</td>
@@ -612,7 +614,7 @@ export function IntelligencePage() {
         <section className="glass-panel" style={{ padding: '3rem', marginBottom: '4rem', borderRadius: '16px', borderLeft: '4px solid var(--water)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '2rem' }}>
             <div style={{ flex: '1 1 400px' }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(57,196,217,0.1)', color: 'var(--water)', borderRadius: '100px', fontSize: '0.8rem', fontFamily: 'var(--font-num)', letterSpacing: '0.1em', marginBottom: '1rem' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px', background: 'rgba(var(--water-rgb), 0.1)', color: 'var(--water)', borderRadius: '100px', fontSize: '0.9rem', fontFamily: 'var(--font-num)', letterSpacing: '0.1em', marginBottom: '1rem' }}>
                 <span className="pulse-dot" style={{ display: 'inline-block', width: '8px', height: '8px', background: 'var(--water)', borderRadius: '50%' }}></span>
                 EXPLAINABLE AI (XAI) ACTIVE
               </div>
@@ -626,11 +628,11 @@ export function IntelligencePage() {
               <div style={{ display: 'flex', gap: '2rem' }}>
                 <div>
                   <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--water)', fontFamily: 'var(--font-num)' }}>94.2%</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-3)', fontFamily: 'var(--font-num)', textTransform: 'uppercase' }}>Attention on active erosion front</div>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', fontFamily: 'var(--font-num)', textTransform: 'uppercase' }}>Attention on active erosion front</div>
                 </div>
                 <div>
                   <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text)', fontFamily: 'var(--font-num)' }}>14</div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--text-3)', fontFamily: 'var(--font-num)', textTransform: 'uppercase' }}>Transformer layers deep</div>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--text-3)', fontFamily: 'var(--font-num)', textTransform: 'uppercase' }}>Transformer layers deep</div>
                 </div>
               </div>
             </div>
@@ -641,8 +643,8 @@ export function IntelligencePage() {
               
               {/* River path */}
               <svg width="100%" height="100%" viewBox="0 0 400 300" style={{ position: 'absolute', inset: 0 }}>
-                <path d="M 0 50 Q 150 150 250 100 T 400 250" fill="none" stroke="rgba(57,196,217,0.1)" strokeWidth="80" />
-                <path d="M 0 50 Q 150 150 250 100 T 400 250" fill="none" stroke="rgba(57,196,217,0.2)" strokeWidth="60" />
+                <path d="M 0 50 Q 150 150 250 100 T 400 250" fill="none" stroke="rgba(var(--water-rgb), 0.1)" strokeWidth="80" />
+                <path d="M 0 50 Q 150 150 250 100 T 400 250" fill="none" stroke="rgba(var(--water-rgb), 0.2)" strokeWidth="60" />
                 
                 {/* Heatmap Attention Overlay */}
                 <defs>
@@ -660,10 +662,10 @@ export function IntelligencePage() {
                 <circle cx="350" cy="220" r="30" fill="url(#attentionHeat)" className="attention-pulse" style={{ animationDelay: '0.5s' }} />
                 
                 {/* Scanning grid overlay */}
-                <path d="M 0 0 L 400 0 L 400 300 L 0 300 Z" fill="none" stroke="rgba(57,196,217,0.2)" strokeWidth="1" strokeDasharray="10 10" />
+                <path d="M 0 0 L 400 0 L 400 300 L 0 300 Z" fill="none" stroke="rgba(var(--water-rgb), 0.2)" strokeWidth="1" strokeDasharray="10 10" />
               </svg>
               
-              <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'rgba(0,0,0,0.8)', padding: '4px 8px', borderRadius: '4px', border: '1px solid var(--line)', fontSize: '0.7rem', fontFamily: 'var(--font-num)', color: 'var(--text-2)' }}>
+              <div className="hud-dark" style={{ position: 'absolute', bottom: '1rem', right: '1rem', background: 'rgba(var(--shadow-rgb), 0.8)', padding: '4px 8px', borderRadius: '4px', border: '1px solid var(--line)', fontSize: '0.82rem', fontFamily: 'var(--font-num)', color: 'var(--text-2)' }}>
                 HEAD_4_ACTIVATION_MAP
               </div>
             </div>
@@ -675,7 +677,7 @@ export function IntelligencePage() {
           <h2 style={{ margin: '0 0 0.5rem 0', fontSize: '2rem' }}>Live Inference Telemetry</h2>
           <p style={{ color: 'var(--text-2)', marginBottom: '2rem' }}>Raw ML processing stream. The model autonomously filters anomalies before computing erosion vectors.</p>
           
-          <div style={{ background: '#0a0a0a', border: '1px solid var(--line-strong)', borderRadius: '8px', padding: '1rem', height: '250px', overflowY: 'hidden', position: 'relative', fontFamily: 'var(--font-num)', fontSize: '0.85rem' }}>
+          <div style={{ background: 'var(--surface)', border: '1px solid var(--line-strong)', borderRadius: '8px', padding: '1rem', height: '250px', overflowY: 'hidden', position: 'relative', fontFamily: 'var(--font-num)', fontSize: '0.92rem' }}>
             <div ref={telemetryFeedRef} className="telemetry-feed" style={{ color: 'var(--text-3)', display: 'flex', flexDirection: 'column', gap: '8px', height: '100%', overflowY: 'auto' }}>
               {telemetryLines.map((line, i) => {
                 const timestamp = line.match(/\[.*?\]/)?.[0] || '';
@@ -695,7 +697,7 @@ export function IntelligencePage() {
               <div className="typing-cursor" style={{ display: 'inline-block', width: '8px', height: '15px', background: 'var(--water)', animation: 'blink 1s step-end infinite' }}></div>
             </div>
             {/* Fade out top */}
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '40px', background: 'linear-gradient(to bottom, #0a0a0a 0%, transparent 100%)' }}></div>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '40px', background: 'linear-gradient(to bottom, var(--surface) 0%, transparent 100%)' }}></div>
           </div>
         </section>
 
@@ -714,10 +716,10 @@ export function IntelligencePage() {
               { name: 'Output', desc: 'Probability Map', param: 'Softmax Activation' },
             ].map((block, i, arr) => (
               <React.Fragment key={i}>
-                <div style={{ flex: '1 1 120px', backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '1.5rem 1rem', textAlign: 'center', position: 'relative' }}>
+                <div style={{ flex: '1 1 120px', backgroundColor: 'rgba(var(--fg-rgb), 0.03)', border: '1px solid rgba(var(--fg-rgb), 0.1)', borderRadius: '8px', padding: '1.5rem 1rem', textAlign: 'center', position: 'relative' }}>
                   <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: 'var(--water, #39C4D9)' }}>{block.name}</div>
                   <div style={{ fontSize: '0.875rem', marginBottom: '0.5rem' }}>{block.desc}</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-3)', fontFamily: 'var(--font-num)' }}>{block.param}</div>
+                  <div style={{ fontSize: '0.86rem', color: 'var(--text-3)', fontFamily: 'var(--font-num)' }}>{block.param}</div>
                 </div>
                 {i < arr.length - 1 && (
                   <div style={{ color: 'var(--text-3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -743,14 +745,14 @@ export function IntelligencePage() {
             ].map((site, i) => {
               const isActive = reachId === site.id;
               return (
-              <div key={i} style={{ backgroundColor: isActive ? 'rgba(57,196,217,0.1)' : 'rgba(255,255,255,0.02)', border: isActive ? '1px solid var(--water)' : '1px solid rgba(255,255,255,0.05)', boxShadow: isActive ? '0 0 15px rgba(57,196,217,0.2)' : 'none', borderRadius: '12px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', transition: 'all 0.3s ease' }}>
+              <div key={i} style={{ backgroundColor: isActive ? 'rgba(var(--water-rgb), 0.1)' : 'rgba(var(--fg-rgb), 0.02)', border: isActive ? '1px solid var(--water)' : '1px solid rgba(var(--fg-rgb), 0.05)', boxShadow: isActive ? '0 0 15px rgba(var(--water-rgb), 0.2)' : 'none', borderRadius: '12px', padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', transition: 'all 0.3s ease' }}>
               
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h3 style={{ margin: '0 0 0.25rem 0', fontSize: '1.25rem' }}>{site.site}</h3>
                     <div style={{ fontSize: '0.875rem', color: 'var(--text-3)' }}>{site.event} detected: <span style={{ color: 'var(--text)', fontWeight: 600 }}>{site.val}</span></div>
                   </div>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.25rem 0.75rem', borderRadius: '9999px', backgroundColor: `rgba(${site.vColor === 'var(--pass, #7FBF8E)' ? '127,191,142' : site.vColor === 'var(--erosion, #E4572E)' ? '228,87,46' : '217,178,106'}, 0.1)`, color: site.vColor, border: `1px solid ${site.vColor}` }}>
+                  <div style={{ fontSize: '0.86rem', fontWeight: 700, padding: '0.25rem 0.75rem', borderRadius: '9999px', backgroundColor: `rgba(${site.vColor === 'var(--pass, #7FBF8E)' ? '127,191,142' : site.vColor === 'var(--erosion, #E4572E)' ? '228,87,46' : '217,178,106'}, 0.1)`, color: site.vColor, border: `1px solid ${site.vColor}` }}>
                     {site.verdict}
                   </div>
                 </div>
@@ -760,7 +762,7 @@ export function IntelligencePage() {
                     <span>Model Confidence</span>
                     <span>{site.conf}%</span>
                   </div>
-                  <div style={{ height: '6px', backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: '3px', overflow: 'hidden' }}>
+                  <div style={{ height: '6px', backgroundColor: 'rgba(var(--fg-rgb), 0.05)', borderRadius: '3px', overflow: 'hidden' }}>
                     <div style={{ height: '100%', width: mounted ? `${site.conf}%` : '0%', backgroundColor: site.vColor, transition: 'width 1.5s ease-out' }} />
                   </div>
                 </div>
@@ -775,19 +777,19 @@ export function IntelligencePage() {
           <h2 style={{ margin: '0 0 0.5rem 0', fontSize: '2rem' }}>SBAS (Small Baseline Subset) Network Graph</h2>
           <p style={{ color: 'var(--text-2, #94A3B8)', margin: '0 0 2rem 0' }}>Visualizing the network of interferogram pairs formed from satellite acquisitions over time and perpendicular baseline.</p>
           
-          <div style={{ height: '350px', position: 'relative', borderBottom: '1px solid #333', borderLeft: '1px solid #333', marginTop: '2rem', paddingLeft: '20px', paddingBottom: '20px' }}>
+          <div style={{ height: '350px', position: 'relative', borderBottom: '1px solid var(--line)', borderLeft: '1px solid var(--line)', marginTop: '2rem', marginLeft: '3rem', marginRight: '9rem', paddingLeft: '20px', paddingBottom: '20px' }}>
             <svg width="100%" height="100%" viewBox="0 0 800 350" preserveAspectRatio="none" style={{ overflow: 'visible' }}>
-              <text x="-40" y="20" fill="#aaa" fontSize="12" transform="rotate(-90 -40 20)">Perp Baseline (m)</text>
-              <text x="400" y="380" fill="#aaa" fontSize="12" textAnchor="middle">Temporal Baseline (Days)</text>
+              <text x="-40" y="20" fill="var(--text-3)" fontSize="14" transform="rotate(-90 -40 20)">Perp Baseline (m)</text>
+              <text x="400" y="380" fill="var(--text-3)" fontSize="14" textAnchor="middle">Temporal Baseline (Days)</text>
               
               {/* Axes lines */}
-              <line x1="0" y1="175" x2="800" y2="175" stroke="#333" strokeDasharray="4,4" />
-              <text x="-25" y="179" fill="#888" fontSize="12">0</text>
-              <text x="-35" y="30" fill="#888" fontSize="12">200</text>
-              <text x="-40" y="330" fill="#888" fontSize="12">-200</text>
+              <line x1="0" y1="175" x2="800" y2="175" stroke="var(--line)" strokeDasharray="4,4" />
+              <text x="-25" y="179" fill="var(--text-3)" fontSize="14">0</text>
+              <text x="-35" y="30" fill="var(--text-3)" fontSize="14">200</text>
+              <text x="-40" y="330" fill="var(--text-3)" fontSize="14">-200</text>
 
               {/* Lines (Interferograms) */}
-              <g stroke="rgba(57, 196, 217, 0.4)" strokeWidth="2">
+              <g stroke="rgba(var(--water-rgb), 0.4)" strokeWidth="2">
                 <line x1="50" y1="200" x2="150" y2="150" />
                 <line x1="50" y1="200" x2="250" y2="220" />
                 <line x1="150" y1="150" x2="250" y2="220" />
@@ -815,7 +817,7 @@ export function IntelligencePage() {
                 <circle cx="750" cy="160" r="6" />
               </g>
 
-              <g fill="#fff" fontSize="12" fontWeight="600">
+              <g fill="var(--text)" fontSize="14" fontWeight="600">
                 <text x="40" y="225">t0</text>
                 <text x="140" y="135">t1</text>
                 <text x="240" y="240">t2</text>
@@ -830,9 +832,9 @@ export function IntelligencePage() {
         </section>
 
         {/* Section 10c: Ionospheric Faraday Rotation */}
-        <section className="glass-panel" style={{ padding: '3rem', marginBottom: '4rem', borderRadius: '16px', background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(127,191,142,0.1) 100%)', border: '1px solid rgba(127,191,142,0.3)' }}>
+        <section className="glass-panel" style={{ padding: '3rem', marginBottom: '4rem', borderRadius: '16px', background: 'linear-gradient(135deg, rgba(var(--fg-rgb), 0.02) 0%, rgba(127,191,142,0.1) 100%)', border: '1px solid rgba(127,191,142,0.3)' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '2rem' }}>
-            <div style={{ flexShrink: 0, fontSize: '3.5rem' }}>🧠</div>
+            <div style={{ flexShrink: 0, fontSize: '3.5rem' }}><Brain size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /></div>
             <div>
               <h2 style={{ margin: '0 0 0.5rem 0', fontSize: '2rem', color: 'var(--pass, #7FBF8E)' }}>AI Ionospheric Faraday Rotation Compensation</h2>
               <p style={{ color: 'var(--text-2, #94A3B8)', margin: '0 0 1rem 0', lineHeight: 1.6, fontSize: '1.1rem' }}>
@@ -841,8 +843,8 @@ export function IntelligencePage() {
                 <strong> Total Electron Content (TEC)</strong> estimation module that dynamically compensates for these atmospheric anomalies 
                 using quad-polarimetric signatures.
               </p>
-              <div style={{ display: 'inline-block', padding: '0.75rem 1.25rem', background: 'rgba(0,0,0,0.4)', borderRadius: '8px', border: '1px solid rgba(127,191,142,0.3)', fontSize: '0.95rem', color: '#fff' }}>
-                <span style={{ color: 'var(--pass)', marginRight: '8px' }}>✔</span> Phase Unwrapping Error reduced by <strong>42%</strong> globally.
+              <div style={{ display: 'inline-block', padding: '0.75rem 1.25rem', background: 'rgba(var(--shadow-rgb), 0.4)', borderRadius: '8px', border: '1px solid rgba(127,191,142,0.3)', fontSize: '0.95rem', color: '#fff' }}>
+                <span style={{ color: 'var(--pass)', marginRight: '8px' }}><Check size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /></span> Phase Unwrapping Error reduced by <strong>42%</strong> globally.
               </div>
             </div>
           </div>
@@ -869,7 +871,7 @@ export function IntelligencePage() {
               </ul>
             </div>
           </div>
-          <div style={{ marginTop: '2rem', padding: '1rem', backgroundColor: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ marginTop: '2rem', padding: '1rem', backgroundColor: 'rgba(var(--fg-rgb), 0.02)', borderRadius: '8px', border: '1px solid rgba(var(--fg-rgb), 0.05)', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--pass, #7FBF8E)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <div style={{ fontSize: '0.875rem', color: 'var(--text-2)' }}>
               <strong>Provenance Verified:</strong> Every metric on this dashboard traces mathematically back to the <code>manifest.json</code> inference pipeline and the raw NASA NISAR granules.

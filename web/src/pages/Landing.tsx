@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import { Radio, Activity, Square, RefreshCw, Satellite, Waves, CloudRain, Mountain, Globe, BarChart2 } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import '../styles/landing.css';
 
@@ -49,23 +51,27 @@ const EVIDENCE_STAGES = [
 /* ─── SAR concept cards — only concepts our project actually uses ─── */
 const SAR_CONCEPTS = [
   {
-    icon: '📡',
+    icon: <Radio size={18} />,
     title: 'Active Sensing',
+    short: 'Its own light source — works through clouds and at night.',
     body: 'SAR sends its own microwave pulse and measures the return signal. Unlike optical sensors, it works through clouds, at night, and during monsoon — exactly when river change happens.',
   },
   {
-    icon: '〰️',
+    icon: <Activity size={18} />,
     title: 'L-Band Radar (~24 cm)',
+    short: 'A long wavelength that sees through the tree canopy.',
     body: 'NISAR transmits at L-band: a ~24 cm wavelength that penetrates vegetation canopy and interacts with the ground surface. This lets us see through trees to the water edge beneath.',
   },
   {
-    icon: '⬛',
+    icon: <Square size={18} />,
     title: 'Backscatter & Water',
+    short: 'Water is dark, land is bright.',
     body: 'Open water acts like a mirror, reflecting the radar pulse away — appearing dark (low σ⁰). Land and vegetation scatter the signal back to the sensor — appearing bright. This contrast is our detection principle.',
   },
   {
-    icon: '🔄',
+    icon: <RefreshCw size={18} />,
     title: 'Change Detection',
+    short: 'Same river height, two dates — what moved?',
     body: 'By comparing two radar passes at the same river height, we isolate real bank migration from temporary flooding. A pixel that was land and became water, at matched stage — that is our signal.',
   },
 ];
@@ -73,37 +79,37 @@ const SAR_CONCEPTS = [
 /* ─── Data sources used in our project ─── */
 const DATA_SOURCES = [
   {
-    badge: '🛰️',
+    badge: <Satellite size={18} />,
     name: 'NISAR L2 GCOV Provisional V1',
     role: 'Primary measurement — calibrated γ⁰ backscatter per pass',
     doi: '10.5067/NIL2GCOV-P1',
   },
   {
-    badge: '🌊',
+    badge: <Waves size={18} />,
     name: 'OPERA L3 DSWx-S1 V1',
     role: 'Independent validation — Sentinel-1 water extent, different wavelength',
     doi: '10.5067/OPDSWS1-L3V1',
   },
   {
-    badge: '🌧️',
+    badge: <CloudRain size={18} />,
     name: 'GPM IMERG Daily',
     role: 'Rainfall context — precipitation anomaly check',
     doi: '10.5067/GPM/IMERGDL/DAY/07',
   },
   {
-    badge: '⛰️',
+    badge: <Mountain size={18} />,
     name: 'ASF GLO-30 HAND',
     role: 'Terrain mask — excludes water on high ground',
     doi: null,
   },
   {
-    badge: '🌍',
+    badge: <Globe size={18} />,
     name: 'NASA GIBS Blue Marble',
     role: 'Satellite basemap tiles via WMTS',
     doi: null,
   },
   {
-    badge: '📊',
+    badge: <BarChart2 size={18} />,
     name: 'FFWC River Stage',
     role: 'Scientific control — river height at each acquisition',
     doi: null,
@@ -111,158 +117,35 @@ const DATA_SOURCES = [
 ];
 
 export function Landing() {
+  const trailRef = useRef<HTMLDivElement>(null);
+
+  // Reveal the evidence-trail steps one after another when they scroll into view.
+  useEffect(() => {
+    const el = trailRef.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      el.classList.add('is-visible');
+      return;
+    }
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        el.classList.add('is-visible');
+        io.disconnect();
+      }
+    }, { threshold: 0.15 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div className="page-container">
       <Navbar transparent />
 
       {/* ════ Hero ════ */}
-      <section style={{ position: 'relative', overflow: 'hidden', backgroundColor: '#000000', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '80px' }}>
-        <style>
-          {`
-            @keyframes subtle-sweep {
-              0% { transform: translateX(-100%) rotate(15deg); opacity: 0; }
-              50% { opacity: 0.15; }
-              100% { transform: translateX(200%) rotate(15deg); opacity: 0; }
-            }
-            @keyframes pulse-mesh {
-              0%, 100% { opacity: 0.2; transform: scale(1); }
-              50% { opacity: 0.4; transform: scale(1.05); }
-            }
-            @keyframes float-up {
-              0% { opacity: 0; transform: translateY(30px); }
-              100% { opacity: 1; transform: translateY(0); }
-            }
-            .elegant-bg {
-              position: absolute;
-              inset: 0;
-              background: radial-gradient(circle at 50% 0%, #0c1824 0%, #000000 70%);
-              z-index: 0;
-            }
-            .radar-light {
-              position: absolute;
-              top: -50%; bottom: -50%;
-              left: 0; width: 200px;
-              background: linear-gradient(90deg, transparent, #39C4D9, transparent);
-              filter: blur(50px);
-              animation: subtle-sweep 8s infinite ease-in-out;
-              z-index: 1;
-            }
-            .grid-mesh {
-              position: absolute;
-              inset: 0;
-              background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-              background-size: 60px 60px;
-              background-position: center center;
-              mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
-              -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
-              z-index: 1;
-              animation: pulse-mesh 10s infinite ease-in-out;
-            }
-            .hero-content-elegant {
-              position: relative;
-              z-index: 10;
-              text-align: center;
-              max-width: 900px;
-              padding: 0 2rem;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              gap: 2rem;
-              animation: float-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            }
-            .eyebrow {
-              color: #39C4D9;
-              font-size: 0.8rem;
-              font-weight: 600;
-              letter-spacing: 0.3em;
-              text-transform: uppercase;
-              background: rgba(57, 196, 217, 0.1);
-              padding: 6px 16px;
-              border-radius: 100px;
-              border: 1px solid rgba(57, 196, 217, 0.2);
-              backdrop-filter: blur(10px);
-            }
-            .headline {
-              font-size: clamp(3.5rem, 8vw, 6rem);
-              font-weight: 800;
-              line-height: 1.1;
-              color: #ffffff;
-              letter-spacing: -0.02em;
-              margin: 0;
-            }
-            .headline-gradient {
-              background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-            }
-            .headline-accent {
-              background: linear-gradient(135deg, #39C4D9 0%, #3b82f6 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-            }
-            .subheadline {
-              font-size: clamp(1.1rem, 2vw, 1.4rem);
-              line-height: 1.6;
-              color: #94a3b8;
-              max-width: 700px;
-              margin: 0;
-              font-weight: 400;
-            }
-            .btn-group {
-              display: flex;
-              gap: 1.5rem;
-              margin-top: 1rem;
-            }
-            @media (max-width: 600px) {
-              .btn-group {
-                flex-direction: column;
-                gap: 1rem;
-                width: 100%;
-              }
-              .btn-elegant-primary, .btn-elegant-secondary {
-                width: 100%;
-                text-align: center;
-              }
-            }
-            .btn-elegant-primary {
-              background: #ffffff;
-              color: #000000;
-              padding: 16px 32px;
-              border-radius: 100px;
-              font-weight: 600;
-              font-size: 1.1rem;
-              text-decoration: none;
-              transition: all 0.3s ease;
-              box-shadow: 0 0 20px rgba(255,255,255,0.2);
-            }
-            .btn-elegant-primary:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 0 30px rgba(255,255,255,0.4);
-            }
-            .btn-elegant-secondary {
-              background: rgba(255,255,255,0.05);
-              color: #ffffff;
-              padding: 16px 32px;
-              border-radius: 100px;
-              font-weight: 600;
-              font-size: 1.1rem;
-              text-decoration: none;
-              border: 1px solid rgba(255,255,255,0.1);
-              transition: all 0.3s ease;
-              backdrop-filter: blur(10px);
-            }
-            .btn-elegant-secondary:hover {
-              background: rgba(255,255,255,0.1);
-              border-color: rgba(255,255,255,0.2);
-            }
-          `}
-        </style>
-
-        <div className="elegant-bg" />
-        <div className="grid-mesh" />
-        <div className="radar-light" />
+      <section style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '80px' }}>
+        <div className="hero-radar" aria-hidden="true" />
+        <div className="hero-scrim" aria-hidden="true" />
+        <div className="hero-caption">Jamuna River, Bangladesh · NISAR L-band radar · dark is water, bright is land</div>
 
         <div className="hero-content-elegant">
           <div className="eyebrow">
@@ -309,10 +192,18 @@ export function Landing() {
 
         <div className="sar-intro__grid">
           {SAR_CONCEPTS.map((c) => (
-            <div key={c.title} className="sar-card">
-              <span className="sar-card__icon">{c.icon}</span>
-              <h3>{c.title}</h3>
-              <p>{c.body}</p>
+            <div key={c.title} className="sar-flip">
+              <div className="sar-flip__inner">
+                <div className="sar-flip__face sar-flip__front">
+                  <span className="sar-card__icon">{c.icon}</span>
+                  <h3>{c.title}</h3>
+                  <p>{c.short}</p>
+                </div>
+                <div className="sar-flip__face sar-flip__back">
+                  <h3>{c.title}</h3>
+                  <p>{c.body}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -353,9 +244,10 @@ export function Landing() {
           with independent sources, challenge the finding, explain the result, connect to the field.
         </p>
 
-        <div className="evidence-trail__flow">
-          {EVIDENCE_STAGES.map((s) => (
-            <div key={s.num} className="evidence-trail__step">
+        <div className="evidence-trail__flow" ref={trailRef}>
+          {EVIDENCE_STAGES.map((s, i) => (
+            <div key={s.num} className="evidence-trail__step" style={{ ['--i' as string]: i }}>
+              <span className="evidence-trail__ghost" aria-hidden="true">{s.num}</span>
               <span className="evidence-trail__step-num">STEP {s.num}</span>
               <span className="evidence-trail__step-title">{s.title}</span>
               <span className="evidence-trail__step-desc">{s.desc}</span>

@@ -70,6 +70,8 @@ interface StoreState {
   setCinematicDesc: (active: boolean) => void;
   chatOpen: boolean;
   setChatOpen: (active: boolean) => void;
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
 }
 
 export const useStore = create<StoreState>((set) => ({
@@ -144,4 +146,11 @@ export const useStore = create<StoreState>((set) => ({
   setCinematicDesc: (active) => set({ showCinematicDesc: active }),
   chatOpen: false,
   setChatOpen: (active) => set({ chatOpen: active }),
+  theme: (localStorage.getItem('fluvisar_theme') as 'dark' | 'light') || 'dark',
+  toggleTheme: () => set((state) => {
+    const newTheme = state.theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('fluvisar_theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    return { theme: newTheme };
+  }),
 }));

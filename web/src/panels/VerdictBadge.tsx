@@ -16,7 +16,7 @@ export function VerdictBadge() {
       border: `1px solid ${color}`,
       color: color,
       fontWeight: 'bold',
-      fontSize: '0.8rem',
+      fontSize: '0.9rem',
       textTransform: 'uppercase',
       marginBottom: 'var(--s2)'
     }}>

@@ -77,7 +77,7 @@ export function Hydrograph({ width = 800, height = 150 }) {
           position: 'absolute', top: 0, left: margin.left, height: 16, zIndex: 10,
           display: 'flex', gap: 6, alignItems: 'center', background: 'var(--panel)',
         }}>
-          <span style={{ color: 'var(--text-3)', fontSize: '0.7rem' }}>Showing:</span>
+          <span style={{ color: 'var(--text-3)', fontSize: '0.82rem' }}>Showing:</span>
           {acqs.filter(a => a.status === 'ok').map((a) => {
             const isSelected = a.date === selectedDate;
             return (
@@ -94,7 +94,7 @@ export function Hydrograph({ width = 800, height = 150 }) {
                   lineHeight: '14px',
                   borderRadius: 'var(--r)',
                   cursor: 'pointer',
-                  fontSize: '0.7rem',
+                  fontSize: '0.82rem',
                 }}
               >
                 {isSelected ? '✓ ' : ''}{formatDate(a.date)}
@@ -110,7 +110,7 @@ export function Hydrograph({ width = 800, height = 150 }) {
           {yScale.ticks(3).map(tickValue => (
             <g key={tickValue} transform={`translate(0,${yScale(tickValue)})`}>
               <line x2={innerWidth} stroke="var(--line)" />
-              <text x={-5} dy="0.32em" fill="var(--text-3)" fontSize="10" textAnchor="end">{tickValue}</text>
+              <text x={-5} dy="0.32em" fill="var(--text-3)" fontSize="12" textAnchor="end">{tickValue}</text>
             </g>
           ))}
 
@@ -122,7 +122,7 @@ export function Hydrograph({ width = 800, height = 150 }) {
               return (
                 <g key={tickValue.toString()} transform={`translate(${xScale(tickValue)},0)`}>
                   <line y2={5} stroke="var(--line)" />
-                  <text y={15} fill="var(--text-3)" fontSize="10" textAnchor="middle">{dateStr}</text>
+                  <text y={15} fill="var(--text-3)" fontSize="12" textAnchor="middle">{dateStr}</text>
                 </g>
               );
             })}
@@ -132,7 +132,7 @@ export function Hydrograph({ width = 800, height = 150 }) {
           {stage.station?.danger_level_m && (
             <g transform={`translate(0,${yScale(stage.station.danger_level_m)})`}>
               <line x2={innerWidth} stroke="var(--fail)" strokeDasharray="4,4" opacity={0.5} />
-              <text x={innerWidth} y={-5} fill="var(--fail)" fontSize="10" textAnchor="end" opacity={0.8}>Danger Level</text>
+              <text x={innerWidth} y={-5} fill="var(--fail)" fontSize="12" textAnchor="end" opacity={0.8}>Danger Level</text>
             </g>
           )}
 
@@ -170,8 +170,8 @@ export function Hydrograph({ width = 800, height = 150 }) {
                 <line y1={-20} y2={20} stroke="#ff5a00" strokeWidth={1} strokeDasharray="2,2" />
                 <circle r={3} fill="#ff5a00" />
                 <rect x={-8} y={-35} width={16} height={12} fill="#ff5a00" rx={2} />
-                <text y={-26} fill="#fff" fontSize="8" textAnchor="middle" fontWeight="bold">EQ</text>
-                <text x={10} y={-26} fill="#ff5a00" fontSize="9" fontWeight="bold">M {eq.mag}</text>
+                <text y={-26} fill="#fff" fontSize="12" textAnchor="middle" fontWeight="bold">EQ</text>
+                <text x={10} y={-26} fill="#ff5a00" fontSize="11" fontWeight="bold">M {eq.mag}</text>
               </g>
             );
           })}

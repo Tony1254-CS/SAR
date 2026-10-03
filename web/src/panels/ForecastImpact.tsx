@@ -1,3 +1,4 @@
+import { User, Sprout, DollarSign, Zap, Calendar, AlertTriangle } from 'lucide-react';
 import { useStore } from '../state/store';
 
 /* ── Synthetic but scientifically-grounded forecast data per reach ── */
@@ -119,7 +120,7 @@ export const IMPACT_DATA: Record<string, {
 function ProgressBar({ value, max, color }: { value: number; max: number; color: string }) {
   const pct = Math.min(100, (value / max) * 100);
   return (
-    <div style={{ width: '100%', height: 6, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
+    <div style={{ width: '100%', height: 6, background: 'rgba(var(--fg-rgb), 0.06)', borderRadius: 3, overflow: 'hidden' }}>
       <div style={{ width: `${pct}%`, height: '100%', background: color, borderRadius: 3, transition: 'width 1s var(--ease-out)' }} />
     </div>
   );
@@ -147,7 +148,7 @@ export function ForecastPanel() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 'var(--s2)' }}>
         <div>
           <div style={{ fontSize: 'var(--text-xs)', fontFamily: 'var(--font-num)', color: 'var(--water)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>
-            ⚡ NISAR L2 PREDICTIVE MODEL
+            <Zap size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> NISAR L2 PREDICTIVE MODEL
           </div>
           <div style={{ fontSize: 'var(--text-sm)', color: 'var(--text-2)' }}>
             {forecast.model}
@@ -162,8 +163,8 @@ export function ForecastPanel() {
       </div>
 
       {/* Horizon */}
-      <div style={{ padding: 'var(--s3)', background: 'rgba(57,196,217,0.06)', border: '1px solid rgba(57,196,217,0.12)', borderRadius: 'var(--r-md)', fontSize: 'var(--text-sm)', color: 'var(--water)', fontWeight: 600 }}>
-        📅 Forecast Horizon: {forecast.horizon}
+      <div style={{ padding: 'var(--s3)', background: 'rgba(var(--water-rgb), 0.06)', border: '1px solid rgba(var(--water-rgb), 0.12)', borderRadius: 'var(--r-md)', fontSize: 'var(--text-sm)', color: 'var(--water)', fontWeight: 600 }}>
+        <Calendar size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> Forecast Horizon: {forecast.horizon}
       </div>
 
       {/* Erosion Risk Zones */}
@@ -181,7 +182,7 @@ export function ForecastPanel() {
                 </span>
               </div>
               <ProgressBar value={zone.probability} max={1} color="var(--erosion)" />
-              <div style={{ fontSize: '0.6rem', color: 'var(--text-3)', marginTop: 2, fontFamily: 'var(--font-num)' }}>
+              <div style={{ fontSize: '0.74rem', color: 'var(--text-3)', marginTop: 2, fontFamily: 'var(--font-num)' }}>
                 P = {(zone.probability * 100).toFixed(0)}%
               </div>
             </div>
@@ -204,7 +205,7 @@ export function ForecastPanel() {
                 </span>
               </div>
               <ProgressBar value={zone.probability} max={1} color="var(--accretion)" />
-              <div style={{ fontSize: '0.6rem', color: 'var(--text-3)', marginTop: 2, fontFamily: 'var(--font-num)' }}>
+              <div style={{ fontSize: '0.74rem', color: 'var(--text-3)', marginTop: 2, fontFamily: 'var(--font-num)' }}>
                 P = {(zone.probability * 100).toFixed(0)}%
               </div>
             </div>
@@ -219,7 +220,7 @@ export function ForecastPanel() {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {forecast.drivers.map((d, i) => (
-            <div key={i} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-2)', padding: '6px var(--s3)', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--r-sm)', borderLeft: '2px solid var(--water)' }}>
+            <div key={i} style={{ fontSize: 'var(--text-sm)', color: 'var(--text-2)', padding: '6px var(--s3)', background: 'rgba(var(--fg-rgb), 0.03)', borderRadius: 'var(--r-sm)', borderLeft: '2px solid var(--water)' }}>
               {d}
             </div>
           ))}
@@ -227,7 +228,7 @@ export function ForecastPanel() {
       </div>
 
       {/* Methodology Disclosure */}
-      <div style={{ padding: 'var(--s3)', background: 'rgba(255,255,255,0.02)', borderRadius: 'var(--r-md)', fontSize: '0.65rem', color: 'var(--text-3)', lineHeight: 1.5, borderLeft: '2px solid var(--text-3)' }}>
+      <div style={{ padding: 'var(--s3)', background: 'rgba(var(--fg-rgb), 0.02)', borderRadius: 'var(--r-md)', fontSize: '0.78rem', color: 'var(--text-3)', lineHeight: 1.5, borderLeft: '2px solid var(--text-3)' }}>
         <strong>Methodology:</strong> {forecast.methodology}
       </div>
     </div>
@@ -245,10 +246,10 @@ export function ImpactDashboard() {
   );
 
   const stats = [
-    { label: 'People at Risk', value: formatNumber(impact.populationAtRisk), icon: '👤', color: 'var(--fail)' },
+    { label: 'People at Risk', value: formatNumber(impact.populationAtRisk), icon: <User size={18} />, color: 'var(--fail)' },
     { label: 'Homes Threatened', value: formatNumber(impact.homesAtRisk), icon: '🏠', color: 'var(--warn)' },
-    { label: 'Agricultural Land', value: `${formatNumber(impact.agriLandHa)} ha`, icon: '🌾', color: 'var(--accretion)' },
-    { label: 'Economic Exposure', value: `$${formatNumber(impact.economicLossUSD)}`, icon: '💰', color: 'var(--water)' },
+    { label: 'Agricultural Land', value: `${formatNumber(impact.agriLandHa)} ha`, icon: <Sprout size={18} />, color: 'var(--accretion)' },
+    { label: 'Economic Exposure', value: `$${formatNumber(impact.economicLossUSD)}`, icon: <DollarSign size={18} />, color: 'var(--water)' },
   ];
 
   return (
@@ -261,7 +262,7 @@ export function ImpactDashboard() {
         <div style={{ fontFamily: 'var(--font-num)', fontSize: '3rem', fontWeight: 900, color: impact.vulnerabilityIndex > 70 ? 'var(--fail)' : impact.vulnerabilityIndex > 50 ? 'var(--warn)' : 'var(--pass)', lineHeight: 1 }}>
           {impact.vulnerabilityIndex}
         </div>
-        <div style={{ fontSize: '0.65rem', color: 'var(--text-3)', marginTop: 4 }}>
+        <div style={{ fontSize: '0.78rem', color: 'var(--text-3)', marginTop: 4 }}>
           / 100 — {impact.vulnerabilityIndex > 70 ? 'CRITICAL' : impact.vulnerabilityIndex > 50 ? 'ELEVATED' : 'MODERATE'}
         </div>
         <div style={{ marginTop: 'var(--s2)' }}>
@@ -272,12 +273,12 @@ export function ImpactDashboard() {
       {/* Stats Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 'var(--s3)' }}>
         {stats.map((s, i) => (
-          <div key={i} style={{ padding: 'var(--s3)', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--line)', borderRadius: 'var(--r-md)', textAlign: 'center' }}>
+          <div key={i} style={{ padding: 'var(--s3)', background: 'rgba(var(--fg-rgb), 0.03)', border: '1px solid var(--line)', borderRadius: 'var(--r-md)', textAlign: 'center' }}>
             <div style={{ fontSize: '1.2rem', marginBottom: 4 }}>{s.icon}</div>
             <div style={{ fontFamily: 'var(--font-num)', fontSize: 'var(--text-lg)', fontWeight: 700, color: s.color }}>
               {s.value}
             </div>
-            <div style={{ fontSize: '0.6rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+            <div style={{ fontSize: '0.74rem', color: 'var(--text-3)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
               {s.label}
             </div>
           </div>
@@ -287,7 +288,7 @@ export function ImpactDashboard() {
       {/* Emergency Actions */}
       <div>
         <div style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--fail)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 'var(--s2)' }}>
-          ⚠️ Recommended Emergency Actions
+          <AlertTriangle size={18} style={{ display: 'inline', verticalAlign: 'text-bottom', margin: '0 4px' }} /> Recommended Emergency Actions
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
           {impact.emergencyActions.map((action, i) => (
@@ -300,7 +301,7 @@ export function ImpactDashboard() {
       </div>
 
       {/* Disclaimer */}
-      <div style={{ padding: 'var(--s3)', fontSize: '0.6rem', color: 'var(--text-3)', lineHeight: 1.5, borderTop: '1px solid var(--line)' }}>
+      <div style={{ padding: 'var(--s3)', fontSize: '0.74rem', color: 'var(--text-3)', lineHeight: 1.5, borderTop: '1px solid var(--line)' }}>
         Impact estimates derived from UN OCHA population density grids, CEGIS historical erosion-displacement ratios, 
         and WorldBank agricultural land value assessments. These are modeled estimates — not census counts.
       </div>

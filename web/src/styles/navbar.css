@@ -23,9 +23,9 @@
 }
 
 .navbar--scrolled {
-  background: rgba(14, 17, 19, 0.95);
-  border-color: rgba(57, 196, 217, 0.25);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  background: var(--overlay-strong);
+  border-color: var(--navbar-border);
+  box-shadow: 0 2px 20px rgba(var(--shadow-rgb), 0.2);
 }
 
 .navbar--transparent {
@@ -36,11 +36,11 @@
 }
 
 .navbar--transparent.navbar--scrolled {
-  background: rgba(14, 17, 19, 0.95);
-  border-color: rgba(57, 196, 217, 0.25);
+  background: var(--overlay-strong);
+  border-color: var(--navbar-border);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 20px rgba(var(--shadow-rgb), 0.2);
 }
 
 /* ── Left group ── */
@@ -203,19 +203,19 @@
 .navbar__btn:hover {
   border-color: var(--water);
   color: var(--water);
-  box-shadow: 0 0 12px rgba(57, 196, 217, 0.1);
+  box-shadow: 0 0 12px rgba(var(--water-rgb), 0.1);
 }
 
 .navbar__btn--primary {
   background: var(--water);
-  color: #04222b;
+  color: var(--on-accent);
   border-color: var(--water);
 }
 
 .navbar__btn--primary:hover {
   background: var(--water-strong);
-  color: #04222b;
-  box-shadow: 0 0 16px rgba(57, 196, 217, 0.3);
+  color: var(--on-accent);
+  box-shadow: 0 0 16px rgba(var(--water-rgb), 0.3);
 }
 
 .navbar__dropdown {
@@ -228,15 +228,24 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--glass-border);
-  min-width: 160px;
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  min-width: 180px;
   box-shadow: var(--glass-shadow);
   z-index: 1;
   border-radius: var(--r-md);
   padding: var(--s2) 0;
   margin-top: 8px;
+}
+
+/* Bridge the gap so hover state isn't lost */
+.navbar__dropdown-content::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
 }
 
 .navbar__dropdown:hover .navbar__dropdown-content {
@@ -252,13 +261,13 @@
   background: transparent;
   color: var(--text);
   padding: 8px 16px;
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   cursor: pointer;
   transition: all var(--duration-fast);
 }
 
 .navbar__dropdown-content button:hover {
-  background: rgba(57, 196, 217, 0.1);
+  background: rgba(var(--water-rgb), 0.1);
   color: var(--water);
 }
 
@@ -284,9 +293,9 @@
 
 /* ── Reach selector (for /app page) ── */
 .navbar__reach-select {
-  background: rgba(14, 17, 19, 0.5);
+  background: var(--overlay-faint);
   color: var(--water);
-  border: 1px solid rgba(57, 196, 217, 0.3);
+  border: 1px solid rgba(var(--water-rgb), 0.3);
   border-radius: var(--r-md);
   padding: 4px 12px;
   font-family: var(--font-num);
@@ -298,8 +307,8 @@
 
 .navbar__reach-select:hover,
 .navbar__reach-select:focus {
-  border-color: rgba(57, 196, 217, 0.6);
-  box-shadow: 0 0 10px rgba(57, 196, 217, 0.15);
+  border-color: rgba(var(--water-rgb), 0.6);
+  box-shadow: 0 0 10px rgba(var(--water-rgb), 0.15);
 }
 
 /* ── Spacer for fixed navbar ── */
@@ -315,7 +324,7 @@
     left: 0;
     right: 0;
     flex-direction: column;
-    background: rgba(14, 17, 19, 0.98);
+    background: var(--overlay-strong);
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--navbar-border);
     padding: var(--s2) 0;
